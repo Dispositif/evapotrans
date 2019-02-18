@@ -52,6 +52,14 @@ class ETcalcStrategy
         return round(101.3 * pow((293 - 0.0065 * $altitude) / 293, 5.26), 1); // KPa
     }
 
+    // todo Refactor RaStrategy
+
+    /**
+     * @param MeteoData $data
+     *
+     * @return float
+     * @throws Exception
+     */
     public function solarRadiationStrategyFromMeteodata(MeteoData $data)
     {
 
@@ -73,7 +81,7 @@ class ETcalcStrategy
             if ($data->Ra) {
                 $Ra = $data->Ra;
             }else {
-                $Ra = $this->meteo->extraterrestrialRadiationDailyPeriod(
+                $Ra = (new MeteoCalculation())->extraterrestrialRadiationDailyPeriod(
                     $data->getDaysOfYear(),
                     $data->getLocation()->getLat()
                 );
@@ -107,7 +115,7 @@ class ETcalcStrategy
             return $Rs;
         }
 
-        throw new \Exception('no strategy for solarRadiation');
+        throw new Exception('no strategy for solarRadiation');
     }
 
     /**
@@ -262,14 +270,13 @@ class ETcalcStrategy
      * requires air temperature, humidity, radiation and wind speed data for daily, weekly, ten-day or monthly calculations.
      * T°, wind taken at 2 meters.
      *
-     * @param     $Tmoyen
-     * @param     $u2
-     * @param     $e_s
-     * @param     $e_a
-     * @param     $delta
-     * @param     $Rn
-     * @param     $g
-     * @param int $G
+     * @param float $Tmoyen
+     * @param float $u2
+     * @param float $e_s
+     * @param float $e_a
+     * @param float $delta
+     * @param float $Rn
+     * @param float $g
      *
      * @return float ETo mm.day-1
      */

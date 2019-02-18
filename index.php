@@ -2,7 +2,7 @@
 
 namespace Evapotrans;
 
-use Evapotrans\ValueObjects\Unity;
+use Evapotrans\ValueObjects\Unit;
 use Evapotrans\ValueObjects\Wind;
 
 date_default_timezone_set('Europe/Paris');
@@ -42,7 +42,7 @@ $meteoData = new MeteoData($location, new \DateTime('2019-02-15'));
 $meteoData->setTmin(2.7);
 $meteoData->setTmax(16.1);
 $meteoData->setSunnyHours(7.2); // moyenne Mars à Marseille = 7.2
-$wind = (new Wind(20, new Unity('km/h'), 2));
+$wind = (new Wind(20, new Unit('km/h'), 2));
 $meteoData->setWind2($wind->getSpeed2meters());
 
 $u2 = $wind->getSpeed2meters();

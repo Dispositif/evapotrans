@@ -1,10 +1,11 @@
+#Evapotrans (work in progress)
 
+PHP 7.2 implementation of evapotranspiration prediction. Various calculation procedures for estimating missing data are also provided : weather, climatological, physical and agronomic datas. 
 
-Computation of all data required for the calculation of the reference evapotranspiration (ET) by means of the FAO Penman-Monteith method. 
+Computation of all data required for the calculation of the reference evapotranspiration (ET)c by means of the FAO Penman-Monteith method. Also computation of crop evapotranspiration (ETc) with others algos. 
 
-Implementation of various calculation procedures for estimating missing data are also provided : weather, climatological, physical and agronomic datas. Implementation of unit converters.
-
-Sources : http://www.fao.org/docrep/X0490E/x0490e07.htm
+Explanation : https://en.wikipedia.org/wiki/Evapotranspiration
+Sources for algorithmes and tests datas : http://www.fao.org/docrep/X0490E/x0490e07.htm
 
 Meteorological factors determining ET :
 Solar radiation
@@ -26,5 +27,6 @@ Missing wind speed data
 
 alternative equation for ETo when weather data are missing
 
-See http://www.cesbio.ups-tlse.fr/multitemp/?p=4802
+See also http://www.cesbio.ups-tlse.fr/multitemp/?p=4802
+
 

@@ -24,9 +24,8 @@ class Plant
     /**
      * Plant constructor.
      *
-     * @param string $plantName
-     * @param        $growStadeNames
-     * @param        $KcIni
+     * @param string     $plantName
+     * @param float|null $Kc
      */
     public function __construct(string $plantName, ?float $Kc)
     {

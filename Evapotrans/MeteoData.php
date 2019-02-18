@@ -329,8 +329,8 @@ class MeteoData
      * @param mixed $RHmax
      *
      * @return MeteoData
-     * @throws \Exception
-     * @throws \Exception
+     * @throws Exception
+     * @throws Exception
      */
     public function setRHmax(float $RHmax):self
     {
@@ -338,7 +338,7 @@ class MeteoData
             $this->RHmin = $RHmax;
             return $this;
         }
-        throw new \Exception('RHmax error');
+        throw new Exception('RHmax error');
     }
 
     /**
@@ -353,8 +353,8 @@ class MeteoData
      * @param mixed $RHmin
      *
      * @return MeteoData
-     * @throws \Exception
-     * @throws \Exception
+     * @throws Exception
+     * @throws Exception
      */
     public function setRHmin(float $RHmin):self
     {
@@ -362,7 +362,7 @@ class MeteoData
             $this->RHmin = $RHmin;
             return $this;
         }
-        throw new \Exception('RHmin error');
+        throw new Exception('RHmin error');
     }
 
     /**

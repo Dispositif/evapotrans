@@ -1,7 +1,7 @@
 <?php
 
 use Evapotrans\MeteoData;
-use Evapotrans\ValueObjects\Unity;
+use Evapotrans\ValueObjects\Unit;
 use Evapotrans\ValueObjects\Wind;
 use PHPUnit\Framework\TestCase;
 
@@ -36,21 +36,21 @@ class ETcalcStrategyTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function testWind()
     {
-        $wind = new Wind(3.2, new Unity('m/s'), 10);
+        $wind = new Wind(3.2, new Unit('m/s'), 10);
         $this->assertEquals(2.4, $wind->getSpeed2meters());
 
-        $wind = new Wind(5, new Unity('m/s'));
+        $wind = new Wind(5, new Unit('m/s'));
         $this->assertEquals(5, $wind->getSpeed2meters());
 
-        $wind = new Wind(36, new Unity('km/h'));
+        $wind = new Wind(36, new Unit('km/h'));
         $this->assertEquals(10, $wind->getSpeed2meters());
 
-        $this->expectException(\Exception::class);
-        new Wind(5, new Unity('m'));
+        $this->expectException(\Evapotrans\Exception::class);
+        new Wind(5, new Unit('m'));
     }
 
     public function testDayOfYear()

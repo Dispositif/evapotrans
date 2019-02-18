@@ -75,18 +75,22 @@ class CropEvapoTranspiration
 
     /**
      * @return float
-     * @throws \Exception
+     * @throws Exception
      */
     public function calcETo()
     {
         if( $this->ETo === false ) {
-            throw new \Exception('ETo not defined');
+            throw new Exception('ETo not defined');
         }
         $Kc = $this->strategyKc();
 
         return round($Kc * $this->ETo, 1);
     }
 
+    /**
+     * @return float
+     * @throws Exception
+     */
     private function strategyKc():float
     {
         if($this->Kc) {
@@ -95,7 +99,7 @@ class CropEvapoTranspiration
         // TODO
         // calc Kc with KcINI, KcMID, KcEND with climatic and crop ref
         // calc Kc as Kc = Kcb + Ke
-        throw new \Exception('no Kc determined');
+        throw new Exception('no Kc determined');
     }
     /**
      * @param mixed $ETo

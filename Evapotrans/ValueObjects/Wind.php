@@ -2,19 +2,19 @@
 
 namespace Evapotrans\ValueObjects;
 
+use Evapotrans\Exception;
+
 /**
+ * In general, wind speed at 2 m, u2, should be limited to about u2 ³ 0.5 m/s when used in the ETo equation (Equation 6). This is necessary to account for the effects of boundary layer instability and buoyancy of air in promoting exchange of vapour at the surface when air is calm. This effect occurs when the wind speed is small and buoyancy of warm air induces air exchange at the surface. Limiting u2 ³ 0.5 m/s in the ETo equation improves the estimation accuracy under the conditions of very low wind speed.
+ * todo max 0.5 + value "estimated/minimized" -> MeteoData ?
+ *
  * Class Wind
- * default unity : m/s
+ * default unit : m/s
  *
  * @package Evapotranspiration
  */
 class Wind
 {
-    /**
-     * In general, wind speed at 2 m, u2, should be limited to about u2 ³ 0.5 m/s when used in the ETo equation (Equation 6). This is necessary to account for the effects of boundary layer instability and buoyancy of air in promoting exchange of vapour at the surface when air is calm. This effect occurs when the wind speed is small and buoyancy of warm air induces air exchange at the surface. Limiting u2 ³ 0.5 m/s in the ETo equation improves the estimation accuracy under the conditions of very low wind speed.
-     * todo max 0.5 + value "estimated/minimized" -> MeteoData ?
-     */
-
     /**
      * Wind speed at 2meter in m.s-1
      *
@@ -27,29 +27,27 @@ class Wind
      * moderate to strong wind => 3 - 5 m/s
      * strong wind => 5.0 m/s
      *
-     * @var float|int m.s-1
+     * @var float m.s-1
      */
     public $speed2meters = 2.0;
 
-    public $speed;
-
-    public $altitude;
+    //public $speed;
+    //public $altitude;
 
     /**
      * Wind constructor.
      *
      * @param float $speed
-     * @param Unity $unity
+     * @param Unit  $unit
      * @param int   $altitudeM
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __construct(float $speed, Unity $unity, ?int $altitudeM = 2)
+    public function __construct(float $speed, Unit $unit, ?int $altitudeM = 10)
     {
-        $speedMS = $this->convertSpeedInMS($speed, $unity);
-
-        $this->altitude = $altitudeM;
-        $this->speed = $speedMS;
+        $speedMS = $this->convertSpeedToMS($speed, $unit);
+        //$this->altitude = $altitudeM;
+        //$this->speed = $speedMS;
         $this->speed2meters = $this->calcWind2meters($speedMS, $altitudeM);
     }
 
@@ -63,20 +61,21 @@ class Wind
 
     /**
      * @param float $speed
-     * @param Unity $unity
+     * @param Unit  $unit
      *
      * @return float
-     * @throws \Exception
+     * @throws Exception
      */
-    private function convertSpeedInMS(float $speed, Unity $unity): float
+    private function convertSpeedToMS(float $speed, Unit $unit): float
     {
-        if ($unity == new Unity('m/s')) {
+        if ($unit->equal(new Unit('m/s'))) {
             return abs($speed);
         }
-        if ($unity == new Unity('km/h')) {
+        if ($unit->equal(new Unit('km/h'))) {
             return abs(round($speed / 3.6, 1));
         }
-        throw new \Exception('Speed unity unknow');
+        // todo knot, US
+        throw new Exception('Speed unit error');
     }
 
     /**
@@ -88,7 +87,7 @@ class Wind
      *
      * @return float
      */
-    private function calcWind2meters(float $speed, int $altitude)
+    private function calcWind2meters(float $speed, int $altitude):float
     {
         if ($altitude === 2) {
             return $speed;
