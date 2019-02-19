@@ -20,4 +20,3 @@ $area->setStressFactor(1.1);
 
 $ETc = (new CropEvapotrans($area, $ETo))->calcETc();
 var_dump($ETc);
-

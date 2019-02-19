@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUndefinedClassInspection */
+<?php
+
+/** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUndefinedClassInspection */
 
 /** @noinspection PhpUndefinedClassInspection */
@@ -43,7 +45,7 @@ $data->setRHmin(0.38);
 
 $ETo = (new PenmanCalc())->EToPenmanMonteith($data);
 
-echo 'ETo = '.$ETo. ' mm/day';
+echo 'ETo = '.$ETo.' mm/day';
 
 // ----------------------
 // Simplistic calculation

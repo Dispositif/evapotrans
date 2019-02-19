@@ -4,15 +4,12 @@ namespace Evapotrans;
 
 /**
  * Données culture
- * Class PlantData
- *
- * @package Evapotranspiration
+ * Class PlantData.
  */
 class Area
 {
-
     /**
-     * @var Plant $plant
+     * @var Plant
      */
     private $plant;
 
@@ -30,7 +27,7 @@ class Area
 
     /**
      * Stress factor (Ks)
-     * 1.1 = in the wind, isolated, few water reserve
+     * 1.1 = in the wind, isolated, few water reserve.
      *
      * @var float
      */
@@ -65,7 +62,6 @@ class Area
     {
         $this->growStade = $growStade;
     }
-
 
     /**
      * @return float
@@ -125,7 +121,7 @@ class Area
     }
 
     /**
-     * Ks
+     * Ks.
      *
      * @return float
      */
@@ -141,6 +137,4 @@ class Area
     {
         $this->stressFactor = $stressFactor;
     }
-
-
 }

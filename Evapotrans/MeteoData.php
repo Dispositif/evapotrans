@@ -1,4 +1,6 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 /** @noinspection PhpUndefinedClassInspection */
 
@@ -14,6 +16,7 @@ class MeteoData
      * @var Location
      */
     private $location;
+
     /**
      * @var \DateTime
      */
@@ -23,20 +26,22 @@ class MeteoData
      * @var float Tmax
      */
     private $Tmax;
+
     /**
      * @var float
      */
     private $Tmean;
+
     /**
      * @var float
      */
     private $Tmin;
 
-
     /**
      * Recorded sunny hours per day (n)
      * Effective hours of sun
-     * Opposed to "Daylight hours" = maximum possible duration of sunshine (N)
+     * Opposed to "Daylight hours" = maximum possible duration of sunshine (N).
+     *
      * @var float [hours/day]
      */
     private $actualSunnyHours;
@@ -48,13 +53,17 @@ class MeteoData
 
     // n (hours)
     public $actualSunshineHours;
+
     // N (hours)
     public $daylightHours;
+
     // Ra extraterrestrial radiation [MJ m-2 day-1],
 
     public $Ra;
+
     // a_s regression constant, expressing the fraction of extraterrestrial radiation reaching the earth on overcast days (n =0),
     public $a_s;
+
     //as+bs fraction of extraterrestrial radiation reaching the earth on clear days (n = N).
     public $b_s;
 
@@ -67,6 +76,7 @@ class MeteoData
      * @var float Wind speed at 2meter in m.s-1
      */
     private $wind2 = 2.0; // wind 2meter m.s-1
+
     private $wind2origin = 'default';
 
     // Température dewpoint (point rosée)
@@ -74,28 +84,28 @@ class MeteoData
 
     /**
      * Pression niveau mer : 1004 hPa
-     * Facultatif, sinon calculé
+     * Facultatif, sinon calculé.
      *
      * @var int KPa
      */
     private $pression = 1004; // TODO default value ?
 
     /**
-     * Maximum relative humidity (%)
+     * Maximum relative humidity (%).
      *
-     * @var float $RHmax
+     * @var float
      */
     private $RHmax;
 
     /**
-     * Minimum relative humidity (%)
+     * Minimum relative humidity (%).
      *
      * @var float
      */
     private $RHmin;
 
     /**
-     * Mean relative humidity (%)
+     * Mean relative humidity (%).
      *
      * @var float RHmean
      */
@@ -159,7 +169,7 @@ class MeteoData
 
     /**
      * Number of the day in the year
-     * 1-01=>1, 27 mars => 85
+     * 1-01=>1, 27 mars => 85.
      *
      * @param \DateTime $dateTime
      *
@@ -300,7 +310,6 @@ class MeteoData
 
     /**
      * @param mixed  $wind2
-     *
      * @param string $origin
      *
      * @return MeteoData
@@ -332,7 +341,6 @@ class MeteoData
 
         return $this;
     }
-
 
     /**
      * @return mixed
@@ -366,6 +374,7 @@ class MeteoData
      * @param mixed $RHmax
      *
      * @return MeteoData
+     *
      * @throws Exception
      * @throws Exception
      */
@@ -376,6 +385,7 @@ class MeteoData
 
             return $this;
         }
+
         throw new Exception('RHmax error');
     }
 
@@ -391,6 +401,7 @@ class MeteoData
      * @param mixed $RHmin
      *
      * @return MeteoData
+     *
      * @throws Exception
      * @throws Exception
      */
@@ -401,6 +412,7 @@ class MeteoData
 
             return $this;
         }
+
         throw new Exception('RHmin error');
     }
 
@@ -423,5 +435,4 @@ class MeteoData
 
         return $this;
     }
-
 }

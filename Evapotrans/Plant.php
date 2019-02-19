@@ -2,15 +2,16 @@
 
 namespace Evapotrans;
 
-
 class Plant
 {
     private $plantName = '';
 
     // Tableau KC plantes sur http://www.fao.org/docrep/X0490E/x0490e0b.htm#crop coefficients
     // radish Kcini=0.7 Kcmid = 0.9 KCend=0.85 Maxhight=0.3
+
     /**
-     * crop coefficient [dimensionless] by growStade
+     * crop coefficient [dimensionless] by growStade.
+     *
      * @var array
      */
     private $KcStade; // ['ini'=>, 'mid'=>, 'end'=>]
@@ -42,5 +43,4 @@ class Plant
     {
         return $this->plantName;
     }
-
 }

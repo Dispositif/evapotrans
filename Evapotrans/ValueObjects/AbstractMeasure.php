@@ -7,6 +7,7 @@ use Evapotrans\Exception;
 abstract class AbstractMeasure
 {
     const UNIT = 'UNDEFINED';
+
     protected $value;
 
     /**
@@ -45,6 +46,7 @@ abstract class AbstractMeasure
      * @param string $unit
      *
      * @return float
+     *
      * @throws Exception
      */
     protected function convertUnit(float $value, string $unit): float
@@ -52,6 +54,7 @@ abstract class AbstractMeasure
         if (mb_strtolower($unit) === mb_strtolower(static::UNIT)) {
             return $value;
         }
+
         throw new Exception("No unit conversion for $unit");
     }
 }

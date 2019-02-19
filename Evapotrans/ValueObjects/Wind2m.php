@@ -10,8 +10,6 @@ use Evapotrans\Exception;
  *
  * Class Wind
  * default unit : m/s
- *
- * @package Evapotranspiration
  */
 class Wind2m extends AbstractMeasure
 {
@@ -28,6 +26,7 @@ class Wind2m extends AbstractMeasure
      * @param string $unit
      *
      * @return float
+     *
      * @throws Exception
      */
     private function convertSpeedToMS(float $speed, string $unit): float
@@ -35,7 +34,7 @@ class Wind2m extends AbstractMeasure
         if ($unit === static::UNIT) {
             return abs($speed);
         }
-        if ($unit === 'km/h') {
+        if ('km/h' === $unit) {
             return abs(round($speed / 3.6, 1));
         }
         // todo knot, US
@@ -44,7 +43,7 @@ class Wind2m extends AbstractMeasure
 
     /**
      * To adjust wind speed data obtained from instruments placed at elevations other than the standard height of 2m, a logarithmic wind speed profile may be used for measurements above a short grassed surface
-     * [Eq. 47]
+     * [Eq. 47].
      *
      * @param float $speed
      * @param int   $altitude
@@ -53,11 +52,10 @@ class Wind2m extends AbstractMeasure
      */
     private function calcWind2meters(float $speed, int $altitude): float
     {
-        if ($altitude === 2) {
+        if (2 === $altitude) {
             return $speed;
         }
 
         return round($speed * 4.87 / log(67.8 * $altitude - 5.42), 1);
     }
-
 }

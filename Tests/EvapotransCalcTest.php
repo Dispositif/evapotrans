@@ -2,7 +2,6 @@
 
 use Evapotrans\MeteoData;
 use Evapotrans\Location;
-use Evapotrans\ValueObjects\Temperature;
 use Evapotrans\ValueObjects\Wind2m;
 use PHPUnit\Framework\TestCase;
 
@@ -25,6 +24,7 @@ class EvapotransCalcTest extends TestCase
      * @var \Evapotrans\PenmanCalc
      */
     private $ETcalc;
+
     /**
      * @var \Evapotrans\MeteoCalc
      */
@@ -34,7 +34,6 @@ class EvapotransCalcTest extends TestCase
     {
         $this->ETcalc = new \Evapotrans\PenmanCalc();
         $this->meteo = new \Evapotrans\MeteoCalc();
-
     }
 
     /**
@@ -54,6 +53,7 @@ class EvapotransCalcTest extends TestCase
         $this->expectException(\Evapotrans\Exception::class);
         new Wind2m(5, 'm');
     }
+
     ///**
     // * @throws Exception
     // */
@@ -96,7 +96,7 @@ class EvapotransCalcTest extends TestCase
 
     /**
      * Results from table2.7 (good estimate (error < 1 %))
-     * http://www.fao.org/docrep/X0490E/x0490e0j.htm#TopOfPage
+     * http://www.fao.org/docrep/X0490E/x0490e0j.htm#TopOfPage.
      *
      * @return array
      */
@@ -112,8 +112,6 @@ class EvapotransCalcTest extends TestCase
             ['2018-07-15', 14.8, 42],
         ];
     }
-
-
 
     /**
      * @param $altitude
@@ -164,7 +162,6 @@ class EvapotransCalcTest extends TestCase
             [4.243, 30.0],
         ];
     }
-
 
     public function testSlopeOfSaturationVapourPressureCurve()
     {
