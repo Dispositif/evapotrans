@@ -14,6 +14,8 @@ Explanation : https://en.wikipedia.org/wiki/Evapotranspiration
 
 Sources for algorithmes and test datas : http://www.fao.org/docrep/X0490E/x0490e07.htm
 
+<img src="https://raw.githubusercontent.com/Dispositif/evapotrans/master/evapotrans.png?sanitize=true&raw=true">
+
 Meteorological factors determining ET :
 Solar radiation
 Air temperature
