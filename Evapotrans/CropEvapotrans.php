@@ -41,10 +41,15 @@ namespace Evapotrans;
 class CropEvapotrans
 {
     /**
+     * @var Area
+     */
+    private $area;
+    /**
      * @var float|null
      */
     private $ETo = null;
     /**
+     * refactor
      * crop coefficient [dimensionless]
      * http://www.fao.org/docrep/x0490e/x0490e0b.htm
      * @var float|null
@@ -62,18 +67,21 @@ class CropEvapotrans
     /**
      * CropEvapoTranspiration constructor.
      *
+     * @param Area  $area
      * @param float $ETo
      */
-    public function __construct(float $ETo)
+    public function __construct(Area $area, float $ETo)
     {
+        $this->area = $area;
         $this->ETo = $ETo;
+        $this->Kc = $area->getKc(); // todo refactor
     }
 
     /**
      * @return float
      * @throws Exception
      */
-    public function calcETo()
+    public function calcETc()
     {
         if( $this->ETo === false ) {
             throw new Exception('ETo not defined');
@@ -97,34 +105,13 @@ class CropEvapotrans
         // calc Kc as Kc = Kcb + Ke
         throw new Exception('no Kc determined');
     }
-    /**
-     * @param mixed $ETo
-     */
-    public function setETo($ETo): void
-    {
-        $this->ETo = $ETo;
-    }
 
-    /**
-     * @param bool $Kc
-     */
-    public function setKc(bool $Kc): void
-    {
-        $this->Kc = $Kc;
-    }
-
-    /**
-     * @param bool $Kcb
-     */
-    public function setKcb(bool $Kcb): void
+    public function setKcb(float $Kcb): void
     {
         $this->Kcb = $Kcb;
     }
 
-    /**
-     * @param bool $Ke
-     */
-    public function setKe(bool $Ke): void
+    public function setKe(float $Ke): void
     {
         $this->Ke = $Ke;
     }

@@ -6,16 +6,14 @@ namespace Evapotrans;
 class Plant
 {
     private $plantName = '';
-    private $growStadeNames;
 
     // Tableau KC plantes sur http://www.fao.org/docrep/X0490E/x0490e0b.htm#crop coefficients
-    // radis Kcini=0.7 Kcmid = 0.9 KCend=0.85 Maxhight=0.3
-
-    // table at http://www.fao.org/docrep/x0490e/x0490e0b.htm
-    private $Kc;
-    private $KcIni;
-    private $KcMid;
-    private $KcEnd;
+    // radish Kcini=0.7 Kcmid = 0.9 KCend=0.85 Maxhight=0.3
+    /**
+     * crop coefficient [dimensionless] by growStade
+     * @var array
+     */
+    private $KcStade; // ['ini'=>, 'mid'=>, 'end'=>]
 
     /**
      * Plant constructor.
@@ -23,10 +21,18 @@ class Plant
      * @param string     $plantName
      * @param float|null $Kc
      */
-    public function __construct(string $plantName, ?float $Kc)
+    public function __construct(string $plantName, array $KcStade)
     {
         $this->plantName = $plantName;
-        $this->Kc = $Kc;
+        $this->KcStade = $KcStade;
+    }
+
+    /**
+     * @return array
+     */
+    public function getKcStade(): array
+    {
+        return $this->KcStade;
     }
 
     /**
@@ -36,30 +42,5 @@ class Plant
     {
         return $this->plantName;
     }
-
-    /**
-     * @param string|string $plantName
-     */
-    public function setPlantName($plantName)
-    {
-        $this->plantName = $plantName;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGrowStadeNames()
-    {
-        return $this->growStadeNames;
-    }
-
-    /**
-     * @param array $growStadeNames
-     */
-    public function setGrowStadeNames($growStadeNames)
-    {
-        $this->growStadeNames = $growStadeNames;
-    }
-
 
 }

@@ -3,7 +3,9 @@ By Dispositif alias Philippe M.
 
 PHP 7.2 implementation of evapotranspiration prediction. Various calculation procedures for estimating missing data are also provided : weather, climatological, physical and agronomic datas. 
 
-Computation of all data required for the calculation of the reference evapotranspiration (ET)c by means of the FAO Penman-Monteith method. Also computation of crop evapotranspiration (ETc) with others algos. 
+Computation of all data required for the calculation of the reference evapotranspiration (ETc) by means of the FAO Penman-Monteith method. 
+
+Also computation of crop evapotranspiration (ETc) with crop and plant datas. 
 
 Explanation : https://en.wikipedia.org/wiki/Evapotranspiration
 
@@ -20,14 +22,11 @@ Atmospheric parameters :
 * Latent heat of vaporization (l)
 * Psychrometric constant (g)
 
-Estimation of extraterrestrial radiation
+Estimation of missing datas :
+* climatic data (wind speed, humidity)
+* radiation data (solar, extraterrestrial)
 
-Estimating missing climatic data
-Estimating missing humidity data
-Estimating missing radiation data
-Missing wind speed data
-
-alternative equation for ETo when weather data are missing
+Simplistic equation for ETo when weather data are missing
 
 See also http://www.cesbio.ups-tlse.fr/multitemp/?p=4802
 
@@ -42,6 +41,23 @@ $data->setWind2(new Wind2m(20, 'km/h', 2)); // mesured at 2 meters
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
-$ETo = (new EvapotransCalc())->EToPenmanMonteith($data); // 1.1 mm/day
+$ETo = (new EvapotransCalc())->EToPenmanMonteith($data); 
+// ETo = 1.1 (mm/day)
+
+
+// Crop evapotranspiration (work in progress)
+$radish = new Plant(
+    'Radish',
+    ['initial' => 0.7, 'mid-season' => 0.9, 'late-season' => 0.85]
+);
+$area = new Area($radish);
+$area->setGrowStade('initial');
+$area->setFractionWetted(0.95);
+$area->setStressFactor(1);
+$area->setKc(0.9);
+
+$ETc = (new CropEvapotrans($area, $ETo))->calcETc();
+// ETc = 0.8 (mm/day)
+
 ```
 

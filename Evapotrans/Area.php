@@ -16,26 +16,69 @@ class Area
      */
     private $plant;
 
-    private $growStadeId = 0;
+    /**
+     * @var string|null
+     */
+    private $growStade = null;
 
-    // Fraction arrosée : % terrain arrosé par irrigation/pluie (Kc = Fw * Kcini et Iw = I / Fw )
-    private $fraction_wetted;
+    // Fraction of partial wetting by irrigation/rain
+    // TODO : (Kc = Fw * Kcini et Iw = I / Fw )
+    private $fractionWetted;
 
     // 'journalier'; //=> +0.2kc
     private $frequence_eau = 'journalier';
 
-    // Facteur stress (water, wind, isolé sans végétation autour)
-    // 1.1 = potager dans vent, isolé, peu de réserve eau
-    private $Ks = 1.1;
+    /**
+     * Stress factor (Ks)
+     * 1.1 = in the wind, isolated, few water reserve
+     *
+     * @var float
+     */
+    private $stressFactor = 1.1;
 
-    // Typical soil water characteristics for different soil types : "Table 19" http://www.fao.org/docrep/X0490E/x0490e0c.htm#TopOfPage
+    // Typical soil water characteristics for different soil types :
+    // "Table 19" http://www.fao.org/docrep/X0490E/x0490e0c.htm#TopOfPage
     private $Kc = 0.9;
+
+    /**
+     * Area constructor.
+     *
+     * @param Plant $plant
+     */
+    public function __construct(Plant $plant)
+    {
+        $this->plant = $plant;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGrowStade(): string
+    {
+        return $this->growStade;
+    }
+
+    /**
+     * @param string $growStade
+     */
+    public function setGrowStade(string $growStade): void
+    {
+        $this->growStade = $growStade;
+    }
+
 
     /**
      * @return float
      */
     public function getKc()
     {
+        // TODO
+        if ($this->getGrowStade()
+            && isset($this->getPlant()->getKcStade()[$this->getGrowStade()])
+        ) {
+            return $this->getPlant()->getKcStade()[$this->getGrowStade()];
+        }
+
         return $this->Kc;
     }
 
@@ -55,44 +98,14 @@ class Area
         return $this->plant;
     }
 
-    /**
-     * @param mixed $plant
-     */
-    public function setPlant(Plant $plant)
+    public function getFractionWetted(): float
     {
-        $this->plant = $plant;
+        return $this->fractionWetted;
     }
 
-    /**
-     * @return int
-     */
-    public function getGrowStadeId()
+    public function setFractionWetted(float $fractionWetted)
     {
-        return $this->growStadeId;
-    }
-
-    /**
-     * @param int $growStadeId
-     */
-    public function setGrowStadeId($growStadeId)
-    {
-        $this->growStadeId = $growStadeId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFractionWetted()
-    {
-        return $this->fraction_wetted;
-    }
-
-    /**
-     * @param mixed $fraction_wetted
-     */
-    public function setFractionWetted($fraction_wetted)
-    {
-        $this->fraction_wetted = $fraction_wetted;
+        $this->fractionWetted = $fractionWetted;
     }
 
     /**
@@ -112,23 +125,22 @@ class Area
     }
 
     /**
+     * Ks
+     *
      * @return float
      */
-    public function getKs()
+    public function getStressFactor(): float
     {
-        return $this->Ks;
+        return $this->stressFactor;
     }
 
     /**
-     * @param float $Ks
+     * @param float $stressFactor
      */
-    public function setKs($Ks)
+    public function setStressFactor(float $stressFactor)
     {
-        $this->Ks = $Ks;
+        $this->stressFactor = $stressFactor;
     }
-
-
-
 
 
 }

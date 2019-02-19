@@ -56,4 +56,4 @@ $simplisticETo = $ETcalc->simplisticETo($data->getTmin(), $data->getTmax(), $Ra)
 $simplistic_error = round(abs($simplisticETo - $ETo) * 100 / $ETo);
 echo "<br> Simplistic ETo = $simplisticETo error $simplistic_error %";
 
-
+include 'example_crop.php';
