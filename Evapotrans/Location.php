@@ -26,7 +26,7 @@ class Location
      * @param int         $altitude
      * @param string|null $name
      */
-    public function __construct(float $lat, float $lon, int $altitude = null, string $name=null)
+    public function __construct(float $lat, float $lon, int $altitude = null, ?string $name=null)
     {
         $this->lat = $lat;
         $this->lon = $lon;

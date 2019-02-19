@@ -1,8 +1,4 @@
 <?php
-/**
- * Created by phil
- * 2019-02-09 23:52
- */
 
 namespace Evapotrans;
 

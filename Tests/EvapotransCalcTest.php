@@ -1,8 +1,9 @@
 <?php
 
 use Evapotrans\MeteoData;
-use Evapotrans\ValueObjects\Unit;
-use Evapotrans\ValueObjects\Wind;
+use Evapotrans\Location;
+use Evapotrans\ValueObjects\Temperature;
+use Evapotrans\ValueObjects\Wind2m;
 use PHPUnit\Framework\TestCase;
 
 spl_autoload_register(
@@ -18,10 +19,10 @@ spl_autoload_register(
     }
 );
 
-class ETcalcStrategyTest extends TestCase
+class EvapotransCalcTest extends TestCase
 {
     /**
-     * @var \Evapotrans\ETcalcStrategy
+     * @var \Evapotrans\EvapotransCalc
      */
     private $ETcalc;
     /**
@@ -31,34 +32,54 @@ class ETcalcStrategyTest extends TestCase
 
     public function setUp(): void
     {
-        $this->ETcalc = new \Evapotrans\ETcalcStrategy();
+        $this->ETcalc = new \Evapotrans\EvapotransCalc();
         $this->meteo = new \Evapotrans\MeteoCalculation();
     }
+
 
     /**
      * @throws Exception
      */
-    public function testWind()
+    public function testWind2m()
     {
-        $wind = new Wind(3.2, new Unit('m/s'), 10);
-        $this->assertEquals(2.4, $wind->getSpeed2meters());
+        $wind = new Wind2m(3.2, 'm/s', 10);
+        $this->assertEquals(2.4, $wind->getValue());
 
-        $wind = new Wind(5, new Unit('m/s'));
-        $this->assertEquals(5, $wind->getSpeed2meters());
+        $wind = new Wind2m(5, 'm/s', 2);
+        $this->assertEquals(5, $wind->getValue());
 
-        $wind = new Wind(36, new Unit('km/h'));
-        $this->assertEquals(10, $wind->getSpeed2meters());
+        $wind = new Wind2m(36, 'km/h', 2);
+        $this->assertEquals(10, $wind->getValue());
 
         $this->expectException(\Evapotrans\Exception::class);
-        new Wind(5, new Unit('m'));
+        new Wind2m(5, 'm');
     }
+    ///**
+    // * @throws Exception
+    // */
+    //public function testWind()
+    //{
+    //    $wind = new Wind(3.2, new UnitOld('m/s'), 10);
+    //    $this->assertEquals(2.4, $wind->getSpeed2meters());
+    //
+    //    $wind = new Wind(5, new UnitOld('m/s'));
+    //    $this->assertEquals(5, $wind->getSpeed2meters());
+    //
+    //    $wind = new Wind(36, new UnitOld('km/h'));
+    //    $this->assertEquals(10, $wind->getSpeed2meters());
+    //
+    //    $this->expectException(\Evapotrans\Exception::class);
+    //    new Wind(5, new UnitOld('m'));
+    //}
 
     public function testDayOfYear()
     {
-        $this->assertEquals(1, $this->meteo->daysOfYear(new \DateTime('2018-01-01')));
-        $this->assertEquals(305, $this->meteo->daysOfYear(new \DateTime('2018-11-01')));
+        $loc = new Location(45.72, 0, 200);
+
+        $this->assertEquals(1, (new MeteoData($loc, new \DateTime('2018-01-01')))->getDaysOfYear());
+        $this->assertEquals(305, (new MeteoData($loc, new \DateTime('2018-11-01')))->getDaysOfYear());
         // 2016 leap year
-        $this->assertEquals(306, $this->meteo->daysOfYear(new \DateTime('2016-11-01')));
+        $this->assertEquals(306, (new MeteoData($loc, new \DateTime('2016-11-01')))->getDaysOfYear());
     }
 
     /**
@@ -107,21 +128,24 @@ class ETcalcStrategyTest extends TestCase
 
     /**
      * EXAMPLE 15. Determination of solar radiation from temperature data
+     *
      * @throws Exception
      */
     public function testSolarRadiationFromTempData()
     {
         //45°43'N and at 200 m above sea level. In July, the mean monthly
         // maximum and minimum air temperatures are 26.6 and 14.8°C respectively.
-        $loc = new \Evapotrans\Location(45.72, 0, 200 );
+        $loc = new \Evapotrans\Location(45.72, 0, 200);
         $loc->setKRs(0.16);
         $date = new \DateTime('2018-07-15');
         $data = new MeteoData($loc, $date);
-        $data->setTmax(26.6);
-        $data->setTmin(14.8);
+        $data->setTmax(new Temperature(26.6));
+        $data->setTmin(new Temperature(14.8));
 
-        $this->assertEquals(22.3,
-            $this->ETcalc->solarRadiationStrategyFromMeteodata($data));
+        $this->assertEquals(
+            22.3,
+            $this->ETcalc->solarRadiationStrategyFromMeteodata($data)
+        );
     }
 
     /**
@@ -152,16 +176,26 @@ class ETcalcStrategyTest extends TestCase
         $this->assertEquals(2.39, $actual);
     }
 
-    public function testSaturationVaporPression()
+    /**
+     * @dataProvider saturationVaporPressionProvider
+     */
+    public function testSaturationVaporPression($expected, $temp)
     {
-        $actual = function ($that, $temp) {
-            return round($that->ETcalc->saturationVapourPression($temp), 3);
-        };
-        $this->assertEquals(0.657, $actual($this, 1.0));
-        $this->assertEquals(0.657, $actual($this, 1.0));
-        $this->assertEquals(1.228, $actual($this, 10.0));
-        $this->assertEquals(2.338, $actual($this, 20.0));
-        $this->assertEquals(4.243, $actual($this, 30.0));
+        $this->assertEquals(
+            $expected,
+            round($this->ETcalc->saturationVapourPression($temp), 3)
+        );
+    }
+
+    public function saturationVaporPressionProvider()
+    {
+        return [
+            [0.657, 1.0],
+            [0.657, 1.0],
+            [1.228, 10.0],
+            [2.338, 20.0],
+            [4.243, 30.0],
+        ];
     }
 
     public function testExtraterrestrialRadiation()

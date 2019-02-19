@@ -13,65 +13,29 @@ use Evapotrans\Exception;
  *
  * @package Evapotranspiration
  */
-class Wind
+class Wind2m extends AbstractMeasure
 {
-    /**
-     * Wind speed at 2meter in m.s-1
-     *
-     * Where no wind data are available within the region, a value of 2 m/s
-     * can be used as a temporary estimate. This value is the average over
-     * 2000 weather stations around the globe.
-     *
-     * light wind => 1.0 m/s
-     * light to moderate wind => 1 - 3 m/s
-     * moderate to strong wind => 3 - 5 m/s
-     * strong wind => 5.0 m/s
-     *
-     * @var float m.s-1
-     */
-    public $speed2meters = 2.0;
+    const UNIT = 'm/s';
 
-    //public $speed;
-    //public $altitude;
-
-    /**
-     * Wind constructor.
-     *
-     * @param float $speed
-     * @param Unit  $unit
-     * @param int   $altitudeM
-     *
-     * @throws Exception
-     */
-    public function __construct(float $speed, Unit $unit, ?int $altitudeM = 10)
+    public function __construct(float $speed, ?string $unit = 'm/s', ?int $altitudeM = 2)
     {
         $speedMS = $this->convertSpeedToMS($speed, $unit);
-        //$this->altitude = $altitudeM;
-        //$this->speed = $speedMS;
-        $this->speed2meters = $this->calcWind2meters($speedMS, $altitudeM);
+        $this->value = $this->calcWind2meters($speedMS, $altitudeM);
     }
 
     /**
-     * @return mixed
-     */
-    public function getSpeed2meters()
-    {
-        return $this->speed2meters;
-    }
-
-    /**
-     * @param float $speed
-     * @param Unit  $unit
+     * @param float  $speed
+     * @param string $unit
      *
      * @return float
      * @throws Exception
      */
-    private function convertSpeedToMS(float $speed, Unit $unit): float
+    private function convertSpeedToMS(float $speed, string $unit): float
     {
-        if ($unit->equal(new Unit('m/s'))) {
+        if ($unit === static::UNIT) {
             return abs($speed);
         }
-        if ($unit->equal(new Unit('km/h'))) {
+        if ($unit === 'km/h') {
             return abs(round($speed / 3.6, 1));
         }
         // todo knot, US
@@ -87,7 +51,7 @@ class Wind
      *
      * @return float
      */
-    private function calcWind2meters(float $speed, int $altitude):float
+    private function calcWind2meters(float $speed, int $altitude): float
     {
         if ($altitude === 2) {
             return $speed;

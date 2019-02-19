@@ -1,8 +1,4 @@
 <?php
-/**
- * Created by phil
- * 2019-02-16 12:58
- */
 
 namespace Evapotrans;
 /*
@@ -42,7 +38,7 @@ namespace Evapotrans;
  *
  * @package Evapotrans
  */
-class CropEvapoTranspiration
+class CropEvapotrans
 {
     /**
      * @var float|null

@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by phil
- * 2019-02-10 00:37
- */
 
 namespace Evapotrans;
 
-class ETcalcStrategy
+class EvapotransCalc
 {
     /**
      * latent heat of vaporization (l)
@@ -14,13 +10,15 @@ class ETcalcStrategy
      * l = 2.501 - (2.361 x 10-3) x Temp
      */
     const LATENT_HEAT_VAPORIZATION = 2.45;
+
     /**
      * Soil heat flux density (G), assumed to be zero (Allen et al.:1989)
      */
-    const G = 0;
+    const G_CONST = 0;
 
     // $albedo (α) : albedo or canopy reflection coefficient for the reference crop
-    // todo déplacer sur Area
+    // albedo (a) (végétation 0.20-0.25) pour herbe verte = 0.23
+    // todo move on Area
     private $albedo = 0.23;
 
 
@@ -62,7 +60,6 @@ class ETcalcStrategy
      */
     public function solarRadiationStrategyFromMeteodata(MeteoData $data)
     {
-
         // Determination of solar radiation from measured duration of sunshine
         if ($data->actualSunshineHours) {
             $n = $data->actualSunshineHours;
@@ -95,7 +92,6 @@ class ETcalcStrategy
         //  Determination of solar radiation from temperature data
         //The temperature difference method is recommended for locations where it is not appropriate to import radiation data from a regional station, either because homogeneous climate conditions do not occur, or because data for the region are lacking. For island conditions, the methodology of Equation 50 is not appropriate due to moderating effects of the surrounding water body.
         if ($data->getTmax() && $data->getTmin()) {
-
             if ($data->Ra) {
                 $Ra = $data->Ra;
             }else {
@@ -166,8 +162,7 @@ class ETcalcStrategy
         ?float $a_s = 0.25,
         ?float $b_s = 0.50
     ): float {
-        // TODO : gestion $pourcent_soleil
-        // TODO : option remplacé $n/$N par coefficient ensoleillement ou pourcent% * 100 ?
+        // TODO : strategy for using a parameter "$n/$N coefficient"
         $Rs = ($a_s + $b_s * $n / $N) * $Ra;
 
         return round($Rs, 1); // MJ m-2 day-1
@@ -237,30 +232,59 @@ class ETcalcStrategy
         return $Rns - $Rnl;
     }
 
+    /**
+     * Rn from data
+     *
+     * @param MeteoData $meteoData
+     *
+     * @return float Rn
+     * @throws Exception
+     */
+    public function netRadiationFromMeteodata(MeteoData $meteoData): float
+    {
+        if( !$meteoData->getActualSunnyHours() ) {
+            throw new Exception('Actual sunny hours not defined');
+        }
+        $n = $meteoData->getActualSunnyHours();
 
-    //public function EToPenmanMonteith(MeteoData $data)
-    //{
-    //    // TODO
-    //    //$e_s,
-    //    //$e_a,
-    //    $delta =
-    //    $Rs = $this->solarRadiationStrategyFromMeteodata($data);
-    //
-    //
-    //    $g = $this->psychrometricConstant($data->getLocation()->getAltitude());
-    //
-    //    $ETo = $this->penmanMonteithFormula(
-    //        $data->getTmoy(),
-    //    float $data->getWind2(),
-    //    $e_s,
-    //    $e_a,
-    //    $delta,
-    //    $Rn,
-    //    $g
-    //    );
-    //    return round($ETo,1);
-    //
-    //}
+        $calc = new MeteoCalculation();
+        // todo move on MeteoData
+        $N = $calc->daylightHours($meteoData->getDaysOfYear(), $meteoData->getLocation()->getLat());
+
+        // TODO RaByMeteoData strategy
+        $Ra = $calc->extraterrestrialRadiationDailyPeriod($meteoData->getDaysOfYear(), $meteoData->getLocation()->getLat());
+
+        $Rs = $this->solarRadiationFromDurationSunshineAndRa($Ra, $n, $N);
+
+        $e_a = $this->actualVaporPressionStrategy($meteoData);
+
+        $a_s = null; // move a_s on MeteoData ?
+        $b_s = null; //
+        $Rso = $this->clearSkySolarRadiation($Ra, $meteoData->getLocation()->getAltitude(), $a_s, $b_s);
+        $Rns = $this->netSolarRadiation($Rs, $this->getAlbedo());
+        $Rnl = $this->netLongwaveRadiation($e_a, $meteoData->getTmax(), $meteoData->getTmin(), $Rs, $Rso);
+
+        return $this->netRadiation($Rns, $Rnl);
+    }
+
+    /**
+     * @param MeteoData $data
+     *
+     * @return float ETo [mm.day-1]
+     * @throws Exception
+     */
+    public function EToPenmanMonteith(MeteoData $data)
+    {
+        return $this->penmanMonteithFormula(
+            $data->getTmean(),
+            $data->getWind2(),
+            $this->meanSaturationVapourPression($data->getTmin(), $data->getTmax()),
+            $this->actualVaporPressionStrategy($data),
+            $this->slopeOfSaturationVapourPressureCurve($data->getTmean()),
+            $this->netRadiationFromMeteodata($data),
+            $this->psychrometricConstant($data->getLocation()->getAltitude())
+        );
+    }
 
     /**
      * EVAPOTRANSPIRATION
@@ -289,7 +313,7 @@ class ETcalcStrategy
         float $Rn,
         float $g
     ): float {
-        $G = self::G;
+        $G = self::G_CONST;
         $ETo = (0.408 * $delta * ($Rn - $G) + $g * 900 / ($Tmoyen + 273) * $u2 * ($e_s - $e_a)) / ($delta + $g * (1
                     + 0.34 * $u2));
 
@@ -358,6 +382,7 @@ class ETcalcStrategy
         return $this->saturationVapourPression($Tdew);
     }
 
+    // todo inject Meteodata
     public function vapourPressionFromRHmax($RHmax, $RHmin, $Tmax, $Tmin)
     {
         return ($this->saturationVapourPression($Tmin) * $RHmax / 100 + $this->saturationVapourPression($Tmax) * $RHmin
@@ -365,18 +390,17 @@ class ETcalcStrategy
     }
 
     /**
-     * saturation vapour pression (e^o) as function of T° [11]
-     * todo private ?
+     * saturation vapour pression (e_o) as function of T° [11]
      *
-     * @param $temperature
+     * @param $temperature float °C
      *
-     * @return float
+     * @return float e_o (kPa)
      */
     public function saturationVapourPression(float $temperature)
     {
         $e = 0.6108 * exp(17.27 * $temperature / ($temperature + 237.3));
 
-        return $e;
+        return $e; // todo new Pression()
     }
 
 
@@ -392,7 +416,6 @@ class ETcalcStrategy
         $delta = (4098 * (0.6108 * exp(17.27 * $Tmoyen / ($Tmoyen + 237.3)))) / pow(($Tmoyen + 237.3), 2);
 
         return round($delta, 3);
-
     }
 
     public function delta(float $T)
@@ -421,4 +444,46 @@ class ETcalcStrategy
 
         return round($Rso, 1);
     }
+
+    /**
+     * ACTUAL VAPOUR PRESSION (e_a)
+     *
+     * @param MeteoData $meteoData
+     *
+     * @return float|int
+     */
+    public function actualVaporPressionStrategy(MeteoData $meteoData)
+    {
+        // derived from Tdew (dewpoint temperature)
+        if ($meteoData->getTdew()) {
+            return $this->vapourPressionFromTdew($meteoData->getTdew());
+        }
+
+        // derived from relative humidity data
+        if ($meteoData->getRHmax()
+            && $meteoData->getRHmin()
+            && $meteoData->getTmax()
+            && $meteoData->getTmin()
+        ) {
+            return $this->vapourPressionFromRHmax(
+                $meteoData->getRHmax(),
+                $meteoData->getRHmin(),
+                $meteoData->getTmax(),
+                $meteoData->getTmin()
+            ); // todo inject Meteodata
+        }
+
+        if ($meteoData->getRHmax() and $meteoData->getTmin()) {
+            return $this->saturationVapourPression($meteoData->getTmin()) * $meteoData->getRHmax() / 100;
+        }
+
+        // For RHmean defined
+        if ($meteoData->getRHmean() && $meteoData->getTmean()) {
+            return $this->saturationVapourPression($meteoData->getTmean()) * $meteoData->getRHmean() / 100;
+        }
+
+        throw new Exception('Impossible to determine actual vapor pression');
+    }
+
+
 }

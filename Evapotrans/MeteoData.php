@@ -4,7 +4,9 @@
 
 namespace Evapotrans;
 
-// TODO inject ValueObjects\Wind
+use Evapotrans\ValueObjects\Temperature;
+use Evapotrans\ValueObjects\Wind2m;
+use Evapotrans\ValueObjects\Pression;
 
 class MeteoData
 {
@@ -24,16 +26,20 @@ class MeteoData
     /**
      * @var float
      */
-    private $Tmoy;
+    private $Tmean;
     /**
      * @var float
      */
     private $Tmin;
 
+
     /**
-     * @var float
+     * Recorded sunny hours per day (n)
+     * Effective hours of sun
+     * Opposed to "Daylight hours" = maximum possible duration of sunshine (N)
+     * @var float [hours/day]
      */
-    private $sunnyHours;
+    private $actualSunnyHours;
 
     /**
      * @var float millimetres
@@ -45,6 +51,7 @@ class MeteoData
     // N (hours)
     public $daylightHours;
     // Ra extraterrestrial radiation [MJ m-2 day-1],
+
     public $Ra;
     // a_s regression constant, expressing the fraction of extraterrestrial radiation reaching the earth on overcast days (n =0),
     public $a_s;
@@ -59,30 +66,56 @@ class MeteoData
      *
      * @var float Wind speed at 2meter in m.s-1
      */
-    private $wind2 = 2; // wind 2meter m.s-1
+    private $wind2 = 2.0; // wind 2meter m.s-1
     private $wind2origin = 'default';
 
     // Température dewpoint (point rosée)
     private $Tdew;
 
     /**
+     * Pression niveau mer : 1004 hPa
+     * Facultatif, sinon calculé
+     *
+     * @var int KPa
+     */
+    private $pression = 1004; // TODO default value ?
+
+    /**
      * Maximum relative humidity (%)
+     *
      * @var float $RHmax
      */
     private $RHmax;
 
     /**
      * Minimum relative humidity (%)
+     *
      * @var float
      */
     private $RHmin;
 
     /**
-     * Pression niveau mer : 1004 hPa
-     * Facultatif, sinon calculé
-     * @var int KPa
+     * Mean relative humidity (%)
+     *
+     * @var float RHmean
      */
-    private $pression = 1004; // TODO default value ?
+    private $RHmean;
+
+    /**
+     * @return float
+     */
+    public function getRHmean(): float
+    {
+        return $this->RHmean;
+    }
+
+    /**
+     * @param float $RHmean
+     */
+    public function setRHmean(float $RHmean): void
+    {
+        $this->RHmean = $RHmean;
+    }
 
     /**
      * ClimaticData constructor.
@@ -99,7 +132,7 @@ class MeteoData
     /**
      * @return mixed
      */
-    public function getLocation():Location
+    public function getLocation(): Location
     {
         return $this->location;
     }
@@ -109,9 +142,10 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setLocation($location):self
+    public function setLocation($location): self
     {
         $this->location = $location;
+
         return $this;
     }
 
@@ -126,6 +160,7 @@ class MeteoData
     /**
      * Number of the day in the year
      * 1-01=>1, 27 mars => 85
+     *
      * @param \DateTime $dateTime
      *
      * @return int
@@ -140,16 +175,17 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setDate($date):self
+    public function setDate($date): self
     {
         $this->date = $date;
+
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getTmax():?float
+    public function getTmax(): ?float
     {
         return $this->Tmax;
     }
@@ -159,43 +195,45 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setTmax(float $Tmax):self
+    public function setTmax(Temperature $Tmax): self
     {
-        $this->Tmax = $Tmax;
+        $this->Tmax = $Tmax->getValue();
+
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getTmoy():?float
+    public function getTmean(): ?float
     {
-        if (isset($this->Tmoy)) {
-            return $this->Tmoy;
+        if (isset($this->Tmean)) {
+            return $this->Tmean;
         }
 
         if (isset($this->Tmin) && isset($this->Tmax)) {
-            return round(($this->Tmax + $this->Tmin) / 2,1);
+            return round(($this->Tmax + $this->Tmin) / 2, 1);
         }
 
         return null; // exception ?
     }
 
     /**
-     * @param mixed $Tmoy
+     * @param mixed $Tmean
      *
      * @return MeteoData
      */
-    public function setTmoy(float $Tmoy):self
+    public function setTmean(Temperature $Tmean): self
     {
-        $this->Tmoy = $Tmoy;
+        $this->Tmean = $Tmean->getValue();
+
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getTmin():?float
+    public function getTmin(): ?float
     {
         return $this->Tmin;
     }
@@ -205,28 +243,30 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setTmin(float $Tmin):self
+    public function setTmin(Temperature $Tmin): self
     {
-        $this->Tmin = $Tmin;
+        $this->Tmin = $Tmin->getValue();
+
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getSunnyHours():?float
+    public function getActualSunnyHours(): ?float
     {
-        return $this->sunnyHours;
+        return $this->actualSunnyHours;
     }
 
     /**
-     * @param mixed $sunnyHours
+     * @param mixed $actualSunnyHours hours
      *
      * @return MeteoData
      */
-    public function setSunnyHours(float $sunnyHours):self
+    public function setActualSunnyHours(float $actualSunnyHours): self
     {
-        $this->sunnyHours = min(24, max(0, $sunnyHours));
+        $this->actualSunnyHours = min(24, max(0, $actualSunnyHours));
+
         return $this;
     }
 
@@ -243,16 +283,17 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setPrecipitation(float $precipitation):self
+    public function setPrecipitation(float $precipitation): self
     {
         $this->precipitation = max(0, $precipitation);
+
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getWind2()
+    public function getWind2(): ?float
     {
         return $this->wind2;
     }
@@ -264,24 +305,18 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setWind2(float $wind2, $origin = 'set'):self
+    public function setWind2(Wind2m $wind2, $origin = 'set'): self
     {
-        $this->wind2 = $wind2;
+        $this->wind2 = $wind2->getValue();
         $this->wind2origin = $origin;
-        return $this;
-    }
 
-    public function setWind2fromKmH(int $wind2KmH, $origin = 'set'):self
-    {
-        $win2 = round($wind2KmH / 3.6, 1);
-        $this->setWind2($win2, $origin);
         return $this;
     }
 
     /**
      * @return float
      */
-    public function getWind2origin():float
+    public function getWind2origin(): float
     {
         return $this->wind2origin;
     }
@@ -291,9 +326,10 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setWind2origin($wind2origin):self
+    public function setWind2origin($wind2origin): self
     {
         $this->wind2origin = $wind2origin;
+
         return $this;
     }
 
@@ -311,16 +347,17 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setTdew($Tdew):self
+    public function setTdew($Tdew): self
     {
         $this->Tdew = $Tdew;
+
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getRHmax():float
+    public function getRHmax(): float
     {
         return $this->RHmax;
     }
@@ -332,10 +369,11 @@ class MeteoData
      * @throws Exception
      * @throws Exception
      */
-    public function setRHmax(float $RHmax):self
+    public function setRHmax(float $RHmax): self
     {
-        if($RHmax <= 1 && $RHmax > 0) {
+        if ($RHmax <= 1 && $RHmax > 0) {
             $this->RHmin = $RHmax;
+
             return $this;
         }
         throw new Exception('RHmax error');
@@ -344,7 +382,7 @@ class MeteoData
     /**
      * @return mixed
      */
-    public function getRHmin():float
+    public function getRHmin(): float
     {
         return $this->RHmin;
     }
@@ -356,10 +394,11 @@ class MeteoData
      * @throws Exception
      * @throws Exception
      */
-    public function setRHmin(float $RHmin):self
+    public function setRHmin(float $RHmin): self
     {
-        if($RHmin <= 1 && $RHmin > 0) {
+        if ($RHmin <= 1 && $RHmin > 0) {
             $this->RHmin = $RHmin;
+
             return $this;
         }
         throw new Exception('RHmin error');
@@ -368,9 +407,8 @@ class MeteoData
     /**
      * @return float
      */
-    public function getPression()
+    public function getPression(): ?int
     {
-        // TODO calcul si null
         return $this->pression;
     }
 
@@ -379,11 +417,11 @@ class MeteoData
      *
      * @return MeteoData
      */
-    public function setPression(int $pression):self
+    public function setPression(int $pression): self
     {
         $this->pression = $pression;
+
         return $this;
     }
-
 
 }

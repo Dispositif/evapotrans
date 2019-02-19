@@ -110,7 +110,7 @@ class MeteoCalculation
 
     /**
      * Extraterrestrial radiation for daily periods (Ra) [21]
-     * TODO refactor : explode + injecte Location/Date ?
+     * TODO refactor : inject MeteoData
      *
      * @param int   $dayOfTheYear
      * @param float $latitude
@@ -175,7 +175,7 @@ class MeteoCalculation
     }
 
     /**
-     * Daylight hours (N)
+     * Daylight hours or maximum possible duration of sunshine (N)
      *
      * @param int $dayOfTheYear
      * @param     $latitude
