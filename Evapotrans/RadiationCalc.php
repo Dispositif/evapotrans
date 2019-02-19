@@ -12,7 +12,7 @@ class RadiationCalc
     /**
      * $albedo (a)(α) : albedo or canopy reflection coefficient for the reference crop
      * (végétation 0.20-0.25) pour herbe verte = 0.23
-     * todo get/move on Area
+     * todo get/move on Area.
      *
      * @var float
      */
@@ -46,10 +46,12 @@ class RadiationCalc
 
     /**
      * Solar radiation (Rs) strategy of calculation
-     * todo Refactor RaStrategy
+     * todo Refactor RaStrategy.
      *
      * @param MeteoData $data
+     *
      * @return float
+     *
      * @throws Exception
      */
     public function solarRadiationStrategyFromMeteodata(MeteoData $data)
@@ -64,7 +66,7 @@ class RadiationCalc
 
             if ($data->actualSunshineHours) {
                 $N = $data->actualSunshineHours;
-            }else {
+            } else {
                 $N = $this->meteoCalc->daylightHours(
                     $data->getDaysOfYear(),
                     $data->getLocation()->getLat()
@@ -104,7 +106,8 @@ class RadiationCalc
      * @param float $Ra
      * @param float $Tmin
      * @param float $Tmax
-     * @param float $kRs adjustment coefficient
+     * @param float $kRs  adjustment coefficient
+     *
      * @return float
      */
     private function solarRadiationFromTemperatures(float $Ra, float $Tmin, float $Tmax, ?float $kRs = 0.18): float
@@ -125,11 +128,12 @@ class RadiationCalc
      * a_s regression constant, expressing the fraction of extraterrestrial radiation reaching the earth on overcast days (n =0),
      * as+bs fraction of extraterrestrial radiation reaching the earth on clear days (n = N).
      *
-     * @param float $Ra
-     * @param float $n
-     * @param float $N
+     * @param float      $Ra
+     * @param float      $n
+     * @param float      $N
      * @param float|null $a_s
      * @param float|null $b_s
+     *
      * @return float
      */
     public function solarRadiationFromDurationSunshineAndRa(
@@ -153,15 +157,17 @@ class RadiationCalc
 
     // Net longwave radiation (Rnl)
     // TODO : option (TmaxKelvin^4+TminKelvin^4)/2 remplacé par TmoyenKelvin^4
+
     /**
      * Net longwave radiation (Rnl)
-     * Stefan-Boltzmann law [39]
+     * Stefan-Boltzmann law [39].
      *
      * @param $e_a
      * @param $Tmax
      * @param $Tmin
      * @param $Rs
      * @param $Rso
+     *
      * @return float|int
      */
     public function netLongwaveRadiation($e_a, $Tmax, $Tmin, $Rs, $Rso)
@@ -182,10 +188,12 @@ class RadiationCalc
     }
 
     /**
-     * Rn from data
+     * Rn from data.
      *
      * @param MeteoData $meteoData
+     *
      * @return float Rn
+     *
      * @throws Exception
      */
     public function netRadiationFromMeteodata(MeteoData $meteoData): float
@@ -216,19 +224,20 @@ class RadiationCalc
 
     /**
      * Clear-sky solar radiation (Rso)
-     * required for computing net longwave radiation
+     * required for computing net longwave radiation.
      *
      * @param float $Ra
-     * @param int $altitude
-     * @param null $a_s
-     * @param null $b_s
+     * @param int   $altitude
+     * @param null  $a_s
+     * @param null  $b_s
+     *
      * @return float Rso [MJ m-2 day-1]
      */
     public function clearSkySolarRadiation(float $Ra, int $altitude, $a_s = null, $b_s = null): float
     {
         if ($a_s && $b_s) {
             $Rso = ($a_s + $b_s) * $Ra;  // [36]
-        }else {
+        } else {
             $Rso = (0.75 + 2 * pow(10, -5) * $altitude) * $Ra; // [37]
         }
 
@@ -236,9 +245,10 @@ class RadiationCalc
     }
 
     /**
-     * todo use Temperature->getTempKelvin()
+     * todo use Temperature->getTempKelvin().
      *
      * @param float $temp
+     *
      * @return float
      */
     private function deg2Kelvin(float $temp): float
@@ -248,13 +258,14 @@ class RadiationCalc
 
     /**
      * @param MeteoData $data
+     *
      * @return float|int
      */
     public function extraterresRadiationFromMeteodata(MeteoData $data)
     {
         if ($data->Ra) {
             $Ra = $data->Ra; // TODO setter in MeteoData
-        }else {
+        } else {
             $Ra = $this->meteoCalc->extraterrestrialRadiationDailyPeriod(
                 $data->getDaysOfYear(),
                 $data->getLocation()->getLat()

@@ -7,12 +7,12 @@ class PenmanCalc
     /**
      * latent heat of vaporization (l)
      * Simplified as constant (at 20°C) (Reference: Harrison 1963)
-     * l = 2.501 - (2.361 x 10-3) x Temp
+     * l = 2.501 - (2.361 x 10-3) x Temp.
      */
     const LATENT_HEAT_VAPORIZATION = 2.45;
 
     /**
-     * Soil heat flux density (G), assumed to be zero (Allen et al.:1989)
+     * Soil heat flux density (G), assumed to be zero (Allen et al.:1989).
      */
     const G_CONST = 0;
 
@@ -21,6 +21,7 @@ class PenmanCalc
      * The specific heat at constant pressure is the amount of energy required to increase the temperature of a unit mass of air by one degree at constant pressure.
      *
      * @param int|null $altitude
+     *
      * @return float
      */
     public function psychrometricConstant(?int $altitude = 0): float
@@ -32,7 +33,7 @@ class PenmanCalc
 
     /**
      * Atmospheric pressure (P) [7]
-     * simplification of the ideal gas law, assuming 20°C for a standard atmosphere [7]
+     * simplification of the ideal gas law, assuming 20°C for a standard atmosphere [7].
      *
      * @param int|null $altitude m
      *
@@ -47,6 +48,7 @@ class PenmanCalc
      * @param MeteoData $data
      *
      * @return float ETo [mm.day-1]
+     *
      * @throws Exception
      */
     public function EToPenmanMonteith(MeteoData $data)
@@ -101,11 +103,11 @@ class PenmanCalc
      * When solar radiation data, relative humidity data and/or wind speed data are missing, they should be estimated using the procedures presented in this section.
      * Equation 52 has a tendency to underpredict under high wind conditions (u2 > 3 m/s) and to overpredict under conditions of high relative humidity.
      * Optimisation regionale/annuelle par ETo = a + b * ETo
-     * Equation [52]
+     * Equation [52].
      *
      * @param float $Tmin
      * @param float $Tmax
-     * @param float $Ra Ra MJ.m-2.day-1
+     * @param float $Ra   Ra MJ.m-2.day-1
      *
      * @return float mm/day
      */
@@ -122,7 +124,7 @@ class PenmanCalc
     /**
      * Conversion from energy values to equivalent evaporation
      * equivalent evaporation from Eq. [20]
-     * by using a conversion factor equal to the inverse of the latent heat heat of vaporization
+     * by using a conversion factor equal to the inverse of the latent heat heat of vaporization.
      *
      * @param float Ra MJ.m-2.day-1
      *
@@ -133,12 +135,11 @@ class PenmanCalc
         return round(1 / self::LATENT_HEAT_VAPORIZATION * $Ra, 1);
     }
 
-
     // ---------- ESTIMATION Humidité de l'air (e_a) ---------
     // http://www.fao.org/nr/water/docs/ReferenceManualETo.pdf
 
     /**
-     * mean saturation vapour pression (e_s)
+     * mean saturation vapour pression (e_s).
      *
      * @param float $Tmin Tmin
      * @param float $Tmax Tmax
@@ -166,7 +167,7 @@ class PenmanCalc
     }
 
     /**
-     * saturation vapour pression (e_o) as function of T° [11]
+     * saturation vapour pression (e_o) as function of T° [11].
      *
      * @param $temperature float °C
      *
@@ -179,9 +180,9 @@ class PenmanCalc
         return $e; // todo new Pression()
     }
 
-
     // Slope of saturation vapour pressure curve (∆, delta)
     // T = Tmoyen ? à vérifier
+
     /**
      * @param float $Tmoyen
      *
@@ -199,10 +200,8 @@ class PenmanCalc
         return $this->slopeOfSaturationVapourPressureCurve($T);
     }
 
-
-
     /**
-     * ACTUAL VAPOUR PRESSION (e_a)
+     * ACTUAL VAPOUR PRESSION (e_a).
      *
      * @param MeteoData $meteoData
      *
@@ -240,5 +239,4 @@ class PenmanCalc
 
         throw new Exception('Impossible to determine actual vapor pression');
     }
-
 }

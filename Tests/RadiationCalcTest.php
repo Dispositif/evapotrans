@@ -41,8 +41,6 @@ class RadiationCalcTest extends TestCase
         $this->radiationCalc = new RadiationCalc($meteoData);
     }
 
-    /**
-     */
     public function testSolarRadiation()
     {
         $actual = $this->radiationCalc->solarRadiationFromDurationSunshineAndRa(25.1, 7.1, 10.9);
@@ -50,7 +48,7 @@ class RadiationCalcTest extends TestCase
     }
 
     /**
-     * EXAMPLE 15. Determination of solar radiation from temperature data
+     * EXAMPLE 15. Determination of solar radiation from temperature data.
      *
      * @throws Exception
      */

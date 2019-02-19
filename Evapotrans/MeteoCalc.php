@@ -1,24 +1,23 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 namespace Evapotrans;
 
 /**
- * Class MeteoCalculation
- *
- * @package Evapotranspiration
+ * Class MeteoCalculation.
  */
 class MeteoCalc
 {
-
     /**
-     * Convert degres to radian
+     * Convert degres to radian.
      *
      * @param int|float $degres
      * @param int|null  $minutes
      *
      * @return float
      */
-    function degres2radian($degres, int $minutes = null): float
+    public function degres2radian($degres, int $minutes = null): float
     {
         $minutes = $minutes ?? 0;
         $decimal = $degres + $minutes / 60;
@@ -28,7 +27,8 @@ class MeteoCalc
 
     /**
      * Number of the day in the year
-     * 1-01=>1, 27 mars => 85
+     * 1-01=>1, 27 mars => 85.
+     *
      * @param \DateTime $dateTime
      *
      * @return int
@@ -38,14 +38,11 @@ class MeteoCalc
         return 1 + $dateTime->format('z');
     }
 
+    // indice d'aridité
+    // https://fr.wikipedia.org/wiki/Indice_d%27aridit%C3%A9
 
-
-
-// indice d'aridité
-// https://fr.wikipedia.org/wiki/Indice_d%27aridit%C3%A9
-
-// indice aridité de De Martonne
-// Pour un mois
+    // indice aridité de De Martonne
+    // Pour un mois
     public function indice_mensuel_aridite($temperature_moyenne, $precipitations_totales)
     {
         // I = 12 * p / ( t+10)
@@ -59,24 +56,23 @@ class MeteoCalc
         $climat = false;
         $indice = indice_mensuel_aridite($temperature_moyenne, $precipitations_totales);
         if ($indice < 5) {
-            $climat = "hyperaride";
-        }elseif ($indice < 10) {
-            $climat = "aride";
-        }elseif ($indice < 20) {
-            $climat = "semi-aride";
-        }elseif ($indice < 30) {
-            $climat = "semi-humide";
-        }elseif ($indice >= 30) {
-            $climat = "humide";
+            $climat = 'hyperaride';
+        } elseif ($indice < 10) {
+            $climat = 'aride';
+        } elseif ($indice < 20) {
+            $climat = 'semi-aride';
+        } elseif ($indice < 30) {
+            $climat = 'semi-humide';
+        } elseif ($indice >= 30) {
+            $climat = 'humide';
         }
 
         return $climat;
     }
 
-
-// indice du diagramme ombrothermique (par mois) de Henri Gaussen (P=2T)
-// https://fr.wikipedia.org/wiki/Diagramme_climatique P = 2T
-//http://www.mgm.fr/PUB/Mappemonde/M297/Charre.pdf
+    // indice du diagramme ombrothermique (par mois) de Henri Gaussen (P=2T)
+    // https://fr.wikipedia.org/wiki/Diagramme_climatique P = 2T
+    //http://www.mgm.fr/PUB/Mappemonde/M297/Charre.pdf
     public function indice_ombrothermique($temperature_moyenne, $precipitations_totales)
     {
         return round($precipitations_totales / $temperature_moyenne, 1);
@@ -89,9 +85,9 @@ class MeteoCalc
         $climat = false;
         if ($indice < 2) {
             $climat = 'sec';
-        }elseif ($indice < 3) {
+        } elseif ($indice < 3) {
             $climat = 'tempéré';
-        }elseif ($indice >= 3) {
+        } elseif ($indice >= 3) {
             $climat = 'humide';
         }
 
@@ -105,7 +101,7 @@ class MeteoCalc
      */
     protected function inverseRelativeDistanceEarthSun(int $dayOfTheYear)
     {
-// inverse relative distance earth-sun
+        // inverse relative distance earth-sun
         $dr = 1 + 0.033 * cos(2 * pi() * $dayOfTheYear / 365);
 
         return $dr;
@@ -118,7 +114,7 @@ class MeteoCalc
      */
     protected function solarDeclinaison(int $dayOfTheYear)
     {
-// solar declinaison
+        // solar declinaison
         $d = 0.409 * sin(2 * pi() * $dayOfTheYear / 365 - 1.39);
 
         return $d;
@@ -127,7 +123,7 @@ class MeteoCalc
     /**
      * sunset hour angle (ws) [25 or 26]
      * Error in algo writing on the FAO doc with J parameter
-     * J latitude in radian / verified in http://edis.ifas.ufl.edu/ae459
+     * J latitude in radian / verified in http://edis.ifas.ufl.edu/ae459.
      *
      * @param int $dayOfTheYear
      * @param     $latitude
@@ -144,10 +140,11 @@ class MeteoCalc
     }
 
     /**
-     * Daylight hours or maximum possible duration of sunshine (N)
+     * Daylight hours or maximum possible duration of sunshine (N).
      *
      * @param int $dayOfTheYear
      * @param     $latitude
+     *
      * @return float
      */
     public function daylightHours(int $dayOfTheYear, $latitude): float
@@ -160,7 +157,7 @@ class MeteoCalc
 
     /**
      * Extraterrestrial radiation for daily periods (Ra) [21]
-     * TODO refactor : inject MeteoData
+     * TODO refactor : inject MeteoData.
      *
      * @param int   $dayOfTheYear
      * @param float $latitude
@@ -178,5 +175,4 @@ class MeteoCalc
 
         return round($Ra, 1); // MJ.m-2.d-1
     }
-
 }

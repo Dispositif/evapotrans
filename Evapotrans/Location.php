@@ -5,9 +5,13 @@ namespace Evapotrans;
 class Location
 {
     private $lat;
+
     private $lon;
+
     private $altitude = 0;
+
     private $name = '';
+
     /**
      * *  for 'interior' locations, where land mass dominates and air masses are
      *  not strongly influenced by a large water body, kRs @ 0.16;
@@ -26,14 +30,14 @@ class Location
      * @param int         $altitude
      * @param string|null $name
      */
-    public function __construct(float $lat, float $lon, int $altitude = null, ?string $name=null)
+    public function __construct(float $lat, float $lon, int $altitude = null, ?string $name = null)
     {
         $this->lat = $lat;
         $this->lon = $lon;
         if ($altitude) {
             $this->altitude = $altitude;
         }
-        if($name) {
+        if ($name) {
             $this->name = $name;
         }
     }
@@ -105,7 +109,7 @@ class Location
     /**
      * @return mixed
      */
-    public function getKRs():?float
+    public function getKRs(): ?float
     {
         return $this->kRs;
     }
@@ -117,6 +121,4 @@ class Location
     {
         $this->kRs = $kRs;
     }
-
-
 }

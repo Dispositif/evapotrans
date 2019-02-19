@@ -11,10 +11,10 @@ class Humidity extends AbstractMeasure
 
     protected function convertUnit(float $value, string $unit): float
     {
-        if ($unit === self::UNIT && $value <= 100 && $value > 1 ) {
+        if (self::UNIT === $unit && $value <= 100 && $value > 1) {
             return $value;
         }
+
         throw new Exception("No unit conversion for $unit");
     }
-
 }
