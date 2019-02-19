@@ -43,7 +43,8 @@ $data->setTdew(9);
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
-$ETo = (new PenmanCalc())->EToPenmanMonteith($data);
+$ETcalc = new PenmanCalc();
+$ETo = $ETcalc->EToPenmanMonteith($data);
 
 echo 'ETo = '.$ETo.' mm/day';
 
