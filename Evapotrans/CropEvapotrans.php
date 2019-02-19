@@ -116,5 +116,16 @@ class CropEvapotrans
         $this->Ke = $Ke;
     }
 
+    // Degré jour de croissance (DJ)
+    // DJ = (Tmax - Tmin) /2 - Tbase
+    public function degre_jour($Tmin, $Tmax, $Tbase = 10, $Tmaxbase = 30)
+    {
+        $Tmin = max($Tmin, ($Tbase + $Tmin) / 2); // pondération car seulement T>Tbase compte
+        $Tmax = min($Tmax, ($Tmaxbase + $Tmax) / 2); // pondération car seulement T<30°C compte
+        $DJ = ($Tmax - $Tmin) / 2 - $Tbase;
+        $DJ = max($DJ, 0);
+
+        return $DJ;
+    }
 
 }

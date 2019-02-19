@@ -15,9 +15,8 @@ $radish = new Plant(
 
 $area = new Area($radish);
 $area->setGrowStade('initial');
-$area->setFractionWetted(0.95);
-$area->setStressFactor(1);
-$area->setKc(0.9);
+$area->setFractionWetted(1);
+$area->setStressFactor(1.1);
 
 $ETc = (new CropEvapotrans($area, $ETo))->calcETc();
 var_dump($ETc);

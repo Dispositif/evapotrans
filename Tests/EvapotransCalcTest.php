@@ -22,20 +22,20 @@ spl_autoload_register(
 class EvapotransCalcTest extends TestCase
 {
     /**
-     * @var \Evapotrans\EvapotransCalc
+     * @var \Evapotrans\PenmanCalc
      */
     private $ETcalc;
     /**
-     * @var \Evapotrans\MeteoCalculation
+     * @var \Evapotrans\MeteoCalc
      */
     private $meteo;
 
     public function setUp(): void
     {
-        $this->ETcalc = new \Evapotrans\EvapotransCalc();
-        $this->meteo = new \Evapotrans\MeteoCalculation();
-    }
+        $this->ETcalc = new \Evapotrans\PenmanCalc();
+        $this->meteo = new \Evapotrans\MeteoCalc();
 
+    }
 
     /**
      * @throws Exception
@@ -43,13 +43,13 @@ class EvapotransCalcTest extends TestCase
     public function testWind2m()
     {
         $wind = new Wind2m(3.2, 'm/s', 10);
-        $this->assertEquals(2.4, $wind->getValue());
+        self::assertEquals(2.4, $wind->getValue());
 
         $wind = new Wind2m(5, 'm/s', 2);
-        $this->assertEquals(5, $wind->getValue());
+        self::assertEquals(5, $wind->getValue());
 
         $wind = new Wind2m(36, 'km/h', 2);
-        $this->assertEquals(10, $wind->getValue());
+        self::assertEquals(10, $wind->getValue());
 
         $this->expectException(\Evapotrans\Exception::class);
         new Wind2m(5, 'm');
@@ -60,13 +60,13 @@ class EvapotransCalcTest extends TestCase
     //public function testWind()
     //{
     //    $wind = new Wind(3.2, new UnitOld('m/s'), 10);
-    //    $this->assertEquals(2.4, $wind->getSpeed2meters());
+    //    self::assertEquals(2.4, $wind->getSpeed2meters());
     //
     //    $wind = new Wind(5, new UnitOld('m/s'));
-    //    $this->assertEquals(5, $wind->getSpeed2meters());
+    //    self::assertEquals(5, $wind->getSpeed2meters());
     //
     //    $wind = new Wind(36, new UnitOld('km/h'));
-    //    $this->assertEquals(10, $wind->getSpeed2meters());
+    //    self::assertEquals(10, $wind->getSpeed2meters());
     //
     //    $this->expectException(\Evapotrans\Exception::class);
     //    new Wind(5, new UnitOld('m'));
@@ -76,10 +76,10 @@ class EvapotransCalcTest extends TestCase
     {
         $loc = new Location(45.72, 0, 200);
 
-        $this->assertEquals(1, (new MeteoData($loc, new \DateTime('2018-01-01')))->getDaysOfYear());
-        $this->assertEquals(305, (new MeteoData($loc, new \DateTime('2018-11-01')))->getDaysOfYear());
+        self::assertEquals(1, (new MeteoData($loc, new \DateTime('2018-01-01')))->getDaysOfYear());
+        self::assertEquals(305, (new MeteoData($loc, new \DateTime('2018-11-01')))->getDaysOfYear());
         // 2016 leap year
-        $this->assertEquals(306, (new MeteoData($loc, new \DateTime('2016-11-01')))->getDaysOfYear());
+        self::assertEquals(306, (new MeteoData($loc, new \DateTime('2016-11-01')))->getDaysOfYear());
     }
 
     /**
@@ -91,7 +91,7 @@ class EvapotransCalcTest extends TestCase
     public function testDaylightHours($date, $expected, $lat)
     {
         $day = $this->meteo->daysOfYear(new \DateTime($date));
-        $this->assertEquals($expected, $this->meteo->daylightHours($day, $lat));
+        self::assertEquals($expected, $this->meteo->daylightHours($day, $lat));
     }
 
     /**
@@ -113,40 +113,7 @@ class EvapotransCalcTest extends TestCase
         ];
     }
 
-    /**
-     */
-    public function testSolarRadiation()
-    {
-        //$location = new \Evapotrans\Location(-22.90, 0);
-        //$date = new \DateTime('2015-05-15');
-        $Ra = 25.1;
-        $N = 10.9;
-        $n = 7.1;
-        $actual = $this->ETcalc->solarRadiationFromDurationSunshineAndRa($Ra, $n, $N);
-        $this->assertEquals(14.4, $actual); // doc 14.5
-    }
 
-    /**
-     * EXAMPLE 15. Determination of solar radiation from temperature data
-     *
-     * @throws Exception
-     */
-    public function testSolarRadiationFromTempData()
-    {
-        //45°43'N and at 200 m above sea level. In July, the mean monthly
-        // maximum and minimum air temperatures are 26.6 and 14.8°C respectively.
-        $loc = new \Evapotrans\Location(45.72, 0, 200);
-        $loc->setKRs(0.16);
-        $date = new \DateTime('2018-07-15');
-        $data = new MeteoData($loc, $date);
-        $data->setTmax(new Temperature(26.6));
-        $data->setTmin(new Temperature(14.8));
-
-        $this->assertEquals(
-            22.3,
-            $this->ETcalc->solarRadiationStrategyFromMeteodata($data)
-        );
-    }
 
     /**
      * @param $altitude
@@ -156,7 +123,7 @@ class EvapotransCalcTest extends TestCase
      */
     public function testPsychometricConstant($altitude, $expected)
     {
-        $this->assertEquals($expected, $this->ETcalc->psychrometricConstant($altitude));
+        self::assertEquals($expected, $this->ETcalc->psychrometricConstant($altitude));
     }
 
     public function psychometricConstantProvider()
@@ -173,7 +140,7 @@ class EvapotransCalcTest extends TestCase
     public function testMeanSaturationVaporPression()
     {
         $actual = $this->ETcalc->meanSaturationVapourPression(15.0, 24.5);
-        $this->assertEquals(2.39, $actual);
+        self::assertEquals(2.39, $actual);
     }
 
     /**
@@ -181,7 +148,7 @@ class EvapotransCalcTest extends TestCase
      */
     public function testSaturationVaporPression($expected, $temp)
     {
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             round($this->ETcalc->saturationVapourPression($temp), 3)
         );
@@ -198,25 +165,13 @@ class EvapotransCalcTest extends TestCase
         ];
     }
 
-    public function testExtraterrestrialRadiation()
-    {
-        $days = $this->meteo->daysOfYear(new \DateTime('2018-09-03'));
-        $Ra = $this->meteo->extraterrestrialRadiationDailyPeriod($days, -20);
-        $this->assertEquals(32.2, $Ra);
-    }
-
-    public function testNetLongwaveRadiation()
-    {
-        $Rnl = $this->ETcalc->netLongwaveRadiation(2.1, 25.1, 19.1, 14.5, 18.8);
-        $this->assertEquals(3.5, $Rnl);
-    }
 
     public function testSlopeOfSaturationVapourPressureCurve()
     {
-        $this->assertEquals(0.047, $this->ETcalc->slopeOfSaturationVapourPressureCurve(1.0));
-        $this->assertEquals(0.082, $this->ETcalc->slopeOfSaturationVapourPressureCurve(10.0));
-        $this->assertEquals(0.145, $this->ETcalc->slopeOfSaturationVapourPressureCurve(20.0));
+        self::assertEquals(0.047, $this->ETcalc->slopeOfSaturationVapourPressureCurve(1.0));
+        self::assertEquals(0.082, $this->ETcalc->slopeOfSaturationVapourPressureCurve(10.0));
+        self::assertEquals(0.145, $this->ETcalc->slopeOfSaturationVapourPressureCurve(20.0));
         // fail : actual 0.243
-        //$this->assertEquals(0.249, $this->ETcalc->slopeOfSaturationVapourPressureCurve(30.0));
+        //self::assertEquals(0.249, $this->ETcalc->slopeOfSaturationVapourPressureCurve(30.0));
     }
 }

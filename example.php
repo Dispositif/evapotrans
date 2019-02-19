@@ -41,15 +41,14 @@ $data->setTdew(9);
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
-$ETcalc = new EvapotransCalc();
-$ETo = $ETcalc->EToPenmanMonteith($data);
+$ETo = (new PenmanCalc())->EToPenmanMonteith($data);
 
 echo 'ETo = '.$ETo. ' mm/day';
 
 // ----------------------
 // Simplistic calculation
 
-$calc = new MeteoCalculation();
+$calc = new MeteoCalc();
 $Ra = $calc->extraterrestrialRadiationDailyPeriod($data->getDaysOfYear(), $data->getLocation()->getLat());
 
 $simplisticETo = $ETcalc->simplisticETo($data->getTmin(), $data->getTmax(), $Ra);

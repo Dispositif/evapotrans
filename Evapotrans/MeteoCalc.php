@@ -7,7 +7,7 @@ namespace Evapotrans;
  *
  * @package Evapotranspiration
  */
-class MeteoCalculation
+class MeteoCalc
 {
 
     /**
@@ -38,17 +38,7 @@ class MeteoCalculation
         return 1 + $dateTime->format('z');
     }
 
-    // Degré jour de croissance (DJ)
-    // DJ = (Tmax - Tmin) /2 - Tbase
-    public function degre_jour($Tmin, $Tmax, $Tbase = 10, $Tmaxbase = 30)
-    {
-        $Tmin = max($Tmin, ($Tbase + $Tmin) / 2); // pondération car seulement T>Tbase compte
-        $Tmax = min($Tmax, ($Tmaxbase + $Tmax) / 2); // pondération car seulement T<30°C compte
-        $DJ = ($Tmax - $Tmin) / 2 - $Tbase;
-        $DJ = max($DJ, 0);
 
-        return $DJ;
-    }
 
 
 // indice d'aridité
@@ -109,27 +99,6 @@ class MeteoCalculation
     }
 
     /**
-     * Extraterrestrial radiation for daily periods (Ra) [21]
-     * TODO refactor : inject MeteoData
-     *
-     * @param int   $dayOfTheYear
-     * @param float $latitude
-     *
-     * @return float|int MJ.m-2.d-1
-     */
-    public function extraterrestrialRadiationDailyPeriod(int $dayOfTheYear, float $latitude)
-    {
-        $rlat = $this->degres2radian($latitude);
-        $dr = $this->inverseRelativeDistanceEarthSun($dayOfTheYear);
-        $d = $this->solarDeclinaison($dayOfTheYear);
-        $ws = $this->sunsetHourAngle($dayOfTheYear, $latitude);
-
-        $Ra = 24 * 60 / pi() * 0.0820 * $dr * ($ws * sin($rlat) * sin($d) + cos($rlat) * cos($d) * sin($ws));
-
-        return round($Ra, 1); // MJ.m-2.d-1
-    }
-
-    /**
      * @param int $dayOfTheYear
      *
      * @return float|int
@@ -187,6 +156,27 @@ class MeteoCalculation
         $N = round(24 / pi() * $ws, 1);
 
         return round($N, 1);
+    }
+
+    /**
+     * Extraterrestrial radiation for daily periods (Ra) [21]
+     * TODO refactor : inject MeteoData
+     *
+     * @param int   $dayOfTheYear
+     * @param float $latitude
+     *
+     * @return float|int MJ.m-2.d-1
+     */
+    public function extraterrestrialRadiationDailyPeriod(int $dayOfTheYear, float $latitude)
+    {
+        $rlat = $this->degres2radian($latitude);
+        $dr = $this->inverseRelativeDistanceEarthSun($dayOfTheYear);
+        $d = $this->solarDeclinaison($dayOfTheYear);
+        $ws = $this->sunsetHourAngle($dayOfTheYear, $latitude);
+
+        $Ra = 24 * 60 / pi() * 0.0820 * $dr * ($ws * sin($rlat) * sin($d) + cos($rlat) * cos($d) * sin($ws));
+
+        return round($Ra, 1); // MJ.m-2.d-1
     }
 
 }

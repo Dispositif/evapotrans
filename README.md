@@ -47,7 +47,7 @@ $data->setWind2(new Wind2m(20, 'km/h', 2)); // mesured at 2 meters
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
-$ETo = (new EvapotransCalc())->EToPenmanMonteith($data); 
+$ETo = (new PenmanCalc())->EToPenmanMonteith($data);
 // ETo = 1.1 (mm/day)
 
 
@@ -58,9 +58,8 @@ $radish = new Plant(
 );
 $area = new Area($radish);
 $area->setGrowStade('initial');
-$area->setFractionWetted(0.95);
-$area->setStressFactor(1);
-$area->setKc(0.9);
+$area->setFractionWetted(1);
+$area->setStressFactor(1.1);
 
 $ETc = (new CropEvapotrans($area, $ETo))->calcETc();
 // ETc = 0.8 (mm/day)
