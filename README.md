@@ -1,7 +1,10 @@
 #Evapotrans
-By Dispositif alias Philippe M.
+[![PHP](https://img.shields.io/badge/PHP-7.2-blue.svg)]()
+[![GPL](https://img.shields.io/badge/license-GPL-yellow.svg)]()
 
 PHP 7.2 implementation of evapotranspiration prediction. Various calculation procedures for estimating missing data are also provided : weather, climatological, physical and agronomic datas. 
+
+GNU GPLv3 (c) 2014-2019 dispositif / Philippe Minelli
 
 Computation of all data required for the calculation of the reference evapotranspiration (ETc) by means of the FAO Penman-Monteith method. 
 
