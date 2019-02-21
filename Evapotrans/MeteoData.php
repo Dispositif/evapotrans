@@ -117,6 +117,15 @@ class MeteoData
     private $RHmean;
 
     /**
+     * @param float $RH
+     * @return bool
+     */
+    private static function isValidRH(float $RH): bool
+    {
+        return $RH <= 1 && $RH > 0;
+    }
+
+    /**
      * @return float
      */
     public function getRHmean(): float
@@ -372,7 +381,7 @@ class MeteoData
      */
     public function setRHmax(float $RHmax): self
     {
-        if ($RHmax <= 1 && $RHmax > 0) {
+        if (self::isValidRH($RHmax)) {
             $this->RHmin = $RHmax;
 
             return $this;
@@ -397,7 +406,7 @@ class MeteoData
      */
     public function setRHmin(float $RHmin): self
     {
-        if ($RHmin <= 1 && $RHmin > 0) {
+        if (self::isValidRH($RHmin)) {
             $this->RHmin = $RHmin;
 
             return $this;
