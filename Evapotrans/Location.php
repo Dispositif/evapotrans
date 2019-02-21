@@ -4,6 +4,7 @@ namespace Evapotrans;
 
 /**
  * Class Location
+ * immutable
  */
 class Location
 {
@@ -19,10 +20,6 @@ class Location
      * @var int
      */
     private $altitude = 0;
-    /**
-     * @var string|null
-     */
-    private $name = null;
 
     /**
      * *  for 'interior' locations, where land mass dominates and air masses are
@@ -45,16 +42,12 @@ class Location
     public function __construct(
         float $latitude,
         float $longitude,
-        int $altitude = null,
-        ?string $name = null
+        int $altitude = null
     ) {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         if ($altitude) {
             $this->altitude = $altitude;
-        }
-        if ($name) {
-            $this->name = $name;
         }
     }
 
@@ -69,7 +62,7 @@ class Location
     /**
      * @return float|int
      */
-    public function getLat_radian(): float
+    public function getLatitudeRadian(): float
     {
         return pi() / 180 * $this->getLatitude();
     }
@@ -88,14 +81,6 @@ class Location
     public function getAltitude(): int
     {
         return $this->altitude;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
     }
 
     /**

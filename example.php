@@ -1,9 +1,6 @@
 <?php
 
 /** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUndefinedClassInspection */
-
-/** @noinspection PhpUndefinedClassInspection */
 
 namespace Evapotrans;
 

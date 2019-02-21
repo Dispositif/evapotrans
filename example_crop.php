@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
+
 use Evapotrans\Area;
 use Evapotrans\CropEvapotrans;
 use Evapotrans\Plant;

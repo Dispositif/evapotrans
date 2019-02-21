@@ -2,16 +2,14 @@
 
 /** @noinspection ALL */
 
-/** @noinspection PhpUndefinedClassInspection */
-
 namespace Evapotrans;
 
 use Evapotrans\ValueObjects\Temperature;
 use Evapotrans\ValueObjects\Wind2m;
-use Evapotrans\ValueObjects\Pression;
 
 class MeteoData
 {
+    //const DEFAULT_PRESSION = 100.4; // kPa !
     /**
      * @var Location
      */
@@ -61,16 +59,22 @@ class MeteoData
 
     public $Ra;
 
+    // todo
     // a_s regression constant, expressing the fraction of extraterrestrial radiation reaching the earth on overcast days (n =0),
     public $a_s;
 
+    // todo
     //as+bs fraction of extraterrestrial radiation reaching the earth on clear days (n = N).
     public $b_s;
 
     /**
-     * Where no wind data are available within the region, a value of 2 m/s can be used as a temporary estimate. This value is the average over 2000 weather stations around the globe.
-     *
-     * In general, wind speed at 2 m, u2, should be limited to about u2 ³ 0.5 m/s when used in the ETo equation (Equation 6). This is necessary to account for the effects of boundary layer instability and buoyancy of air in promoting exchange of vapour at the surface when air is calm. This effect occurs when the wind speed is small and buoyancy of warm air induces air exchange at the surface. Limiting u2 ³ 0.5 m/s in the ETo equation improves the estimation accuracy under the conditions of very low wind speed.
+     * Where no wind data are available within the region, a value of 2 m/s can be used as a temporary estimate.
+     * This value is the average over 2000 weather stations around the globe.
+     * In general, wind speed at 2 m, u2, should be limited to about u2 ³ 0.5 m/s when used in the ETo equation
+     * (Equation 6). This is necessary to account for the effects of boundary layer instability and buoyancy of air in
+     * promoting exchange of vapour at the surface when air is calm. This effect occurs when the wind speed is small
+     * and buoyancy of warm air induces air exchange at the surface. Limiting u2 ³ 0.5 m/s in the ETo equation improves
+     * the estimation accuracy under the conditions of very low wind speed.
      * todo max 0.5 + value "estimated/minimized"
      *
      * @var float Wind speed at 2meter in m.s-1
@@ -82,13 +86,14 @@ class MeteoData
     // Température dewpoint (point rosée)
     private $Tdew;
 
+
     /**
-     * Pression niveau mer : 1004 hPa
+     * Pression
      * Facultatif, sinon calculé.
      *
-     * @var int KPa
+     * @var float KPa
      */
-    private $pression = 1004; // TODO default value ?
+    private $pression; // TODO getters : propriété ou calcul pression/altitude
 
     /**
      * Maximum relative humidity (%).
@@ -149,7 +154,6 @@ class MeteoData
 
     /**
      * @param mixed $location
-     *
      * @return MeteoData
      */
     public function setLocation($location): self
@@ -172,7 +176,6 @@ class MeteoData
      * 1-01=>1, 27 mars => 85.
      *
      * @param \DateTime $dateTime
-     *
      * @return int
      */
     public function getDaysOfYear(): int
@@ -182,7 +185,6 @@ class MeteoData
 
     /**
      * @param mixed $date
-     *
      * @return MeteoData
      */
     public function setDate($date): self
@@ -202,7 +204,6 @@ class MeteoData
 
     /**
      * @param mixed $Tmax
-     *
      * @return MeteoData
      */
     public function setTmax(Temperature $Tmax): self
@@ -230,7 +231,6 @@ class MeteoData
 
     /**
      * @param mixed $Tmean
-     *
      * @return MeteoData
      */
     public function setTmean(Temperature $Tmean): self
@@ -250,7 +250,6 @@ class MeteoData
 
     /**
      * @param mixed $Tmin
-     *
      * @return MeteoData
      */
     public function setTmin(Temperature $Tmin): self
@@ -270,7 +269,6 @@ class MeteoData
 
     /**
      * @param mixed $actualSunnyHours hours
-     *
      * @return MeteoData
      */
     public function setActualSunnyHours(float $actualSunnyHours): self
@@ -290,7 +288,6 @@ class MeteoData
 
     /**
      * @param mixed $precipitation
-     *
      * @return MeteoData
      */
     public function setPrecipitation(float $precipitation): self
@@ -311,7 +308,6 @@ class MeteoData
     /**
      * @param mixed  $wind2
      * @param string $origin
-     *
      * @return MeteoData
      */
     public function setWind2(Wind2m $wind2, $origin = 'set'): self
@@ -332,7 +328,6 @@ class MeteoData
 
     /**
      * @param string $wind2origin
-     *
      * @return MeteoData
      */
     public function setWind2origin($wind2origin): self
@@ -352,7 +347,6 @@ class MeteoData
 
     /**
      * @param mixed $Tdew
-     *
      * @return MeteoData
      */
     public function setTdew($Tdew): self
@@ -372,9 +366,7 @@ class MeteoData
 
     /**
      * @param mixed $RHmax
-     *
      * @return MeteoData
-     *
      * @throws Exception
      * @throws Exception
      */
@@ -399,9 +391,7 @@ class MeteoData
 
     /**
      * @param mixed $RHmin
-     *
      * @return MeteoData
-     *
      * @throws Exception
      * @throws Exception
      */
@@ -419,20 +409,35 @@ class MeteoData
     /**
      * @return float
      */
-    public function getPression(): ?int
+    public function getPression(): float
     {
-        return $this->pression;
+        if ($this->pression) {
+            return $this->pression;
+        }
+        $alt = $this->location->getAltitude();
+        return $this->atmosphericPressureByAltitude($alt);
     }
 
     /**
      * @param float $pression
-     *
      * @return MeteoData
      */
-    public function setPression(int $pression): self
+    public function setPression(float $pression): self
     {
         $this->pression = $pression;
-
         return $this;
+    }
+
+    /**
+     * Atmospheric pressure (P) [7]
+     * simplification of the ideal gas law, assuming 20°C for a standard
+     * atmosphere.
+     *
+     * @param int|null $altitude m
+     * @return float P (kPa)
+     */
+    private function atmosphericPressureByAltitude(?int $altitude = 0): float
+    {
+        return round(101.3 * pow((293 - 0.0065 * $altitude) / 293, 5.26), 1);
     }
 }

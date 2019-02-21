@@ -18,30 +18,17 @@ class PenmanCalc
 
     /**
      * Psychrometric constant (g) [8]
-     * The specific heat at constant pressure is the amount of energy required to increase the temperature of a unit mass of air by one degree at constant pressure.
+     * The specific heat at constant pressure is the amount of energy required
+     * to increase the temperature of a unit mass of air by one degree at
+     * constant pressure.
      *
-     * @param int|null $altitude
-     *
+     * @param MeteoData $meteoData
      * @return float
      */
-    public function psychrometricConstant(?int $altitude = 0): float
+    public function psychrometricConstant(MeteoData $meteoData): float
     {
-        $P = $this->atmosphericPressure($altitude);
-
+        $P = $meteoData->getPression();
         return round(0.665 * 0.001 * $P, 3);
-    }
-
-    /**
-     * Atmospheric pressure (P) [7]
-     * simplification of the ideal gas law, assuming 20°C for a standard atmosphere [7].
-     *
-     * @param int|null $altitude m
-     *
-     * @return float P (kPa)
-     */
-    private function atmosphericPressure(?int $altitude = 0)
-    {
-        return round(101.3 * pow((293 - 0.0065 * $altitude) / 293, 5.26), 1); // KPa
     }
 
     /**
@@ -60,7 +47,7 @@ class PenmanCalc
             $this->actualVaporPressionStrategy($data),
             $this->slopeOfSaturationVapourPressureCurve($data->getTmean()),
             (new RadiationCalc($data))->netRadiationFromMeteodata($data),
-            $this->psychrometricConstant($data->getLocation()->getAltitude())
+            $this->psychrometricConstant($data)
         );
     }
 
@@ -82,7 +69,7 @@ class PenmanCalc
      *
      * @return float ETo mm.day-1
      */
-    public function penmanMonteithFormula(
+    private function penmanMonteithFormula(
         float $Tmoyen,
         float $u2,
         float $e_s,
@@ -130,7 +117,7 @@ class PenmanCalc
      *
      * @return float Ra mm/day
      */
-    public function equivalentEvaporation(float $Ra): float
+    private function equivalentEvaporation(float $Ra): float
     {
         return round(1 / self::LATENT_HEAT_VAPORIZATION * $Ra, 1);
     }
@@ -153,14 +140,14 @@ class PenmanCalc
         return round($e_s, 2); // KPa
     }
 
-    // Actual vapour pression (ea) derived from Tdew (dewpoint temperature, température point rosée)
-    public function vapourPressionFromTdew(float $Tdew): float
+    // Actual vapour pression (ea) derived from Tdew
+    private function vapourPressionFromTdew(float $Tdew): float
     {
         return $this->saturationVapourPression($Tdew);
     }
 
     // todo inject Meteodata
-    public function vapourPressionFromRHmax($RHmax, $RHmin, $Tmax, $Tmin)
+    private function vapourPressionFromRHmax($RHmax, $RHmin, $Tmax, $Tmin)
     {
         return ($this->saturationVapourPression($Tmin) * $RHmax / 100 + $this->saturationVapourPression($Tmax) * $RHmin
                 / 100) / 2; // kPa
@@ -180,32 +167,25 @@ class PenmanCalc
         return $e; // todo new Pression()
     }
 
-    // Slope of saturation vapour pressure curve (∆, delta)
-    // T = Tmoyen ? à vérifier
-
     /**
+     * Slope of saturation vapour pressure curve (∆, delta)
      * @param float $Tmoyen
      *
      * @return float|int
      */
-    public function slopeOfSaturationVapourPressureCurve(float $Tmoyen)
+    private function slopeOfSaturationVapourPressureCurve(float $Tmoyen)
     {
         $delta = (4098 * (0.6108 * exp(17.27 * $Tmoyen / ($Tmoyen + 237.3)))) / pow(($Tmoyen + 237.3), 2);
 
         return round($delta, 3);
     }
 
-    public function delta(float $T)
-    {
-        return $this->slopeOfSaturationVapourPressureCurve($T);
-    }
-
     /**
      * ACTUAL VAPOUR PRESSION (e_a).
      *
      * @param MeteoData $meteoData
-     *
      * @return float|int
+     * @throws Exception
      */
     public function actualVaporPressionStrategy(MeteoData $meteoData)
     {
