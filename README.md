@@ -4,11 +4,11 @@
 
 [![PHP](https://img.shields.io/badge/PHP-7.2-blue.svg)]()
 [![GPL](https://img.shields.io/badge/license-GPL-black.svg)]()
-[![BCH compliance](https://bettercodehub.com/edge/badge/Dispositif/evapotrans?branch=master)](https://bettercodehub.com/)
+[![BCH compliance](https://bettercodehub.com/edge/badge/Dispositif/evapotrans?branch=master)](https://bettercodehub.com/) <a href="https://codeclimate.com/github/Dispositif/evapotrans/maintainability"><img src="https://api.codeclimate.com/v1/badges/6f0ad445bbafa41daaee/maintainability" /></a>
 
 PHP 7.2 implementation of evapotranspiration prediction. Various calculation procedures for estimating missing data are also provided : weather, climatological, physical and agronomic datas. 
 
-GNU GPLv3 (c) 2014-2019 dispositif / Philippe Minelli
+GNU GPLv3 (c) 2014/2019 dispositif / Philippe M.
 
 Computation of all data required for the calculation of the reference evapotranspiration (ETc) by means of the FAO Penman-Monteith method. 
 
@@ -51,7 +51,7 @@ $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
 $ETo = (new PenmanCalc())->EToPenmanMonteith($data);
-// ETo = 1.1 (mm/day)
+// ETo : 1.1 (mm/day)
 
 
 // Crop evapotranspiration (work in progress)
@@ -63,9 +63,9 @@ $area = new Area($radish);
 $area->setGrowStade('initial');
 $area->setFractionWetted(1);
 $area->setStressFactor(1.1);
-
 $ETc = (new CropEvapotrans($area, $ETo))->calcETc();
-// ETc = 0.8 (mm/day)
+
+// ETc : 0.8 (mm/day)
 
 ```
 

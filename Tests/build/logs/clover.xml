@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1550745429">
+  <project timestamp="1550745429">
+    <package name="Evapotrans">
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/Area.php">
+        <class name="Evapotrans\Area" namespace="Evapotrans">
+          <metrics complexity="14" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="41" coveredstatements="0" elements="53" coveredelements="0"/>
+        </class>
+        <line num="45" type="method" name="__construct" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="48" type="stmt" count="0"/>
+        <line num="53" type="method" name="getGrowStade" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="61" type="method" name="setGrowStade" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="69" type="method" name="getKc" visibility="public" complexity="3" crap="12.00" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="84" type="method" name="setKc" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="85" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="92" type="method" name="getPlant" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="97" type="method" name="getFractionWetted" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="98" type="stmt" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="102" type="method" name="setFractionWetted" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="110" type="method" name="getFrequenceEau" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="118" type="method" name="setFrequenceEau" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="128" type="method" name="getStressFactor" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="136" type="method" name="setStressFactor" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <metrics loc="140" ncloc="78" classes="1" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="41" coveredstatements="0" elements="53" coveredelements="0"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/CropEvapotrans.php">
+        <class name="Evapotrans\CropEvapotrans" namespace="Evapotrans">
+          <metrics complexity="8" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="0" elements="37" coveredelements="0"/>
+        </class>
+        <line num="77" type="method" name="__construct" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
+        <line num="82" type="stmt" count="0"/>
+        <line num="89" type="method" name="calcETc" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="97" type="stmt" count="0"/>
+        <line num="104" type="method" name="strategyKc" visibility="private" complexity="2" crap="6.00" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="106" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="115" type="method" name="setKcb" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="120" type="method" name="setKe" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="127" type="method" name="degre_jour" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <metrics loc="136" ncloc="50" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="0" elements="37" coveredelements="0"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/Exception.php">
+        <class name="Evapotrans\Exception" namespace="Evapotrans">
+          <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        </class>
+        <metrics loc="7" ncloc="7" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/Location.php">
+        <class name="Evapotrans\Location" namespace="Evapotrans">
+          <metrics complexity="11" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="20" coveredelements="20"/>
+        </class>
+        <line num="42" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="18"/>
+        <line num="47" type="stmt" count="18"/>
+        <line num="48" type="stmt" count="18"/>
+        <line num="49" type="stmt" count="18"/>
+        <line num="50" type="stmt" count="7"/>
+        <line num="52" type="stmt" count="18"/>
+        <line num="57" type="method" name="getLatitude" visibility="public" complexity="1" crap="1" count="3"/>
+        <line num="59" type="stmt" count="3"/>
+        <line num="65" type="method" name="getLatitudeRadian" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="67" type="stmt" count="1"/>
+        <line num="73" type="method" name="getLongitude" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="75" type="stmt" count="1"/>
+        <line num="81" type="method" name="getAltitude" visibility="public" complexity="1" crap="1" count="6"/>
+        <line num="83" type="stmt" count="6"/>
+        <line num="89" type="method" name="getKRs" visibility="public" complexity="2" crap="2" count="1"/>
+        <line num="91" type="stmt" count="1"/>
+        <line num="97" type="method" name="setKRs" visibility="public" complexity="3" crap="3" count="1"/>
+        <line num="99" type="stmt" count="1"/>
+        <line num="100" type="stmt" count="1"/>
+        <line num="102" type="stmt" count="1"/>
+        <metrics loc="103" ncloc="56" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="20" coveredelements="20"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/MeteoCalc.php">
+        <class name="Evapotrans\MeteoCalc" namespace="Evapotrans">
+          <metrics complexity="6" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="20" elements="26" coveredelements="26"/>
+        </class>
+        <line num="20" type="method" name="degres2radian" visibility="private" complexity="1" crap="1" count="9"/>
+        <line num="22" type="stmt" count="9"/>
+        <line num="23" type="stmt" count="9"/>
+        <line num="25" type="stmt" count="9"/>
+        <line num="33" type="method" name="inverseRelativeDistanceEarthSun" visibility="private" complexity="1" crap="1" count="2"/>
+        <line num="36" type="stmt" count="2"/>
+        <line num="38" type="stmt" count="2"/>
+        <line num="46" type="method" name="solarDeclinaison" visibility="private" complexity="1" crap="1" count="9"/>
+        <line num="49" type="stmt" count="9"/>
+        <line num="51" type="stmt" count="9"/>
+        <line num="64" type="method" name="sunsetHourAngle" visibility="private" complexity="1" crap="1" count="9"/>
+        <line num="66" type="stmt" count="9"/>
+        <line num="67" type="stmt" count="9"/>
+        <line num="68" type="stmt" count="9"/>
+        <line num="70" type="stmt" count="9"/>
+        <line num="81" type="method" name="daylightHours" visibility="public" complexity="1" crap="1" count="7"/>
+        <line num="83" type="stmt" count="7"/>
+        <line num="84" type="stmt" count="7"/>
+        <line num="86" type="stmt" count="7"/>
+        <line num="98" type="method" name="extraterrestrialRadiationDailyPeriod" visibility="public" complexity="1" crap="1" count="2"/>
+        <line num="100" type="stmt" count="2"/>
+        <line num="101" type="stmt" count="2"/>
+        <line num="102" type="stmt" count="2"/>
+        <line num="103" type="stmt" count="2"/>
+        <line num="105" type="stmt" count="2"/>
+        <line num="107" type="stmt" count="2"/>
+        <metrics loc="109" ncloc="52" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="20" elements="26" coveredelements="26"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/MeteoData.php">
+        <class name="Evapotrans\MeteoData" namespace="Evapotrans">
+          <metrics complexity="45" methods="31" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="59" coveredstatements="15" elements="90" coveredelements="23"/>
+        </class>
+        <line num="122" type="method" name="getRHmean" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="124" type="stmt" count="0"/>
+        <line num="130" type="method" name="setRHmean" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="141" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="17"/>
+        <line num="143" type="stmt" count="17"/>
+        <line num="144" type="stmt" count="17"/>
+        <line num="145" type="stmt" count="17"/>
+        <line num="150" type="method" name="getLocation" visibility="public" complexity="1" crap="1" count="2"/>
+        <line num="152" type="stmt" count="2"/>
+        <line num="159" type="method" name="setLocation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="163" type="stmt" count="0"/>
+        <line num="169" type="method" name="getDate" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="171" type="stmt" count="0"/>
+        <line num="181" type="method" name="getDaysOfYear" visibility="public" complexity="1" crap="1" count="10"/>
+        <line num="183" type="stmt" count="10"/>
+        <line num="190" type="method" name="setDate" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="192" type="stmt" count="0"/>
+        <line num="194" type="stmt" count="0"/>
+        <line num="200" type="method" name="getTmax" visibility="public" complexity="2" crap="2" count="1"/>
+        <line num="202" type="stmt" count="1"/>
+        <line num="209" type="method" name="setTmax" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="211" type="stmt" count="1"/>
+        <line num="213" type="stmt" count="1"/>
+        <line num="219" type="method" name="getTmean" visibility="public" complexity="5" crap="30.00" count="0"/>
+        <line num="221" type="stmt" count="0"/>
+        <line num="222" type="stmt" count="0"/>
+        <line num="225" type="stmt" count="0"/>
+        <line num="226" type="stmt" count="0"/>
+        <line num="229" type="stmt" count="0"/>
+        <line num="236" type="method" name="setTmean" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="238" type="stmt" count="0"/>
+        <line num="240" type="stmt" count="0"/>
+        <line num="246" type="method" name="getTmin" visibility="public" complexity="2" crap="2" count="1"/>
+        <line num="248" type="stmt" count="1"/>
+        <line num="255" type="method" name="setTmin" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="257" type="stmt" count="1"/>
+        <line num="259" type="stmt" count="1"/>
+        <line num="265" type="method" name="getActualSunnyHours" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="267" type="stmt" count="0"/>
+        <line num="274" type="method" name="setActualSunnyHours" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="276" type="stmt" count="0"/>
+        <line num="278" type="stmt" count="0"/>
+        <line num="284" type="method" name="getPrecipitation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="286" type="stmt" count="0"/>
+        <line num="293" type="method" name="setPrecipitation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="295" type="stmt" count="0"/>
+        <line num="297" type="stmt" count="0"/>
+        <line num="303" type="method" name="getWind2" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="305" type="stmt" count="0"/>
+        <line num="313" type="method" name="setWind2" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="315" type="stmt" count="0"/>
+        <line num="316" type="stmt" count="0"/>
+        <line num="318" type="stmt" count="0"/>
+        <line num="324" type="method" name="getWind2origin" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="326" type="stmt" count="0"/>
+        <line num="333" type="method" name="setWind2origin" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="335" type="stmt" count="0"/>
+        <line num="337" type="stmt" count="0"/>
+        <line num="343" type="method" name="getTdew" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="345" type="stmt" count="0"/>
+        <line num="352" type="method" name="setTdew" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="354" type="stmt" count="0"/>
+        <line num="356" type="stmt" count="0"/>
+        <line num="362" type="method" name="getRHmax" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="364" type="stmt" count="0"/>
+        <line num="373" type="method" name="setRHmax" visibility="public" complexity="3" crap="12.00" count="0"/>
+        <line num="375" type="stmt" count="0"/>
+        <line num="376" type="stmt" count="0"/>
+        <line num="378" type="stmt" count="0"/>
+        <line num="381" type="stmt" count="0"/>
+        <line num="387" type="method" name="getRHmin" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="389" type="stmt" count="0"/>
+        <line num="398" type="method" name="setRHmin" visibility="public" complexity="3" crap="12.00" count="0"/>
+        <line num="400" type="stmt" count="0"/>
+        <line num="401" type="stmt" count="0"/>
+        <line num="403" type="stmt" count="0"/>
+        <line num="406" type="stmt" count="0"/>
+        <line num="412" type="method" name="getPression" visibility="public" complexity="2" crap="2.06" count="5"/>
+        <line num="414" type="stmt" count="5"/>
+        <line num="415" type="stmt" count="0"/>
+        <line num="417" type="stmt" count="5"/>
+        <line num="418" type="stmt" count="5"/>
+        <line num="425" type="method" name="setPression" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="427" type="stmt" count="0"/>
+        <line num="428" type="stmt" count="0"/>
+        <line num="439" type="method" name="atmosphericPressureByAltitude" visibility="private" complexity="2" crap="2" count="5"/>
+        <line num="441" type="stmt" count="5"/>
+        <metrics loc="443" ncloc="237" classes="1" methods="31" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="59" coveredstatements="15" elements="90" coveredelements="23"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/PenmanCalc.php">
+        <class name="Evapotrans\PenmanCalc" namespace="Evapotrans">
+          <metrics complexity="20" methods="11" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="8" elements="58" coveredelements="12"/>
+        </class>
+        <line num="38" type="method" name="psychrometricConstant" visibility="public" complexity="1" crap="1" count="5"/>
+        <line num="40" type="stmt" count="5"/>
+        <line num="41" type="stmt" count="5"/>
+        <line num="51" type="method" name="EToPenmanMonteith" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="61" type="stmt" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="82" type="method" name="penmanMonteithFormula" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="83" type="stmt" count="0"/>
+        <line num="84" type="stmt" count="0"/>
+        <line num="85" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="105" type="method" name="simplisticETo" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="124" type="method" name="equivalentEvaporation" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="140" type="method" name="meanSaturationVapourPression" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="142" type="stmt" count="1"/>
+        <line num="144" type="stmt" count="1"/>
+        <line num="148" type="method" name="vapourPressionFromTdew" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="150" type="stmt" count="0"/>
+        <line num="154" type="method" name="vapourPressionFromRHmax" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="157" type="stmt" count="0"/>
+        <line num="167" type="method" name="saturationVapourPression" visibility="private" complexity="1" crap="1" count="6"/>
+        <line num="169" type="stmt" count="6"/>
+        <line num="171" type="stmt" count="6"/>
+        <line num="180" type="method" name="slopeOfSaturationVapourPressureCurve" visibility="private" complexity="1" crap="1" count="3"/>
+        <line num="182" type="stmt" count="3"/>
+        <line num="184" type="stmt" count="3"/>
+        <line num="194" type="method" name="actualVaporPressionStrategy" visibility="public" complexity="10" crap="110.00" count="0"/>
+        <line num="197" type="stmt" count="0"/>
+        <line num="198" type="stmt" count="0"/>
+        <line num="202" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="0"/>
+        <line num="204" type="stmt" count="0"/>
+        <line num="205" type="stmt" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="209" type="stmt" count="0"/>
+        <line num="210" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="215" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
+        <line num="220" type="stmt" count="0"/>
+        <line num="221" type="stmt" count="0"/>
+        <line num="224" type="stmt" count="0"/>
+        <metrics loc="226" ncloc="107" classes="1" methods="11" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="8" elements="58" coveredelements="12"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/Plant.php">
+        <class name="Evapotrans\Plant" namespace="Evapotrans">
+          <metrics complexity="3" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="13" coveredelements="0"/>
+        </class>
+        <line num="25" type="method" name="__construct" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="34" type="method" name="getKcStade" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="42" type="method" name="getPlantName" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <metrics loc="46" ncloc="23" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="13" coveredelements="0"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/RadiationCalc.php">
+        <class name="Evapotrans\RadiationCalc" namespace="Evapotrans">
+          <metrics complexity="23" methods="12" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="61" coveredstatements="28" elements="73" coveredelements="33"/>
+        </class>
+        <line num="32" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="4"/>
+        <line num="34" type="stmt" count="4"/>
+        <line num="35" type="stmt" count="4"/>
+        <line num="36" type="stmt" count="4"/>
+        <line num="37" type="stmt" count="4"/>
+        <line num="42" type="method" name="getAlbedo" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="57" type="method" name="solarRadiationStrategyFromMeteodata" visibility="public" complexity="5" crap="8.59" count="1"/>
+        <line num="59" type="stmt" count="1"/>
+        <line num="62" type="stmt" count="1"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="68" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="84" type="stmt" count="1"/>
+        <line num="85" type="stmt" count="1"/>
+        <line num="86" type="stmt" count="1"/>
+        <line num="87" type="stmt" count="1"/>
+        <line num="88" type="stmt" count="1"/>
+        <line num="89" type="stmt" count="1"/>
+        <line num="92" type="stmt" count="1"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="113" type="method" name="solarRadiationFromTemperatures" visibility="private" complexity="2" crap="2" count="1"/>
+        <line num="115" type="stmt" count="1"/>
+        <line num="117" type="stmt" count="1"/>
+        <line num="139" type="method" name="solarRadiationFromDurationSunshineAndRa" visibility="public" complexity="3" crap="3" count="1"/>
+        <line num="147" type="stmt" count="1"/>
+        <line num="149" type="stmt" count="1"/>
+        <line num="153" type="method" name="netSolarRadiation" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="155" type="stmt" count="0"/>
+        <line num="173" type="method" name="netLongwaveRadiation" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="176" type="stmt" count="1"/>
+        <line num="178" type="stmt" count="1"/>
+        <line num="179" type="stmt" count="1"/>
+        <line num="181" type="stmt" count="1"/>
+        <line num="185" type="method" name="netRadiation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="187" type="stmt" count="0"/>
+        <line num="199" type="method" name="netRadiationFromMeteodata" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="201" type="stmt" count="0"/>
+        <line num="202" type="stmt" count="0"/>
+        <line num="204" type="stmt" count="0"/>
+        <line num="206" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="210" type="stmt" count="0"/>
+        <line num="212" type="stmt" count="0"/>
+        <line num="214" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
+        <line num="217" type="stmt" count="0"/>
+        <line num="218" type="stmt" count="0"/>
+        <line num="219" type="stmt" count="0"/>
+        <line num="220" type="stmt" count="0"/>
+        <line num="222" type="stmt" count="0"/>
+        <line num="236" type="method" name="clearSkySolarRadiation" visibility="public" complexity="3" crap="12.00" count="0"/>
+        <line num="238" type="stmt" count="0"/>
+        <line num="239" type="stmt" count="0"/>
+        <line num="241" type="stmt" count="0"/>
+        <line num="244" type="stmt" count="0"/>
+        <line num="254" type="method" name="deg2Kelvin" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="256" type="stmt" count="1"/>
+        <line num="264" type="method" name="extraterresRadiationFromMeteodata" visibility="public" complexity="2" crap="2.02" count="2"/>
+        <line num="266" type="stmt" count="2"/>
+        <line num="267" type="stmt" count="0"/>
+        <line num="269" type="stmt" count="2"/>
+        <line num="270" type="stmt" count="2"/>
+        <line num="271" type="stmt" count="2"/>
+        <line num="275" type="stmt" count="2"/>
+        <metrics loc="277" ncloc="129" classes="1" methods="12" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="61" coveredstatements="28" elements="73" coveredelements="33"/>
+      </file>
+    </package>
+    <package name="Evapotrans\ValueObjects">
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/ValueObjects/AbstractMeasure.php">
+        <class name="Evapotrans\ValueObjects\AbstractMeasure" namespace="Evapotrans\ValueObjects">
+          <metrics complexity="5" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="5" elements="13" coveredelements="7"/>
+        </class>
+        <line num="21" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="23" type="stmt" count="1"/>
+        <line num="24" type="stmt" count="1"/>
+        <line num="25" type="stmt" count="1"/>
+        <line num="26" type="stmt" count="1"/>
+        <line num="31" type="method" name="getValue" visibility="public" complexity="1" crap="1" count="2"/>
+        <line num="33" type="stmt" count="2"/>
+        <line num="39" type="method" name="getUnit" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="52" type="method" name="convertUnit" visibility="protected" complexity="2" crap="6.00" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <metrics loc="60" ncloc="38" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="5" elements="13" coveredelements="7"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/ValueObjects/Energy.php">
+        <class name="Evapotrans\ValueObjects\Energy" namespace="Evapotrans\ValueObjects">
+          <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="6" coveredelements="0"/>
+        </class>
+        <line num="25" type="method" name="equivalentEvaporation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <metrics loc="31" ncloc="16" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="6" coveredelements="0"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/ValueObjects/Humidity.php">
+        <class name="Evapotrans\ValueObjects\Humidity" namespace="Evapotrans\ValueObjects">
+          <metrics complexity="4" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="7" coveredelements="0"/>
+        </class>
+        <line num="12" type="method" name="convertUnit" visibility="protected" complexity="4" crap="20.00" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <metrics loc="20" ncloc="18" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="7" coveredelements="0"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/ValueObjects/Pression.php">
+        <class name="Evapotrans\ValueObjects\Pression" namespace="Evapotrans\ValueObjects">
+          <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        </class>
+        <metrics loc="8" ncloc="8" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/ValueObjects/Temperature.php">
+        <class name="Evapotrans\ValueObjects\Temperature" namespace="Evapotrans\ValueObjects">
+          <metrics complexity="4" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="2" elements="6" coveredelements="2"/>
+        </class>
+        <line num="11" type="method" name="convertUnit" visibility="protected" complexity="4" crap="7.46" count="1"/>
+        <line num="13" type="stmt" count="1"/>
+        <line num="14" type="stmt" count="1"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <metrics loc="22" ncloc="22" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="2" elements="6" coveredelements="2"/>
+      </file>
+      <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/ValueObjects/Wind2m.php">
+        <class name="Evapotrans\ValueObjects\Wind2m" namespace="Evapotrans\ValueObjects">
+          <metrics complexity="8" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
+        </class>
+        <line num="18" type="method" name="__construct" visibility="public" complexity="3" crap="3" count="2"/>
+        <line num="20" type="stmt" count="2"/>
+        <line num="21" type="stmt" count="2"/>
+        <line num="22" type="stmt" count="2"/>
+        <line num="32" type="method" name="convertSpeedToMS" visibility="private" complexity="3" crap="3" count="2"/>
+        <line num="34" type="stmt" count="2"/>
+        <line num="35" type="stmt" count="2"/>
+        <line num="37" type="stmt" count="1"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="41" type="stmt" count="1"/>
+        <line num="53" type="method" name="calcWind2meters" visibility="private" complexity="2" crap="2" count="2"/>
+        <line num="55" type="stmt" count="2"/>
+        <line num="56" type="stmt" count="2"/>
+        <line num="59" type="stmt" count="2"/>
+        <metrics loc="61" ncloc="35" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
+      </file>
+    </package>
+    <metrics files="15" loc="1689" ncloc="876" classes="13" methods="98" coveredmethods="35" conditionals="0" coveredconditionals="0" statements="318" coveredstatements="102" elements="416" coveredelements="137"/>
+  </project>
+</coverage>
