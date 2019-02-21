@@ -26,19 +26,6 @@ class MeteoCalc
     }
 
     /**
-     * Number of the day in the year
-     * 1-01=>1, 27 mars => 85.
-     *
-     * @param \DateTime $dateTime
-     *
-     * @return int
-     */
-    private function daysOfYear(\DateTime $dateTime): int
-    {
-        return 1 + $dateTime->format('z');
-    }
-
-    /**
      * @param int $dayOfTheYear
      *
      * @return float|int

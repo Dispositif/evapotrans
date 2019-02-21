@@ -13,6 +13,7 @@ class LocationTest extends \PHPUnit\Framework\TestCase
         $this::assertEquals(43.29504, $location->getLatitude());
         $this::assertEquals(5.3865, $location->getLongitude());
         $this::assertEquals(35, $location->getAltitude());
+        $this::assertEquals(0.76, round($location->getLatitudeRadian(),2));
     }
     public function testExceptionConstructor()
     {
