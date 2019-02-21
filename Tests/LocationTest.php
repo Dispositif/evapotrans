@@ -2,8 +2,6 @@
 
 namespace Evapotrans;
 
-include __DIR__.'/../Evapotrans/Location.php';
-
 class LocationTest extends \PHPUnit\Framework\TestCase
 {
 
