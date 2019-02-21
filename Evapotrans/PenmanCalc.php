@@ -16,6 +16,16 @@ class PenmanCalc
      */
     const G_CONST = 0;
 
+    private $meteoData;
+
+    private $Tmean;
+    private $u2;
+    private $e_s;
+    private $e_a;
+    private $delta;
+    private $Rn;
+    private $g;
+
     /**
      * Psychrometric constant (g) [8]
      * The specific heat at constant pressure is the amount of energy required
@@ -40,15 +50,16 @@ class PenmanCalc
      */
     public function EToPenmanMonteith(MeteoData $data)
     {
-        return $this->penmanMonteithFormula(
-            $data->getTmean(),
-            $data->getWind2(),
-            $this->meanSaturationVapourPression($data->getTmin(), $data->getTmax()),
-            $this->actualVaporPressionStrategy($data),
-            $this->slopeOfSaturationVapourPressureCurve($data->getTmean()),
-            (new RadiationCalc($data))->netRadiationFromMeteodata($data),
-            $this->psychrometricConstant($data)
-        );
+        $this->Tmean = $data->getTmean();
+        $this->u2 = $data->getWind2();
+        $this->e_s = $this->meanSaturationVapourPression($data->getTmin(), $data->getTmax());
+        $this->e_a = $this->actualVaporPressionStrategy($data);
+        $this->delta = $this->slopeOfSaturationVapourPressureCurve($data->getTmean());
+        $this->Rn = (new RadiationCalc($data))->netRadiationFromMeteodata($data);
+        $this->g = $this->psychrometricConstant($data);
+
+        $ETo = $this->penmanMonteithFormula();
+        return round($ETo, 1);
     }
 
     /**
@@ -59,30 +70,23 @@ class PenmanCalc
      * requires air temperature, humidity, radiation and wind speed data for daily, weekly, ten-day or monthly calculations.
      * T°, wind taken at 2 meters.
      *
-     * @param float $Tmoyen
+     * @param float $Tmean
      * @param float $u2
      * @param float $e_s
      * @param float $e_a
      * @param float $delta
      * @param float $Rn
      * @param float $g
-     *
      * @return float ETo mm.day-1
      */
-    private function penmanMonteithFormula(
-        float $Tmoyen,
-        float $u2,
-        float $e_s,
-        float $e_a,
-        float $delta,
-        float $Rn,
-        float $g
-    ): float {
+    private function penmanMonteithFormula(): float {
         $G = self::G_CONST;
-        $ETo = (0.408 * $delta * ($Rn - $G) + $g * 900 / ($Tmoyen + 273) * $u2 * ($e_s - $e_a)) / ($delta + $g * (1
-                    + 0.34 * $u2));
+        $ETo = (0.408 * $this->delta * ($this->Rn - $G)
+                + $this->g * 900 / ($this->Tmean + 273)
+                * $this->u2 * ($this->e_s - $this->e_a))
+            / ($this->delta + $this->g * (1 + 0.34 * $this->u2));
 
-        return round($ETo, 1); // mm.day-1
+        return $ETo; // mm.day-1
     }
 
     /**
@@ -160,7 +164,7 @@ class PenmanCalc
      *
      * @return float e_o (kPa)
      */
-    public function saturationVapourPression(float $temperature)
+    private function saturationVapourPression(float $temperature)
     {
         $e = 0.6108 * exp(17.27 * $temperature / ($temperature + 237.3));
 
@@ -169,13 +173,13 @@ class PenmanCalc
 
     /**
      * Slope of saturation vapour pressure curve (∆, delta)
-     * @param float $Tmoyen
      *
+     * @param float $Tmean
      * @return float|int
      */
-    private function slopeOfSaturationVapourPressureCurve(float $Tmoyen)
+    private function slopeOfSaturationVapourPressureCurve(float $Tmean)
     {
-        $delta = (4098 * (0.6108 * exp(17.27 * $Tmoyen / ($Tmoyen + 237.3)))) / pow(($Tmoyen + 237.3), 2);
+        $delta = (4098 * (0.6108 * exp(17.27 * $Tmean / ($Tmean + 237.3)))) / pow(($Tmean + 237.3), 2);
 
         return round($delta, 3);
     }
