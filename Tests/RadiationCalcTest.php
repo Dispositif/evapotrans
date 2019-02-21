@@ -1,7 +1,7 @@
 <?php
 
-use Evapotrans\MeteoData;
 use Evapotrans\Location;
+use Evapotrans\MeteoData;
 use Evapotrans\RadiationCalc;
 use Evapotrans\ValueObjects\Temperature;
 use PHPUnit\Framework\TestCase;
@@ -41,6 +41,20 @@ class RadiationCalcTest extends TestCase
         $this->radiationCalc = new RadiationCalc($meteoData);
     }
 
+    /**
+     * Allow TDD tests on private method
+     *
+     * @throws ReflectionException
+     */
+    private function invokeMethod(Object &$object, string $methodName, array $parameters = [])
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
+    }
+
     public function testSolarRadiation()
     {
         $actual = $this->radiationCalc->solarRadiationFromDurationSunshineAndRa(25.1, 7.1, 10.9);
@@ -50,6 +64,7 @@ class RadiationCalcTest extends TestCase
     /**
      * EXAMPLE 15. Determination of solar radiation from temperature data.
      *
+     * @group functional
      * @throws Exception
      */
     public function testSolarRadiationFromTempData()
@@ -74,11 +89,14 @@ class RadiationCalcTest extends TestCase
         $data = new MeteoData(
             new Location(-20, 0), new \DateTime('2018-09-03')
         );
-//        $data->setRa(null);  // Todo setter/getter Ra
+        //        $data->setRa(null);  // Todo setter/getter Ra
         $Ra = $this->radiationCalc->extraterresRadiationFromMeteodata($data);
         self::assertEquals(32.2, $Ra);
     }
 
+    /**
+     * @group functional
+     */
     public function testNetLongwaveRadiation()
     {
         $Rnl = $this->radiationCalc->netLongwaveRadiation(2.1, 25.1, 19.1, 14.5, 18.8);

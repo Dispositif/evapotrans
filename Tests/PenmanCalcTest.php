@@ -1,7 +1,7 @@
 <?php
 
-use Evapotrans\MeteoData;
 use Evapotrans\Location;
+use Evapotrans\MeteoData;
 use Evapotrans\ValueObjects\Wind2m;
 use PHPUnit\Framework\TestCase;
 
@@ -37,6 +37,32 @@ class PenmanCalcTest extends TestCase
     }
 
     /**
+     * TDD : Allow tests on private method
+     *
+     * @throws ReflectionException
+     */
+    private function invokeMethod(Object &$object, string $methodName, array $parameters = [])
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
+    }
+
+    public function testCalcWind2meters()
+    {
+        $wind = new Wind2m(55.0);
+        $actual = $this->invokeMethod(
+            $wind,
+            'calcWind2meters',
+            [3.2, 10]
+        );
+        self::assertEquals(2.4, $actual);
+    }
+
+    /**
+     * @group functional
      * @throws Exception
      */
     public function testWind2m()
@@ -53,24 +79,6 @@ class PenmanCalcTest extends TestCase
         $this->expectException(\Evapotrans\Exception::class);
         new Wind2m(5, 'm');
     }
-
-    ///**
-    // * @throws Exception
-    // */
-    //public function testWind()
-    //{
-    //    $wind = new Wind(3.2, new UnitOld('m/s'), 10);
-    //    self::assertEquals(2.4, $wind->getSpeed2meters());
-    //
-    //    $wind = new Wind(5, new UnitOld('m/s'));
-    //    self::assertEquals(5, $wind->getSpeed2meters());
-    //
-    //    $wind = new Wind(36, new UnitOld('km/h'));
-    //    self::assertEquals(10, $wind->getSpeed2meters());
-    //
-    //    $this->expectException(\Evapotrans\Exception::class);
-    //    new Wind(5, new UnitOld('m'));
-    //}
 
     public function testDayOfYear()
     {
@@ -90,7 +98,7 @@ class PenmanCalcTest extends TestCase
      */
     public function testDaylightHours(string $date, $expected, $lat)
     {
-        $location = new Location($lat,0.0, 0);
+        $location = new Location($lat, 0.0, 0);
         $meteoData = new MeteoData($location, new DateTime($date));
         $day = $meteoData->getDaysOfYear();
         self::assertEquals($expected, $this->meteo->daylightHours($day, $lat));
@@ -123,7 +131,7 @@ class PenmanCalcTest extends TestCase
      */
     public function testPsychometricConstant($altitude, $expected)
     {
-        $location = new Location(0.0,0.0, $altitude);
+        $location = new Location(0.0, 0.0, $altitude);
         $data = new MeteoData($location, new DateTime('2018-01-01'));
         self::assertEquals($expected, $this->ETcalc->psychrometricConstant($data));
     }
@@ -150,10 +158,8 @@ class PenmanCalcTest extends TestCase
      */
     public function testSaturationVaporPression($expected, $temp)
     {
-        self::assertEquals(
-            $expected,
-            round($this->ETcalc->saturationVapourPression($temp), 3)
-        );
+        $actual = $this->invokeMethod($this->ETcalc,'saturationVapourPression', [$temp] );
+        self::assertEquals($expected, round($actual, 3));
     }
 
     public function saturationVaporPressionProvider()
@@ -167,12 +173,25 @@ class PenmanCalcTest extends TestCase
         ];
     }
 
-//    public function testSlopeOfSaturationVapourPressureCurve()
-//    {
-//        self::assertEquals(0.047, $this->ETcalc->slopeOfSaturationVapourPressureCurve(1.0));
-//        self::assertEquals(0.082, $this->ETcalc->slopeOfSaturationVapourPressureCurve(10.0));
-//        self::assertEquals(0.145, $this->ETcalc->slopeOfSaturationVapourPressureCurve(20.0));
-//        // fail : actual 0.243
-//        //self::assertEquals(0.249, $this->ETcalc->slopeOfSaturationVapourPressureCurve(30.0));
-//    }
+    /**
+     * @param $Tmean
+     * @param $expected
+     * @throws ReflectionException
+     * @dataProvider slopeOfSaturationVapourPressureCurveProvider
+     */
+    public function testSlopeOfSaturationVapourPressureCurve($Tmean, $expected)
+    {
+        $actual = $this->invokeMethod($this->ETcalc, 'slopeOfSaturationVapourPressureCurve', [$Tmean]);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function slopeOfSaturationVapourPressureCurveProvider()
+    {
+        return [
+            [1.0, 0.047],
+            [10.0, 0.082],
+            [20.0, 0.145],
+            //            [30.0, 0.249],
+        ];
+    }
 }
