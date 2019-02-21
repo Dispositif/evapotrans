@@ -69,7 +69,7 @@ class RadiationCalc
             } else {
                 $N = $this->meteoCalc->daylightHours(
                     $data->getDaysOfYear(),
-                    $data->getLocation()->getLat()
+                    $data->getLocation()->getLatitude()
                 );
                 // todo move daylightHours on MeteoData
             }
@@ -205,7 +205,7 @@ class RadiationCalc
 
         $calc = new MeteoCalc();
         // todo move on MeteoData
-        $N = $calc->daylightHours($meteoData->getDaysOfYear(), $meteoData->getLocation()->getLat());
+        $N = $calc->daylightHours($meteoData->getDaysOfYear(), $meteoData->getLocation()->getLatitude());
 
         $Ra = $this->extraterresRadiationFromMeteodata($meteoData);
 
@@ -268,7 +268,7 @@ class RadiationCalc
         } else {
             $Ra = $this->meteoCalc->extraterrestrialRadiationDailyPeriod(
                 $data->getDaysOfYear(),
-                $data->getLocation()->getLat()
+                $data->getLocation()->getLatitude()
             );
         }
 

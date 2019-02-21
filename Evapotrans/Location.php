@@ -2,15 +2,27 @@
 
 namespace Evapotrans;
 
+/**
+ * Class Location
+ */
 class Location
 {
-    private $lat;
-
-    private $lon;
-
+    /**
+     * @var float
+     */
+    private $latitude;
+    /**
+     * @var float
+     */
+    private $longitude;
+    /**
+     * @var int
+     */
     private $altitude = 0;
-
-    private $name = '';
+    /**
+     * @var string|null
+     */
+    private $name = null;
 
     /**
      * *  for 'interior' locations, where land mass dominates and air masses are
@@ -25,15 +37,19 @@ class Location
     /**
      * Location constructor.
      *
-     * @param float       $lat
-     * @param float       $lon
-     * @param int         $altitude
+     * @param float $latitude
+     * @param float $longitude
+     * @param int $altitude
      * @param string|null $name
      */
-    public function __construct(float $lat, float $lon, int $altitude = null, ?string $name = null)
-    {
-        $this->lat = $lat;
-        $this->lon = $lon;
+    public function __construct(
+        float $latitude,
+        float $longitude,
+        int $altitude = null,
+        ?string $name = null
+    ) {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
         if ($altitude) {
             $this->altitude = $altitude;
         }
@@ -45,57 +61,33 @@ class Location
     /**
      * @return mixed
      */
-    public function getLat()
+    public function getLatitude(): float
     {
-        return $this->lat;
+        return $this->latitude;
     }
 
     /**
      * @return float|int
      */
-    public function getLat_radian()
+    public function getLat_radian(): float
     {
-        return pi() / 180 * $this->getLat();
-    }
-
-    /**
-     * @param mixed $lat
-     */
-    public function setLat(float $lat)
-    {
-        $this->lat = $lat;
+        return pi() / 180 * $this->getLatitude();
     }
 
     /**
      * @return mixed
      */
-    public function getLon()
+    public function getLongitude(): float
     {
-        return $this->lon;
-    }
-
-    /**
-     * @param mixed $lon
-     */
-    public function setLon($lon)
-    {
-        $this->lon = $lon;
+        return $this->longitude;
     }
 
     /**
      * @return int
      */
-    public function getAltitude()
+    public function getAltitude(): int
     {
         return $this->altitude;
-    }
-
-    /**
-     * @param int $altitude
-     */
-    public function setAltitude(int $altitude)
-    {
-        $this->altitude = $altitude;
     }
 
     /**
@@ -119,6 +111,8 @@ class Location
      */
     public function setKRs(float $kRs): void
     {
-        $this->kRs = $kRs;
+        if ($kRs >= 0.16 && $kRs <= 0.19) {
+            $this->kRs = $kRs;
+        }
     }
 }

@@ -52,7 +52,7 @@ echo 'ETo = '.$ETo.' mm/day';
 // Simplistic calculation
 
 $calc = new MeteoCalc();
-$Ra = $calc->extraterrestrialRadiationDailyPeriod($data->getDaysOfYear(), $data->getLocation()->getLat());
+$Ra = $calc->extraterrestrialRadiationDailyPeriod($data->getDaysOfYear(), $data->getLocation()->getLatitude());
 
 $simplisticETo = $ETcalc->simplisticETo($data->getTmin(), $data->getTmax(), $Ra);
 $simplistic_error = round(abs($simplisticETo - $ETo) * 100 / $ETo);
