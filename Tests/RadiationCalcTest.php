@@ -75,7 +75,7 @@ class RadiationCalcTest extends TestCase
         $data = new MeteoData(
             new Location(-20, 0), new \DateTime('2018-09-03')
         );
-        //        $data->setRa(null);  // Todo setter/getter Ra
+        // Todo setter/getter Ra
         $Ra = (new RadiationCalc($data))->extraterresRadiationFromMeteodata($data);
         self::assertEquals(32.2, $Ra);
     }

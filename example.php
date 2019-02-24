@@ -8,9 +8,7 @@ use Evapotrans\ValueObjects\Temperature;
 use Evapotrans\ValueObjects\Wind2m;
 
 date_default_timezone_set('Europe/Paris');
-error_reporting(E_ALL); //^ E_NOTICE);
-
-//include 'vendor/autoload.php';
+error_reporting(E_ALL);
 
 spl_autoload_register(
     function ($class) {

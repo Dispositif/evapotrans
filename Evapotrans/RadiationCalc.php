@@ -264,12 +264,7 @@ class RadiationCalc
      */
     public function extraterresRadiationFromMeteodata(MeteoData $data)
     {
-//        if ($data->Ra) {
-//            $Ra = $data->Ra; // TODO setter in MeteoData
-//        } else {
             $Ra = $this->meteoCalc->extraterrestrialRadiationDailyPeriod();
-//        }
-
         return $Ra;
     }
 }
