@@ -16,7 +16,7 @@ class MeteoData
     private $location;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      */
     private $date;
 
@@ -142,15 +142,15 @@ class MeteoData
     }
 
     /**
-     * ClimaticData constructor.
+     * MeteoData constructor.
      *
-     * @param $location
-     * @param $date
+     * @param Location  $location
+     * @param \DateTime $date
      */
     public function __construct(Location $location, \DateTime $date)
     {
-        $this->location = $location;
-        $this->date = $date;
+        $this->location = clone $location;
+        $this->date = \DateTimeImmutable::createFromMutable($date);
     }
 
     /**
@@ -159,17 +159,6 @@ class MeteoData
     public function getLocation(): Location
     {
         return $this->location;
-    }
-
-    /**
-     * @param mixed $location
-     * @return MeteoData
-     */
-    public function setLocation($location): self
-    {
-        $this->location = $location;
-
-        return $this;
     }
 
     /**
@@ -184,23 +173,11 @@ class MeteoData
      * Number of the day in the year
      * 1-01=>1, 27 mars => 85.
      *
-     * @param \DateTime $dateTime
      * @return int
      */
     public function getDaysOfYear(): int
     {
         return 1 + $this->date->format('z');
-    }
-
-    /**
-     * @param mixed $date
-     * @return MeteoData
-     */
-    public function setDate($date): self
-    {
-        $this->date = $date;
-
-        return $this;
     }
 
     /**
@@ -424,6 +401,7 @@ class MeteoData
             return $this->pression;
         }
         $alt = $this->location->getAltitude();
+
         return $this->atmosphericPressureByAltitude($alt);
     }
 
@@ -434,6 +412,7 @@ class MeteoData
     public function setPression(float $pression): self
     {
         $this->pression = $pression;
+
         return $this;
     }
 
