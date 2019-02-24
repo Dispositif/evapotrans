@@ -19,20 +19,20 @@ class RadiationCalc
     private $albedo = 0.23;
 
     /**
-     * @var MeteoCalc
+     * @var ExtraRadiation
      */
     private $meteoCalc;
 
     /**
      * RadiationCalc constructor.
      *
-     * @param MeteoData $meteoData
-     * @param MeteoCalc $meteoCalc
+     * @param MeteoData      $meteoData
+     * @param ExtraRadiation $meteoCalc
      */
     public function __construct(MeteoData $meteoData, $albedo = 0.23)
     {
         $this->meteoData = $meteoData;
-        $this->meteoCalc = new MeteoCalc();
+        $this->meteoCalc = new ExtraRadiation($meteoData);
         $this->albedo = $albedo; // TODO (get from Area or MeteoData)
     }
 
@@ -203,7 +203,8 @@ class RadiationCalc
         }
         $n = $meteoData->getActualSunnyHours();
 
-        $calc = new MeteoCalc();
+        $calc = new ExtraRadiation($meteoData);
+
         // todo move on MeteoData
         $N = $calc->daylightHours($meteoData->getDaysOfYear(), $meteoData->getLocation()->getLatitude());
 
@@ -263,14 +264,11 @@ class RadiationCalc
      */
     public function extraterresRadiationFromMeteodata(MeteoData $data)
     {
-        if ($data->Ra) {
-            $Ra = $data->Ra; // TODO setter in MeteoData
-        } else {
-            $Ra = $this->meteoCalc->extraterrestrialRadiationDailyPeriod(
-                $data->getDaysOfYear(),
-                $data->getLocation()->getLatitude()
-            );
-        }
+//        if ($data->Ra) {
+//            $Ra = $data->Ra; // TODO setter in MeteoData
+//        } else {
+            $Ra = $this->meteoCalc->extraterrestrialRadiationDailyPeriod();
+//        }
 
         return $Ra;
     }

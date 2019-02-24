@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
 class RadiationCalcTest extends TestCase
 {
     /**
-     * @var \Evapotrans\MeteoCalc
+     * @var \Evapotrans\ExtraRadiation
      */
-    private $meteoCalc;
+    private $extraRadiation;
 
     /**
      * @var RadiationCalc
@@ -20,11 +20,10 @@ class RadiationCalcTest extends TestCase
 
     public function setUp(): void
     {
-        $this->meteoCalc = new \Evapotrans\MeteoCalc();
-
         $meteoData = new MeteoData(
             new Location(-22.90, 0), new \DateTime('2015-05-15')
         );
+        $this->extraRadiation = new \Evapotrans\ExtraRadiation($meteoData);
         $this->radiationCalc = new RadiationCalc($meteoData);
     }
 
@@ -67,7 +66,7 @@ class RadiationCalcTest extends TestCase
 
         self::assertEquals(
             22.3,
-            $this->radiationCalc->solarRadiationStrategyFromMeteodata($data)
+            (new RadiationCalc($data))->solarRadiationStrategyFromMeteodata($data)
         );
     }
 
@@ -77,7 +76,7 @@ class RadiationCalcTest extends TestCase
             new Location(-20, 0), new \DateTime('2018-09-03')
         );
         //        $data->setRa(null);  // Todo setter/getter Ra
-        $Ra = $this->radiationCalc->extraterresRadiationFromMeteodata($data);
+        $Ra = (new RadiationCalc($data))->extraterresRadiationFromMeteodata($data);
         self::assertEquals(32.2, $Ra);
     }
 

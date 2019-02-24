@@ -1,5 +1,6 @@
 <?php
 
+use Evapotrans\ExtraRadiation;
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
 use Evapotrans\ValueObjects\Wind2m;
@@ -13,14 +14,17 @@ class PenmanCalcTest extends TestCase
     private $ETcalc;
 
     /**
-     * @var \Evapotrans\MeteoCalc
+     * @var \Evapotrans\ExtraRadiation
      */
     private $meteo;
 
     public function setUp(): void
     {
         $this->ETcalc = new \Evapotrans\PenmanCalc();
-        $this->meteo = new \Evapotrans\MeteoCalc();
+
+        $loc = new Location(45.72, 0, 200);
+        $meteoData = new MeteoData($loc, new \DateTime('2018-01-01'));
+        $this->meteo = new ExtraRadiation($meteoData);
     }
 
     /**
@@ -88,7 +92,14 @@ class PenmanCalcTest extends TestCase
         $location = new Location($lat, 0.0, 0);
         $meteoData = new MeteoData($location, new DateTime($date));
         $day = $meteoData->getDaysOfYear();
-        self::assertEquals($expected, $this->meteo->daylightHours($day, $lat));
+
+        $actual = $this->invokeMethod(
+            $this->meteo,
+            'daylightHours',
+            [$day, $lat]
+        );
+        self::assertEquals($expected, $actual);
+
     }
 
     /**

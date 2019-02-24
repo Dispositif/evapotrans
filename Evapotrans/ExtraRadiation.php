@@ -7,14 +7,51 @@ namespace Evapotrans;
 /**
  * Class MeteoCalculation.
  */
-class MeteoCalc
+class ExtraRadiation
 {
+    /**
+     * @var int
+     */
+    private $dayOfTheYear;
+    /**
+     * @var float|mixed
+     */
+    private $latitude;
+
+    /**
+     * ExtraRadiation constructor.
+     *
+     * @param int   $dayOfTheYear
+     * @param float $latitude
+     */
+    public function __construct(MeteoData $meteoData)
+    {
+        $this->dayOfTheYear = $meteoData->getDaysOfYear();
+        $this->latitude = $meteoData->getLocation()->getLatitude();
+    }
+
+    /**
+     * Extraterrestrial radiation for daily periods (Ra) [21]
+     *
+     * @return float|int MJ.m-2.d-1
+     */
+    public function extraterrestrialRadiationDailyPeriod()
+    {
+        $rlat = $this->degres2radian($this->latitude);
+        $dr = $this->inverseRelativeDistanceEarthSun($this->dayOfTheYear);
+        $d = $this->solarDeclinaison($this->dayOfTheYear);
+        $ws = $this->sunsetHourAngle($this->dayOfTheYear, $this->latitude);
+
+        $Ra = 24 * 60 / pi() * 0.0820 * $dr * ($ws * sin($rlat) * sin($d) + cos($rlat) * cos($d) * sin($ws));
+
+        return round($Ra, 1); // MJ.m-2.d-1
+    }
+
     /**
      * Convert degres to radian.
      *
      * @param int|float $degres
      * @param int|null  $minutes
-     *
      * @return float
      */
     private function degres2radian($degres, int $minutes = null): float
@@ -27,7 +64,6 @@ class MeteoCalc
 
     /**
      * @param int $dayOfTheYear
-     *
      * @return float|int
      */
     private function inverseRelativeDistanceEarthSun(int $dayOfTheYear)
@@ -40,7 +76,6 @@ class MeteoCalc
 
     /**
      * @param int $dayOfTheYear
-     *
      * @return float
      */
     private function solarDeclinaison(int $dayOfTheYear)
@@ -58,7 +93,6 @@ class MeteoCalc
      *
      * @param int $dayOfTheYear
      * @param     $latitude
-     *
      * @return float
      */
     private function sunsetHourAngle(int $dayOfTheYear, $latitude)
@@ -72,10 +106,10 @@ class MeteoCalc
 
     /**
      * Daylight hours or maximum possible duration of sunshine (N).
+     * todo move to MeteoData::daylightHours ?
      *
      * @param int $dayOfTheYear
      * @param     $latitude
-     *
      * @return float
      */
     public function daylightHours(int $dayOfTheYear, $latitude): float
@@ -84,26 +118,5 @@ class MeteoCalc
         $N = round(24 / pi() * $ws, 1);
 
         return round($N, 1);
-    }
-
-    /**
-     * Extraterrestrial radiation for daily periods (Ra) [21]
-     * TODO refactor : inject MeteoData.
-     *
-     * @param int   $dayOfTheYear
-     * @param float $latitude
-     *
-     * @return float|int MJ.m-2.d-1
-     */
-    public function extraterrestrialRadiationDailyPeriod(int $dayOfTheYear, float $latitude)
-    {
-        $rlat = $this->degres2radian($latitude);
-        $dr = $this->inverseRelativeDistanceEarthSun($dayOfTheYear);
-        $d = $this->solarDeclinaison($dayOfTheYear);
-        $ws = $this->sunsetHourAngle($dayOfTheYear, $latitude);
-
-        $Ra = 24 * 60 / pi() * 0.0820 * $dr * ($ws * sin($rlat) * sin($d) + cos($rlat) * cos($d) * sin($ws));
-
-        return round($Ra, 1); // MJ.m-2.d-1
     }
 }
