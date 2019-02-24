@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1550752083">
-  <project timestamp="1550752083">
+<coverage generated="1551029393">
+  <project timestamp="1551029393">
     <package name="Evapotrans">
       <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/Area.php">
         <class name="Evapotrans\Area" namespace="Evapotrans">
@@ -170,7 +170,7 @@
       </file>
       <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/MeteoData.php">
         <class name="Evapotrans\MeteoData" namespace="Evapotrans">
-          <metrics complexity="45" methods="32" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="15" elements="92" coveredelements="23"/>
+          <metrics complexity="43" methods="30" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="56" coveredstatements="15" elements="86" coveredelements="23"/>
         </class>
         <line num="123" type="method" name="isValidRH" visibility="private" complexity="2" crap="6.00" count="0"/>
         <line num="125" type="stmt" count="0"/>
@@ -185,150 +185,142 @@
         <line num="154" type="stmt" count="17"/>
         <line num="159" type="method" name="getLocation" visibility="public" complexity="1" crap="1" count="2"/>
         <line num="161" type="stmt" count="2"/>
-        <line num="168" type="method" name="setLocation" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="170" type="stmt" count="0"/>
-        <line num="172" type="stmt" count="0"/>
-        <line num="178" type="method" name="getDate" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="180" type="stmt" count="0"/>
-        <line num="190" type="method" name="getDaysOfYear" visibility="public" complexity="1" crap="1" count="10"/>
-        <line num="192" type="stmt" count="10"/>
-        <line num="199" type="method" name="setDate" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="201" type="stmt" count="0"/>
-        <line num="203" type="stmt" count="0"/>
-        <line num="209" type="method" name="getTmax" visibility="public" complexity="2" crap="2" count="1"/>
-        <line num="211" type="stmt" count="1"/>
-        <line num="218" type="method" name="setTmax" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="220" type="stmt" count="1"/>
-        <line num="222" type="stmt" count="1"/>
-        <line num="228" type="method" name="getTmean" visibility="public" complexity="5" crap="30.00" count="0"/>
-        <line num="230" type="stmt" count="0"/>
-        <line num="231" type="stmt" count="0"/>
-        <line num="234" type="stmt" count="0"/>
-        <line num="235" type="stmt" count="0"/>
-        <line num="238" type="stmt" count="0"/>
-        <line num="245" type="method" name="setTmean" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="247" type="stmt" count="0"/>
-        <line num="249" type="stmt" count="0"/>
-        <line num="255" type="method" name="getTmin" visibility="public" complexity="2" crap="2" count="1"/>
-        <line num="257" type="stmt" count="1"/>
-        <line num="264" type="method" name="setTmin" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="266" type="stmt" count="1"/>
-        <line num="268" type="stmt" count="1"/>
-        <line num="274" type="method" name="getActualSunnyHours" visibility="public" complexity="2" crap="6.00" count="0"/>
-        <line num="276" type="stmt" count="0"/>
-        <line num="283" type="method" name="setActualSunnyHours" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="285" type="stmt" count="0"/>
-        <line num="287" type="stmt" count="0"/>
-        <line num="293" type="method" name="getPrecipitation" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="295" type="stmt" count="0"/>
-        <line num="302" type="method" name="setPrecipitation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="167" type="method" name="getDate" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="169" type="stmt" count="0"/>
+        <line num="178" type="method" name="getDaysOfYear" visibility="public" complexity="1" crap="1" count="10"/>
+        <line num="180" type="stmt" count="10"/>
+        <line num="186" type="method" name="getTmax" visibility="public" complexity="2" crap="2" count="1"/>
+        <line num="188" type="stmt" count="1"/>
+        <line num="195" type="method" name="setTmax" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="197" type="stmt" count="1"/>
+        <line num="199" type="stmt" count="1"/>
+        <line num="205" type="method" name="getTmean" visibility="public" complexity="5" crap="30.00" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
+        <line num="212" type="stmt" count="0"/>
+        <line num="215" type="stmt" count="0"/>
+        <line num="222" type="method" name="setTmean" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="224" type="stmt" count="0"/>
+        <line num="226" type="stmt" count="0"/>
+        <line num="232" type="method" name="getTmin" visibility="public" complexity="2" crap="2" count="1"/>
+        <line num="234" type="stmt" count="1"/>
+        <line num="241" type="method" name="setTmin" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="243" type="stmt" count="1"/>
+        <line num="245" type="stmt" count="1"/>
+        <line num="251" type="method" name="getActualSunnyHours" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="253" type="stmt" count="0"/>
+        <line num="260" type="method" name="setActualSunnyHours" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="262" type="stmt" count="0"/>
+        <line num="264" type="stmt" count="0"/>
+        <line num="270" type="method" name="getPrecipitation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="272" type="stmt" count="0"/>
+        <line num="279" type="method" name="setPrecipitation" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="281" type="stmt" count="0"/>
+        <line num="283" type="stmt" count="0"/>
+        <line num="289" type="method" name="getWind2" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="291" type="stmt" count="0"/>
+        <line num="299" type="method" name="setWind2" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="301" type="stmt" count="0"/>
+        <line num="302" type="stmt" count="0"/>
         <line num="304" type="stmt" count="0"/>
-        <line num="306" type="stmt" count="0"/>
-        <line num="312" type="method" name="getWind2" visibility="public" complexity="2" crap="6.00" count="0"/>
-        <line num="314" type="stmt" count="0"/>
-        <line num="322" type="method" name="setWind2" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="324" type="stmt" count="0"/>
-        <line num="325" type="stmt" count="0"/>
-        <line num="327" type="stmt" count="0"/>
-        <line num="333" type="method" name="getWind2origin" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="335" type="stmt" count="0"/>
-        <line num="342" type="method" name="setWind2origin" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="344" type="stmt" count="0"/>
-        <line num="346" type="stmt" count="0"/>
-        <line num="352" type="method" name="getTdew" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="354" type="stmt" count="0"/>
-        <line num="361" type="method" name="setTdew" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="363" type="stmt" count="0"/>
-        <line num="365" type="stmt" count="0"/>
-        <line num="371" type="method" name="getRHmax" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="373" type="stmt" count="0"/>
-        <line num="382" type="method" name="setRHmax" visibility="public" complexity="2" crap="6.00" count="0"/>
-        <line num="384" type="stmt" count="0"/>
-        <line num="385" type="stmt" count="0"/>
+        <line num="310" type="method" name="getWind2origin" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="312" type="stmt" count="0"/>
+        <line num="319" type="method" name="setWind2origin" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="321" type="stmt" count="0"/>
+        <line num="323" type="stmt" count="0"/>
+        <line num="329" type="method" name="getTdew" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="331" type="stmt" count="0"/>
+        <line num="338" type="method" name="setTdew" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="340" type="stmt" count="0"/>
+        <line num="342" type="stmt" count="0"/>
+        <line num="348" type="method" name="getRHmax" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="350" type="stmt" count="0"/>
+        <line num="359" type="method" name="setRHmax" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="361" type="stmt" count="0"/>
+        <line num="362" type="stmt" count="0"/>
+        <line num="364" type="stmt" count="0"/>
+        <line num="367" type="stmt" count="0"/>
+        <line num="373" type="method" name="getRHmin" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="375" type="stmt" count="0"/>
+        <line num="384" type="method" name="setRHmin" visibility="public" complexity="2" crap="6.00" count="0"/>
+        <line num="386" type="stmt" count="0"/>
         <line num="387" type="stmt" count="0"/>
-        <line num="390" type="stmt" count="0"/>
-        <line num="396" type="method" name="getRHmin" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="398" type="stmt" count="0"/>
-        <line num="407" type="method" name="setRHmin" visibility="public" complexity="2" crap="6.00" count="0"/>
-        <line num="409" type="stmt" count="0"/>
-        <line num="410" type="stmt" count="0"/>
-        <line num="412" type="stmt" count="0"/>
-        <line num="415" type="stmt" count="0"/>
-        <line num="421" type="method" name="getPression" visibility="public" complexity="2" crap="2.06" count="5"/>
-        <line num="423" type="stmt" count="5"/>
-        <line num="424" type="stmt" count="0"/>
-        <line num="426" type="stmt" count="5"/>
-        <line num="427" type="stmt" count="5"/>
-        <line num="434" type="method" name="setPression" visibility="public" complexity="1" crap="2.00" count="0"/>
-        <line num="436" type="stmt" count="0"/>
-        <line num="437" type="stmt" count="0"/>
-        <line num="448" type="method" name="atmosphericPressureByAltitude" visibility="private" complexity="2" crap="2" count="5"/>
-        <line num="450" type="stmt" count="5"/>
-        <metrics loc="452" ncloc="242" classes="1" methods="32" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="15" elements="92" coveredelements="23"/>
+        <line num="389" type="stmt" count="0"/>
+        <line num="392" type="stmt" count="0"/>
+        <line num="398" type="method" name="getPression" visibility="public" complexity="2" crap="2.06" count="5"/>
+        <line num="400" type="stmt" count="5"/>
+        <line num="401" type="stmt" count="0"/>
+        <line num="403" type="stmt" count="5"/>
+        <line num="405" type="stmt" count="5"/>
+        <line num="412" type="method" name="setPression" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="414" type="stmt" count="0"/>
+        <line num="416" type="stmt" count="0"/>
+        <line num="427" type="method" name="atmosphericPressureByAltitude" visibility="private" complexity="2" crap="2" count="5"/>
+        <line num="429" type="stmt" count="5"/>
+        <metrics loc="431" ncloc="230" classes="1" methods="30" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="56" coveredstatements="15" elements="86" coveredelements="23"/>
       </file>
       <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/PenmanCalc.php">
         <class name="Evapotrans\PenmanCalc" namespace="Evapotrans">
-          <metrics complexity="20" methods="11" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="8" elements="58" coveredelements="12"/>
+          <metrics complexity="20" methods="11" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="45" coveredstatements="8" elements="56" coveredelements="12"/>
         </class>
         <line num="38" type="method" name="psychrometricConstant" visibility="public" complexity="1" crap="1" count="5"/>
         <line num="40" type="stmt" count="5"/>
-        <line num="41" type="stmt" count="5"/>
-        <line num="51" type="method" name="EToPenmanMonteith" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="42" type="stmt" count="5"/>
+        <line num="50" type="method" name="EToPenmanMonteith" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="52" type="stmt" count="0"/>
         <line num="53" type="stmt" count="0"/>
         <line num="54" type="stmt" count="0"/>
         <line num="55" type="stmt" count="0"/>
         <line num="56" type="stmt" count="0"/>
         <line num="57" type="stmt" count="0"/>
         <line num="58" type="stmt" count="0"/>
-        <line num="59" type="stmt" count="0"/>
-        <line num="61" type="stmt" count="0"/>
+        <line num="60" type="stmt" count="0"/>
         <line num="62" type="stmt" count="0"/>
         <line num="82" type="method" name="penmanMonteithFormula" visibility="private" complexity="1" crap="2.00" count="0"/>
-        <line num="83" type="stmt" count="0"/>
         <line num="84" type="stmt" count="0"/>
         <line num="85" type="stmt" count="0"/>
         <line num="86" type="stmt" count="0"/>
-        <line num="87" type="stmt" count="0"/>
-        <line num="89" type="stmt" count="0"/>
-        <line num="105" type="method" name="simplisticETo" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="103" type="method" name="simplisticETo" visibility="public" complexity="1" crap="2.00" count="0"/>
+        <line num="105" type="stmt" count="0"/>
         <line num="107" type="stmt" count="0"/>
-        <line num="109" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
         <line num="110" type="stmt" count="0"/>
-        <line num="112" type="stmt" count="0"/>
-        <line num="124" type="method" name="equivalentEvaporation" visibility="private" complexity="1" crap="2.00" count="0"/>
-        <line num="126" type="stmt" count="0"/>
-        <line num="140" type="method" name="meanSaturationVapourPression" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="142" type="stmt" count="1"/>
-        <line num="144" type="stmt" count="1"/>
-        <line num="148" type="method" name="vapourPressionFromTdew" visibility="private" complexity="1" crap="2.00" count="0"/>
-        <line num="150" type="stmt" count="0"/>
-        <line num="154" type="method" name="vapourPressionFromRHmax" visibility="private" complexity="1" crap="2.00" count="0"/>
-        <line num="156" type="stmt" count="0"/>
-        <line num="157" type="stmt" count="0"/>
-        <line num="167" type="method" name="saturationVapourPression" visibility="private" complexity="1" crap="1" count="6"/>
-        <line num="169" type="stmt" count="6"/>
-        <line num="171" type="stmt" count="6"/>
-        <line num="180" type="method" name="slopeOfSaturationVapourPressureCurve" visibility="private" complexity="1" crap="1" count="3"/>
-        <line num="182" type="stmt" count="3"/>
-        <line num="184" type="stmt" count="3"/>
-        <line num="194" type="method" name="actualVaporPressionStrategy" visibility="public" complexity="10" crap="110.00" count="0"/>
+        <line num="121" type="method" name="equivalentEvaporation" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="136" type="method" name="meanSaturationVapourPression" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="138" type="stmt" count="1"/>
+        <line num="140" type="stmt" count="1"/>
+        <line num="144" type="method" name="vapourPressionFromTdew" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="146" type="stmt" count="0"/>
+        <line num="150" type="method" name="vapourPressionFromRHmax" visibility="private" complexity="1" crap="2.00" count="0"/>
+        <line num="152" type="stmt" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="162" type="method" name="saturationVapourPression" visibility="private" complexity="1" crap="1" count="6"/>
+        <line num="164" type="stmt" count="6"/>
+        <line num="166" type="stmt" count="6"/>
+        <line num="175" type="method" name="slopeOfSaturationVapourPressureCurve" visibility="private" complexity="1" crap="1" count="3"/>
+        <line num="177" type="stmt" count="3"/>
+        <line num="179" type="stmt" count="3"/>
+        <line num="189" type="method" name="actualVaporPressionStrategy" visibility="public" complexity="10" crap="110.00" count="0"/>
+        <line num="192" type="stmt" count="0"/>
+        <line num="193" type="stmt" count="0"/>
         <line num="197" type="stmt" count="0"/>
         <line num="198" type="stmt" count="0"/>
+        <line num="199" type="stmt" count="0"/>
+        <line num="200" type="stmt" count="0"/>
         <line num="202" type="stmt" count="0"/>
         <line num="203" type="stmt" count="0"/>
         <line num="204" type="stmt" count="0"/>
         <line num="205" type="stmt" count="0"/>
-        <line num="207" type="stmt" count="0"/>
-        <line num="208" type="stmt" count="0"/>
-        <line num="209" type="stmt" count="0"/>
+        <line num="206" type="stmt" count="0"/>
         <line num="210" type="stmt" count="0"/>
         <line num="211" type="stmt" count="0"/>
         <line num="215" type="stmt" count="0"/>
         <line num="216" type="stmt" count="0"/>
-        <line num="220" type="stmt" count="0"/>
-        <line num="221" type="stmt" count="0"/>
-        <line num="224" type="stmt" count="0"/>
-        <metrics loc="226" ncloc="107" classes="1" methods="11" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="8" elements="58" coveredelements="12"/>
+        <line num="219" type="stmt" count="0"/>
+        <metrics loc="221" ncloc="108" classes="1" methods="11" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="45" coveredstatements="8" elements="56" coveredelements="12"/>
       </file>
       <file name="/Applications/MAMP/htdocs/evapo/Evapotrans/Plant.php">
         <class name="Evapotrans\Plant" namespace="Evapotrans">
@@ -513,6 +505,6 @@
         <metrics loc="61" ncloc="35" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
       </file>
     </package>
-    <metrics files="15" loc="1698" ncloc="881" classes="13" methods="99" coveredmethods="35" conditionals="0" coveredconditionals="0" statements="319" coveredstatements="102" elements="418" coveredelements="137"/>
+    <metrics files="15" loc="1672" ncloc="870" classes="13" methods="97" coveredmethods="35" conditionals="0" coveredconditionals="0" statements="313" coveredstatements="102" elements="410" coveredelements="137"/>
   </project>
 </coverage>

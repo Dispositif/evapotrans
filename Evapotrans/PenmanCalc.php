@@ -38,14 +38,13 @@ class PenmanCalc
     public function psychrometricConstant(MeteoData $meteoData): float
     {
         $P = $meteoData->getPression();
+
         return round(0.665 * 0.001 * $P, 3);
     }
 
     /**
      * @param MeteoData $data
-     *
      * @return float ETo [mm.day-1]
-     *
      * @throws Exception
      */
     public function EToPenmanMonteith(MeteoData $data)
@@ -59,6 +58,7 @@ class PenmanCalc
         $this->g = $this->psychrometricConstant($data);
 
         $ETo = $this->penmanMonteithFormula();
+
         return round($ETo, 1);
     }
 
@@ -79,12 +79,11 @@ class PenmanCalc
      * @param float $g
      * @return float ETo mm.day-1
      */
-    private function penmanMonteithFormula(): float {
+    private function penmanMonteithFormula(): float
+    {
         $G = self::G_CONST;
-        $ETo = (0.408 * $this->delta * ($this->Rn - $G)
-                + $this->g * 900 / ($this->Tmean + 273)
-                * $this->u2 * ($this->e_s - $this->e_a))
-            / ($this->delta + $this->g * (1 + 0.34 * $this->u2));
+        $ETo = (0.408 * $this->delta * ($this->Rn - $G) + $this->g * 900 / ($this->Tmean + 273) * $this->u2
+                * ($this->e_s - $this->e_a)) / ($this->delta + $this->g * (1 + 0.34 * $this->u2));
 
         return $ETo; // mm.day-1
     }
@@ -98,8 +97,7 @@ class PenmanCalc
      *
      * @param float $Tmin
      * @param float $Tmax
-     * @param float $Ra   Ra MJ.m-2.day-1
-     *
+     * @param float $Ra Ra MJ.m-2.day-1
      * @return float mm/day
      */
     public function simplisticETo(float $Tmin, float $Tmax, float $Ra): float
@@ -118,7 +116,6 @@ class PenmanCalc
      * by using a conversion factor equal to the inverse of the latent heat heat of vaporization.
      *
      * @param float Ra MJ.m-2.day-1
-     *
      * @return float Ra mm/day
      */
     private function equivalentEvaporation(float $Ra): float
@@ -134,7 +131,6 @@ class PenmanCalc
      *
      * @param float $Tmin Tmin
      * @param float $Tmax Tmax
-     *
      * @return float|int
      */
     public function meanSaturationVapourPression(float $Tmin, float $Tmax): float
@@ -161,7 +157,6 @@ class PenmanCalc
      * saturation vapour pression (e_o) as function of T° [11].
      *
      * @param $temperature float °C
-     *
      * @return float e_o (kPa)
      */
     private function saturationVapourPression(float $temperature)
