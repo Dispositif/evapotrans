@@ -89,7 +89,7 @@ class MeteoData
 
     /**
      * Pression
-     * Facultatif, sinon calculé.
+     * at sea level ?
      *
      * @var float KPa
      */
@@ -126,9 +126,9 @@ class MeteoData
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getRHmean(): float
+    public function getRHmean(): ?float
     {
         return $this->RHmean;
     }
@@ -324,9 +324,9 @@ class MeteoData
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getTdew()
+    public function getTdew():?float
     {
         return $this->Tdew;
     }
@@ -343,9 +343,9 @@ class MeteoData
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getRHmax(): float
+    public function getRHmax(): ?float
     {
         return $this->RHmax;
     }
@@ -359,7 +359,7 @@ class MeteoData
     public function setRHmax(float $RHmax): self
     {
         if (self::isValidRH($RHmax)) {
-            $this->RHmin = $RHmax;
+            $this->RHmax = $RHmax;
 
             return $this;
         }
@@ -368,9 +368,9 @@ class MeteoData
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getRHmin(): float
+    public function getRHmin(): ?float
     {
         return $this->RHmin;
     }

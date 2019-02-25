@@ -32,7 +32,7 @@ $data->setActualSunnyHours(7.2); // mesured full sunny hours
 $data->setWind2(new Wind2m(20, 'km/h', 2));
 
 // Température dewpoint (point rosée) : Facultatif si RHmax/min ou RHmoyen
-$data->setTdew(9);
+//$data->setTdew(9);
 
 // RHmax, RHmin facultatif si Tdew
 $data->setRHmax(0.90);
@@ -42,15 +42,5 @@ $ETcalc = new PenmanCalc();
 $ETo = $ETcalc->EToPenmanMonteith($data);
 
 echo 'ETo = '.$ETo.' mm/day';
-
-// ----------------------
-// Simplistic calculation
-
-$calc = new ExtraRadiation($data);
-$Ra = $calc->extraterrestrialRadiationDailyPeriod();
-
-$simplisticETo = $ETcalc->simplisticETo($data->getTmin(), $data->getTmax(), $Ra);
-$simplistic_error = round(abs($simplisticETo - $ETo) * 100 / $ETo);
-echo "<br> Simplistic ETo = $simplisticETo error $simplistic_error %";
 
 include 'example_crop.php';

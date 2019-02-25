@@ -93,11 +93,14 @@ class Location
 
     /**
      * @param float $kRs
+     * @throws Exception
      */
     public function setKRs(float $kRs): void
     {
         if ($kRs >= 0.16 && $kRs <= 0.19) {
             $this->kRs = $kRs;
+            return;
         }
+        throw new Exception('kRs value not in range');
     }
 }

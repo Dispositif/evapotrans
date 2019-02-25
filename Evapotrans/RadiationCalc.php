@@ -49,9 +49,7 @@ class RadiationCalc
      * todo Refactor RaStrategy.
      *
      * @param MeteoData $data
-     *
      * @return float
-     *
      * @throws Exception
      */
     public function solarRadiationStrategyFromMeteodata(MeteoData $data)
@@ -66,14 +64,20 @@ class RadiationCalc
 
             if ($data->actualSunshineHours) {
                 $N = $data->actualSunshineHours;
-            } else {
+            }else {
                 $N = $this->meteoCalc->daylightHours(
                     $data->getDaysOfYear(),
                     $data->getLocation()->getLatitude()
                 );
                 // todo move daylightHours on MeteoData
             }
-            $Rs = $this->solarRadiationFromDurationSunshineAndRa($Ra, $n, $N, $a_s, $b_s);
+            $Rs = $this->solarRadiationFromDurationSunshineAndRa(
+                $Ra,
+                $n,
+                $N,
+                $a_s,
+                $b_s
+            );
 
             return $Rs;
         }
@@ -106,12 +110,15 @@ class RadiationCalc
      * @param float $Ra
      * @param float $Tmin
      * @param float $Tmax
-     * @param float $kRs  adjustment coefficient
-     *
+     * @param float $kRs adjustment coefficient
      * @return float
      */
-    private function solarRadiationFromTemperatures(float $Ra, float $Tmin, float $Tmax, ?float $kRs = 0.18): float
-    {
+    private function solarRadiationFromTemperatures(
+        float $Ra,
+        float $Tmin,
+        float $Tmax,
+        ?float $kRs = 0.18
+    ): float {
         $Rs = $kRs * sqrt(abs($Tmax - $Tmin)) * $Ra;
 
         return round($Rs, 1);
@@ -133,7 +140,6 @@ class RadiationCalc
      * @param float      $N
      * @param float|null $a_s
      * @param float|null $b_s
-     *
      * @return float
      */
     public function solarRadiationFromDurationSunshineAndRa(
@@ -167,7 +173,6 @@ class RadiationCalc
      * @param $Tmin
      * @param $Rs
      * @param $Rso
-     *
      * @return float|int
      */
     public function netLongwaveRadiation($e_a, $Tmax, $Tmin, $Rs, $Rso)
@@ -175,8 +180,11 @@ class RadiationCalc
         // Stefan-Boltzmann constant — see table 2.8 at http://www.fao.org/docrep/X0490E/x0490e0j.htm#TopOfPage
         $SBconstant = 4.903 * pow(10, -9);
 
-        $Rnl = $SBconstant * (pow($this->deg2Kelvin($Tmax), 4) + pow($this->deg2Kelvin($Tmin), 4)) / 2 * (0.34 - 0.14
-                * sqrt($e_a)) * (1.35 * $Rs / $Rso - 0.35);
+        $Rnl = $SBconstant * (pow($this->deg2Kelvin($Tmax), 4) + pow(
+                    $this->deg2Kelvin($Tmin),
+                    4
+                )) / 2 * (0.34 - 0.14 * sqrt($e_a)) * (1.35 * $Rs / $Rso
+                - 0.35);
 
         return round($Rnl, 1);
     }
@@ -191,9 +199,7 @@ class RadiationCalc
      * Rn from data.
      *
      * @param MeteoData $meteoData
-     *
      * @return float Rn
-     *
      * @throws Exception
      */
     public function netRadiationFromMeteodata(MeteoData $meteoData): float
@@ -206,19 +212,34 @@ class RadiationCalc
         $calc = new ExtraRadiation($meteoData);
 
         // todo move on MeteoData
-        $N = $calc->daylightHours($meteoData->getDaysOfYear(), $meteoData->getLocation()->getLatitude());
+        $N = $calc->daylightHours(
+            $meteoData->getDaysOfYear(),
+            $meteoData->getLocation()->getLatitude()
+        );
 
         $Ra = $this->extraterresRadiationFromMeteodata($meteoData);
 
         $Rs = $this->solarRadiationStrategyFromMeteodata($meteoData);
 
-        $e_a = (new PenmanCalc())->actualVaporPressionStrategy($meteoData); // todo refactor
+        $e_a = (new PenmanCalc())->actualVaporPressionStrategy($meteoData);
+        // todo refactor
 
         $a_s = null; // move a_s on MeteoData ?
         $b_s = null; //
-        $Rso = $this->clearSkySolarRadiation($Ra, $meteoData->getLocation()->getAltitude(), $a_s, $b_s);
+        $Rso = $this->clearSkySolarRadiation(
+            $Ra,
+            $meteoData->getLocation()->getAltitude(),
+            $a_s,
+            $b_s
+        );
         $Rns = $this->netSolarRadiation($Rs, $this->getAlbedo());
-        $Rnl = $this->netLongwaveRadiation($e_a, $meteoData->getTmax(), $meteoData->getTmin(), $Rs, $Rso);
+        $Rnl = $this->netLongwaveRadiation(
+            $e_a,
+            $meteoData->getTmax(),
+            $meteoData->getTmin(),
+            $Rs,
+            $Rso
+        );
 
         return $this->netRadiation($Rns, $Rnl);
     }
@@ -231,14 +252,17 @@ class RadiationCalc
      * @param int   $altitude
      * @param null  $a_s
      * @param null  $b_s
-     *
      * @return float Rso [MJ m-2 day-1]
      */
-    public function clearSkySolarRadiation(float $Ra, int $altitude, $a_s = null, $b_s = null): float
-    {
+    private function clearSkySolarRadiation(
+        float $Ra,
+        int $altitude,
+        $a_s = null,
+        $b_s = null
+    ): float {
         if ($a_s && $b_s) {
             $Rso = ($a_s + $b_s) * $Ra;  // [36]
-        } else {
+        }else {
             $Rso = (0.75 + 2 * pow(10, -5) * $altitude) * $Ra; // [37]
         }
 
@@ -249,7 +273,6 @@ class RadiationCalc
      * todo use Temperature->getTempKelvin().
      *
      * @param float $temp
-     *
      * @return float
      */
     private function deg2Kelvin(float $temp): float
@@ -259,12 +282,12 @@ class RadiationCalc
 
     /**
      * @param MeteoData $data
-     *
      * @return float|int
      */
     public function extraterresRadiationFromMeteodata(MeteoData $data)
     {
-            $Ra = $this->meteoCalc->extraterrestrialRadiationDailyPeriod();
+        $Ra = $this->meteoCalc->extraterrestrialRadiationDailyPeriod();
+
         return $Ra;
     }
 }

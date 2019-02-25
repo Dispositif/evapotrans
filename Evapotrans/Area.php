@@ -2,6 +2,8 @@
 
 namespace Evapotrans;
 
+use Evapotrans\ValueObjects\Plant;
+
 /**
  * Données culture
  * Class PlantData.

@@ -4,7 +4,7 @@
 
 use Evapotrans\Area;
 use Evapotrans\CropEvapotrans;
-use Evapotrans\Plant;
+use Evapotrans\ValueObjects\Plant;
 
 // Plants Kc references :
 // http://www.fao.org/docrep/X0490E/x0490e0b.htm#crop coefficients

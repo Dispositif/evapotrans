@@ -35,7 +35,7 @@ class PenmanCalc
      * @param MeteoData $meteoData
      * @return float
      */
-    public function psychrometricConstant(MeteoData $meteoData): float
+    private function psychrometricConstant(MeteoData $meteoData): float
     {
         $P = $meteoData->getPression();
 
@@ -133,7 +133,7 @@ class PenmanCalc
      * @param float $Tmax Tmax
      * @return float|int
      */
-    public function meanSaturationVapourPression(float $Tmin, float $Tmax): float
+    private function meanSaturationVapourPression(float $Tmin, float $Tmax): float
     {
         $e_s = ($this->saturationVapourPression($Tmax) + $this->saturationVapourPression($Tmin)) / 2;
 
@@ -204,7 +204,7 @@ class PenmanCalc
                 $meteoData->getRHmin(),
                 $meteoData->getTmax(),
                 $meteoData->getTmin()
-            ); // todo inject Meteodata
+            ); // todo move to Meteodata ?
         }
 
         if ($meteoData->getRHmax() and $meteoData->getTmin()) {

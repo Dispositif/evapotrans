@@ -31,10 +31,10 @@ namespace Evapotrans;
 
 
 */
+
 /**
  * Due to differences in albedo, crop height, aerodynamic properties, and leaf and stomata properties, the evapotranspiration from full grown, well-watered crops differs from ETo.
  * http://www.fao.org/docrep/X0490E/x0490e0a.htm.
- *
  * Class CropEvapoTranspiration
  */
 class CropEvapotrans
@@ -83,7 +83,6 @@ class CropEvapotrans
 
     /**
      * @return float
-     *
      * @throws Exception
      */
     public function calcETc()
@@ -98,7 +97,6 @@ class CropEvapotrans
 
     /**
      * @return float
-     *
      * @throws Exception
      */
     private function strategyKc(): float
@@ -126,8 +124,14 @@ class CropEvapotrans
     // DJ = (Tmax - Tmin) /2 - Tbase
     public function degre_jour($Tmin, $Tmax, $Tbase = 10, $Tmaxbase = 30)
     {
-        $Tmin = max($Tmin, ($Tbase + $Tmin) / 2); // pondération car seulement T>Tbase compte
-        $Tmax = min($Tmax, ($Tmaxbase + $Tmax) / 2); // pondération car seulement T<30°C compte
+        $Tmin = max(
+            $Tmin,
+            ($Tbase + $Tmin) / 2
+        ); // pondération car seulement T>Tbase compte
+        $Tmax = min(
+            $Tmax,
+            ($Tmaxbase + $Tmax) / 2
+        ); // pondération car seulement T<30°C compte
         $DJ = ($Tmax - $Tmin) / 2 - $Tbase;
         $DJ = max($DJ, 0);
 

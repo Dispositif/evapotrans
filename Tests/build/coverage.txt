@@ -1,23 +1,23 @@
 
 
 Code Coverage Report:      
-  2019-02-24 22:47:21      
+  2019-02-25 18:56:13      
                            
  Summary:                  
-  Classes: 23.08% (3/13)   
-  Methods: 37.76% (37/98)  
-  Lines:   32.69% (102/312)
+  Classes: 15.38% (2/13)   
+  Methods: 36.73% (36/98)  
+  Lines:   31.07% (105/338)
 
 \Evapotrans::Evapotrans\ExtraRadiation
   Methods: 100.00% ( 7/ 7)   Lines: 100.00% ( 23/ 23)
 \Evapotrans::Evapotrans\Location
-  Methods: 100.00% ( 7/ 7)   Lines: 100.00% ( 13/ 13)
+  Methods:  85.71% ( 6/ 7)   Lines:  92.86% ( 13/ 14)
 \Evapotrans::Evapotrans\MeteoData
   Methods:  26.67% ( 8/30)   Lines:  26.79% ( 15/ 56)
 \Evapotrans::Evapotrans\PenmanCalc
   Methods:  36.36% ( 4/11)   Lines:  17.78% (  8/ 45)
 \Evapotrans::Evapotrans\RadiationCalc
-  Methods:  50.00% ( 6/12)   Lines:  43.86% ( 25/ 57)
+  Methods:  50.00% ( 6/12)   Lines:  36.84% ( 28/ 76)
 \Evapotrans\ValueObjects::Evapotrans\ValueObjects\AbstractMeasure
   Methods:  50.00% ( 2/ 4)   Lines:  55.56% (  5/  9)
 \Evapotrans\ValueObjects::Evapotrans\ValueObjects\Temperature

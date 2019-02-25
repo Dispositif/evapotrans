@@ -27,20 +27,6 @@ class PenmanCalcTest extends TestCase
         $this->meteo = new ExtraRadiation($meteoData);
     }
 
-    /**
-     * TDD : Allow tests on private method
-     *
-     * @throws ReflectionException
-     */
-    private function invokeMethod(Object &$object, string $methodName, array $parameters = [])
-    {
-        $reflection = new \ReflectionClass(get_class($object));
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
-
-        return $method->invokeArgs($object, $parameters);
-    }
-
     public function testCalcWind2meters()
     {
         $wind = new Wind2m(55.0);
@@ -50,6 +36,23 @@ class PenmanCalcTest extends TestCase
             [3.2, 10]
         );
         self::assertEquals(2.4, $actual);
+    }
+
+    /**
+     * TDD : Allow tests on private method
+     *
+     * @throws ReflectionException
+     */
+    private function invokeMethod(
+        Object &$object,
+        string $methodName,
+        array $parameters = []
+    ) {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
     }
 
     /**
@@ -75,10 +78,25 @@ class PenmanCalcTest extends TestCase
     {
         $loc = new Location(45.72, 0, 200);
 
-        self::assertEquals(1, (new MeteoData($loc, new \DateTime('2018-01-01')))->getDaysOfYear());
-        self::assertEquals(305, (new MeteoData($loc, new \DateTime('2018-11-01')))->getDaysOfYear());
+        self::assertEquals(
+            1,
+            (new MeteoData(
+                $loc, new \DateTime('2018-01-01')
+            ))->getDaysOfYear()
+        );
+        self::assertEquals(
+            305,
+            (new MeteoData(
+                $loc, new \DateTime('2018-11-01')
+            ))->getDaysOfYear()
+        );
         // 2016 leap year
-        self::assertEquals(306, (new MeteoData($loc, new \DateTime('2016-11-01')))->getDaysOfYear());
+        self::assertEquals(
+            306,
+            (new MeteoData(
+                $loc, new \DateTime('2016-11-01')
+            ))->getDaysOfYear()
+        );
     }
 
     /**
@@ -99,7 +117,6 @@ class PenmanCalcTest extends TestCase
             [$day, $lat]
         );
         self::assertEquals($expected, $actual);
-
     }
 
     /**
@@ -131,7 +148,14 @@ class PenmanCalcTest extends TestCase
     {
         $location = new Location(0.0, 0.0, $altitude);
         $data = new MeteoData($location, new DateTime('2018-01-01'));
-        self::assertEquals($expected, $this->ETcalc->psychrometricConstant($data));
+        self::assertEquals(
+            $expected,
+            $this->invokeMethod(
+                $this->ETcalc,
+                'psychrometricConstant',
+                [$data]
+            )
+        );
     }
 
     public function psychometricConstantProvider()
@@ -147,7 +171,11 @@ class PenmanCalcTest extends TestCase
 
     public function testMeanSaturationVaporPression()
     {
-        $actual = $this->ETcalc->meanSaturationVapourPression(15.0, 24.5);
+        $actual = $this->invokeMethod(
+            $this->ETcalc,
+            'meanSaturationVapourPression',
+            [15.0, 24.5]
+        );
         self::assertEquals(2.39, $actual);
     }
 
@@ -156,7 +184,11 @@ class PenmanCalcTest extends TestCase
      */
     public function testSaturationVaporPression($expected, $temp)
     {
-        $actual = $this->invokeMethod($this->ETcalc,'saturationVapourPression', [$temp] );
+        $actual = $this->invokeMethod(
+            $this->ETcalc,
+            'saturationVapourPression',
+            [$temp]
+        );
         self::assertEquals($expected, round($actual, 3));
     }
 
@@ -179,7 +211,11 @@ class PenmanCalcTest extends TestCase
      */
     public function testSlopeOfSaturationVapourPressureCurve($Tmean, $expected)
     {
-        $actual = $this->invokeMethod($this->ETcalc, 'slopeOfSaturationVapourPressureCurve', [$Tmean]);
+        $actual = $this->invokeMethod(
+            $this->ETcalc,
+            'slopeOfSaturationVapourPressureCurve',
+            [$Tmean]
+        );
         self::assertEquals($expected, $actual);
     }
 
