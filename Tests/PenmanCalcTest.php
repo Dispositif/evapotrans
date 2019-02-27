@@ -109,7 +109,7 @@ class PenmanCalcTest extends TestCase
     {
         $location = new Location($lat, 0.0, 0);
         $meteoData = new MeteoData($location, new DateTime($date));
-        self::assertEquals($expected, $meteoData->getSunshineHours());
+        self::assertEquals($expected, $meteoData->getMaxDaylightHours());
     }
 
     /**

@@ -29,13 +29,7 @@ class MeteoData
      * days (n = N).
      */
     public $b_s;
-    /**
-     * theorical maximal hours of light (N)
-     * aka "daylightHours"
-     *
-     * @var float|null
-     */
-    public $sunshineHours = null;
+
     /**
      * @var Location
      */
@@ -60,8 +54,17 @@ class MeteoData
      * @var float
      */
     private $Tmin;
+
     /**
-     * Recorded sunny hours per day (n)
+     * theorical maximal hours of light (N)
+     * aka "daylightHours"
+     *
+     * @var float|null hours
+     */
+    private $maxDaylightHours = null;
+
+    /**
+     * actual duration of sunshine in the day (recorded) (n)
      * Effective hours of sun
      * Opposed to "Daylight hours" = maximum possible duration of sunshine (N).
      *
@@ -146,12 +149,12 @@ class MeteoData
     }
 
     /**
-     * @return mixed N
+     * @return float N
      */
-    public function getSunshineHours(): float
+    public function getMaxDaylightHours(): float
     {
-        if ($this->sunshineHours) {
-            return $this->sunshineHours;
+        if ($this->maxDaylightHours) {
+            return $this->maxDaylightHours;
         }
 
         return $this->calcDaylightHours(
@@ -173,7 +176,7 @@ class MeteoData
         float $latitude
     ): float {
         $ws = $this->sunsetHourAngle($dayOfTheYear, $latitude);
-        $N = round(24 / pi() * $ws, 1);
+        $N = 24 / pi() * $ws;
 
         return round($N, 1);
     }
@@ -493,10 +496,10 @@ class MeteoData
     }
 
     /**
-     * @param mixed $sunshineHours
+     * @param float $sunshineHours MaxHours
      */
-    private function setSunshineHours(float $sunshineHours): void
+    private function setMaxDaylightHours(float $sunshineHours): void
     {
-        $this->sunshineHours = $sunshineHours;
+        $this->maxDaylightHours = $sunshineHours;
     }
 }

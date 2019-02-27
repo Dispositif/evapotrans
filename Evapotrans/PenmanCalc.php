@@ -12,7 +12,8 @@ class PenmanCalc
     const LATENT_HEAT_VAPORIZATION = 2.45;
 
     /**
-     * Soil heat flux density (G), assumed to be zero (Allen et al.:1989).
+     * Soil heat flux density (G)
+     * [42] assumed to be zero (Allen et al.:1989) for day or < 10 day period
      */
     const G_CONST = 0;
 
@@ -44,9 +45,7 @@ class PenmanCalc
         $this->delta = $this->slopeOfSaturationVapourPressureCurve(
             $data->getTmean()
         );
-        $this->Rn = (new RadiationCalc($data))->netRadiationFromMeteodata(
-            $data
-        );
+        $this->Rn = (new RadiationCalc($data))->netRadiationFromMeteodata();
         $this->g = $this->psychrometricConstant($data);
 
         $ETo = $this->penmanMonteithFormula();
@@ -96,6 +95,12 @@ class PenmanCalc
      */
     public function actualVaporPressionStrategy(MeteoData $meteoData)
     {
+        // todo get/set MeteoData ?
+        if (isset($meteoData->actualVaporPression)
+            && $meteoData->actualVaporPression !== null
+        ) {
+            return $meteoData->actualVaporPression;
+        }
         // derived from Tdew (dewpoint temperature)
         if ($meteoData->getTdew()) {
             return $this->vapourPressionFromTdew($meteoData->getTdew());
