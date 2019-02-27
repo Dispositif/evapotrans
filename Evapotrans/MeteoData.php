@@ -9,32 +9,57 @@ use Evapotrans\ValueObjects\Wind2m;
 
 class MeteoData
 {
-    //const DEFAULT_PRESSION = 100.4; // kPa !
+    use CalcTrait;
+    const DEFAULT_PRESSION = 100.4;
+
+    /**
+     * Ra extraterrestrial radiation [MJ m-2 day-1]
+     */
+    public $Ra;
+    /**
+     * a_s regression constant, expressing the fraction of extraterrestrial
+     * radiation reaching the earth on overcast days (n =0),
+     * todo
+     *
+     * @var float
+     */
+    public $a_s;
+    /**
+     * as+bs fraction of extraterrestrial radiation reaching the earth on clear
+     * days (n = N).
+     */
+    public $b_s;
+    /**
+     * theorical maximal hours of light (N)
+     * aka "daylightHours"
+     *
+     * @var float|null
+     */
+    public $sunshineHours = null;
     /**
      * @var Location
      */
     private $location;
 
+    // n (hours)
     /**
      * @var \DateTimeImmutable
      */
     private $date;
 
+    // N (hours)
     /**
      * @var float Tmax
      */
     private $Tmax;
-
     /**
      * @var float
      */
     private $Tmean;
-
     /**
      * @var float
      */
     private $Tmin;
-
     /**
      * Recorded sunny hours per day (n)
      * Effective hours of sun
@@ -48,34 +73,18 @@ class MeteoData
      * @var float millimetres
      */
     private $precipitation;
-
-    // n (hours)
-    public $actualSunshineHours;
-
-    // N (hours)
-    public $daylightHours;
-
-    // Ra extraterrestrial radiation [MJ m-2 day-1],
-
-    public $Ra;
-
-    // todo
-    // a_s regression constant, expressing the fraction of extraterrestrial radiation reaching the earth on overcast days (n =0),
-    public $a_s;
-
-    // todo
-    //as+bs fraction of extraterrestrial radiation reaching the earth on clear days (n = N).
-    public $b_s;
-
     /**
-     * Where no wind data are available within the region, a value of 2 m/s can be used as a temporary estimate.
-     * This value is the average over 2000 weather stations around the globe.
-     * In general, wind speed at 2 m, u2, should be limited to about u2 ³ 0.5 m/s when used in the ETo equation
-     * (Equation 6). This is necessary to account for the effects of boundary layer instability and buoyancy of air in
-     * promoting exchange of vapour at the surface when air is calm. This effect occurs when the wind speed is small
-     * and buoyancy of warm air induces air exchange at the surface. Limiting u2 ³ 0.5 m/s in the ETo equation improves
-     * the estimation accuracy under the conditions of very low wind speed.
-     * todo max 0.5 + value "estimated/minimized"
+     * Where no wind data are available within the region, a value of 2 m/s can
+     * be used as a temporary estimate. This value is the average over 2000
+     * weather stations around the globe. In general, wind speed at 2 m, u2,
+     * should be limited to about u2 ³ 0.5 m/s when used in the ETo equation
+     * (Equation 6). This is necessary to account for the effects of boundary
+     * layer instability and buoyancy of air in promoting exchange of vapour at
+     * the surface when air is calm. This effect occurs when the wind speed is
+     * small and buoyancy of warm air induces air exchange at the surface.
+     * Limiting u2 ³ 0.5 m/s in the ETo equation improves the estimation
+     * accuracy under the conditions of very low wind speed. todo max 0.5 +
+     * value "estimated/minimized"
      *
      * @var float Wind speed at 2meter in m.s-1
      */
@@ -83,9 +92,10 @@ class MeteoData
 
     private $wind2origin = 'default';
 
-    // Température dewpoint (point rosée)
+    /**
+     * Dewpoint temperature
+     */
     private $Tdew;
-
 
     /**
      * Pression
@@ -117,12 +127,74 @@ class MeteoData
     private $RHmean;
 
     /**
-     * @param float $RH
-     * @return bool
+     * MeteoData constructor.
+     *
+     * @param Location  $location
+     * @param \DateTime $date
      */
-    private static function isValidRH(float $RH): bool
+    public function __construct(Location $location, \DateTimeInterface $date)
     {
-        return $RH <= 1 && $RH > 0;
+        $this->location = clone $location;
+
+        if ($date instanceof \DateTimeImmutable) {
+            $this->date = $date;
+        }elseif ($date instanceof \DateTime) {
+            $this->date = \DateTimeImmutable::createFromMutable($date);
+        }else {
+            throw new Exception('date instance error');
+        }
+    }
+
+    /**
+     * @return mixed N
+     */
+    public function getSunshineHours(): float
+    {
+        if ($this->sunshineHours) {
+            return $this->sunshineHours;
+        }
+
+        return $this->calcDaylightHours(
+            $this->getDaysOfYear(),
+            $this->getLocation()->getLatitude()
+        );
+    }
+
+    /**
+     * Daylight hours or maximum possible duration of sunshine (N).
+     *
+     * @param int $dayOfTheYear
+     * @param     $latitude
+     *
+     * @return float
+     */
+    private function calcDaylightHours(
+        int $dayOfTheYear,
+        float $latitude
+    ): float {
+        $ws = $this->sunsetHourAngle($dayOfTheYear, $latitude);
+        $N = round(24 / pi() * $ws, 1);
+
+        return round($N, 1);
+    }
+
+    /**
+     * Number of the day in the year
+     * 1-01=>1, 27 mars => 85.
+     *
+     * @return int
+     */
+    public function getDaysOfYear(): int
+    {
+        return 1 + $this->date->format('z');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocation(): Location
+    {
+        return $this->location;
     }
 
     /**
@@ -142,42 +214,11 @@ class MeteoData
     }
 
     /**
-     * MeteoData constructor.
-     *
-     * @param Location  $location
-     * @param \DateTime $date
-     */
-    public function __construct(Location $location, \DateTime $date)
-    {
-        $this->location = clone $location;
-        $this->date = \DateTimeImmutable::createFromMutable($date);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLocation(): Location
-    {
-        return $this->location;
-    }
-
-    /**
      * @return mixed
      */
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Number of the day in the year
-     * 1-01=>1, 27 mars => 85.
-     *
-     * @return int
-     */
-    public function getDaysOfYear(): int
-    {
-        return 1 + $this->date->format('z');
     }
 
     /**
@@ -190,6 +231,7 @@ class MeteoData
 
     /**
      * @param mixed $Tmax
+     *
      * @return MeteoData
      */
     public function setTmax(Temperature $Tmax): self
@@ -217,6 +259,7 @@ class MeteoData
 
     /**
      * @param mixed $Tmean
+     *
      * @return MeteoData
      */
     public function setTmean(Temperature $Tmean): self
@@ -236,6 +279,7 @@ class MeteoData
 
     /**
      * @param mixed $Tmin
+     *
      * @return MeteoData
      */
     public function setTmin(Temperature $Tmin): self
@@ -255,6 +299,7 @@ class MeteoData
 
     /**
      * @param mixed $actualSunnyHours hours
+     *
      * @return MeteoData
      */
     public function setActualSunnyHours(float $actualSunnyHours): self
@@ -274,6 +319,7 @@ class MeteoData
 
     /**
      * @param mixed $precipitation
+     *
      * @return MeteoData
      */
     public function setPrecipitation(float $precipitation): self
@@ -294,6 +340,7 @@ class MeteoData
     /**
      * @param mixed  $wind2
      * @param string $origin
+     *
      * @return MeteoData
      */
     public function setWind2(Wind2m $wind2, $origin = 'set'): self
@@ -314,6 +361,7 @@ class MeteoData
 
     /**
      * @param string $wind2origin
+     *
      * @return MeteoData
      */
     public function setWind2origin($wind2origin): self
@@ -326,13 +374,14 @@ class MeteoData
     /**
      * @return float|null
      */
-    public function getTdew():?float
+    public function getTdew(): ?float
     {
         return $this->Tdew;
     }
 
     /**
      * @param mixed $Tdew
+     *
      * @return MeteoData
      */
     public function setTdew($Tdew): self
@@ -352,6 +401,7 @@ class MeteoData
 
     /**
      * @param mixed $RHmax
+     *
      * @return MeteoData
      * @throws Exception
      * @throws Exception
@@ -368,6 +418,16 @@ class MeteoData
     }
 
     /**
+     * @param float $RH
+     *
+     * @return bool
+     */
+    private static function isValidRH(float $RH): bool
+    {
+        return $RH <= 1 && $RH > 0;
+    }
+
+    /**
      * @return float|null
      */
     public function getRHmin(): ?float
@@ -377,6 +437,7 @@ class MeteoData
 
     /**
      * @param mixed $RHmin
+     *
      * @return MeteoData
      * @throws Exception
      * @throws Exception
@@ -407,6 +468,7 @@ class MeteoData
 
     /**
      * @param float $pression
+     *
      * @return MeteoData
      */
     public function setPression(float $pression): self
@@ -422,10 +484,19 @@ class MeteoData
      * atmosphere.
      *
      * @param int|null $altitude m
+     *
      * @return float P (kPa)
      */
     private function atmosphericPressureByAltitude(?int $altitude = 0): float
     {
         return round(101.3 * pow((293 - 0.0065 * $altitude) / 293, 5.26), 1);
+    }
+
+    /**
+     * @param mixed $sunshineHours
+     */
+    private function setSunshineHours(float $sunshineHours): void
+    {
+        $this->sunshineHours = $sunshineHours;
     }
 }

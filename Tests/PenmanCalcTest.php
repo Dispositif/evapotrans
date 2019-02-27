@@ -105,18 +105,11 @@ class PenmanCalcTest extends TestCase
      *
      * @dataProvider daylightHoursProvider
      */
-    public function testDaylightHours(string $date, $expected, $lat)
+    public function testCalcDaylightHours(string $date, $expected, $lat)
     {
         $location = new Location($lat, 0.0, 0);
         $meteoData = new MeteoData($location, new DateTime($date));
-        $day = $meteoData->getDaysOfYear();
-
-        $actual = $this->invokeMethod(
-            $this->meteo,
-            'daylightHours',
-            [$day, $lat]
-        );
-        self::assertEquals($expected, $actual);
+        self::assertEquals($expected, $meteoData->getSunshineHours());
     }
 
     /**
