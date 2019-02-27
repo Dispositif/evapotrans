@@ -111,7 +111,8 @@ class RadiationCalcTest extends TestCase
             new Location(-20, 0), new \DateTime('2018-09-03')
         );
         $rad = new RadiationCalc($data);
-        $Ra = $this->invokeMethod($rad,
+        $Ra = $this->invokeMethod(
+            $rad,
             'extraterresRadiationFromMeteodata',
             [$data]
         );

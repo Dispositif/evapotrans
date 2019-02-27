@@ -17,6 +17,9 @@ class PenmanCalc
      */
     const G_CONST = 0;
 
+    /**
+     * @var MeteoData
+     */
     private $meteoData;
 
     private $Tmean;
@@ -28,25 +31,36 @@ class PenmanCalc
     private $g;
 
     /**
-     * @param MeteoData $data
+     * PenmanCalc constructor.
      *
+     * @param $meteoData
+     */
+    public function __construct(MeteoData $meteoData)
+    {
+        $this->meteoData = $meteoData;
+    }
+
+
+    /**
      * @return float ETo [mm.day-1]
      * @throws Exception
      */
-    public function EToPenmanMonteith(MeteoData $data)
+    public function EToPenmanMonteith()
     {
-        $this->Tmean = $data->getTmean();
-        $this->u2 = $data->getWind2();
+        $this->Tmean = $this->meteoData->getTmean();
+        $this->u2 = $this->meteoData->getWind2();
         $this->e_s = $this->meanSaturationVapourPression(
-            $data->getTmin(),
-            $data->getTmax()
+            $this->meteoData->getTmin(),
+            $this->meteoData->getTmax()
         );
-        $this->e_a = $this->actualVaporPressionStrategy($data);
+        $this->e_a = $this->actualVaporPressionStrategy();
         $this->delta = $this->slopeOfSaturationVapourPressureCurve(
-            $data->getTmean()
+            $this->meteoData->getTmean()
         );
-        $this->Rn = (new RadiationCalc($data))->netRadiationFromMeteodata();
-        $this->g = $this->psychrometricConstant($data);
+        $this->Rn = (new RadiationCalc(
+            $this->meteoData
+        ))->netRadiationFromMeteodata();
+        $this->g = $this->psychrometricConstant();
 
         $ETo = $this->penmanMonteithFormula();
 
@@ -88,47 +102,45 @@ class PenmanCalc
     /**
      * ACTUAL VAPOUR PRESSION (e_a).
      *
-     * @param MeteoData $meteoData
-     *
      * @return float|int
      * @throws Exception
      */
-    public function actualVaporPressionStrategy(MeteoData $meteoData)
+    public function actualVaporPressionStrategy()
     {
-        // todo get/set MeteoData ?
-        if (isset($meteoData->actualVaporPression)
-            && $meteoData->actualVaporPression !== null
+        // move on get/set MeteoData ?
+        if (isset($this->meteoData->actualVaporPression)
+            && $this->meteoData->actualVaporPression !== null
         ) {
-            return $meteoData->actualVaporPression;
+            return $this->meteoData->actualVaporPression;
         }
         // derived from Tdew (dewpoint temperature)
-        if ($meteoData->getTdew()) {
-            return $this->vapourPressionFromTdew($meteoData->getTdew());
+        if ($this->meteoData->getTdew()) {
+            return $this->vapourPressionFromTdew($this->meteoData->getTdew());
         }
 
         // derived from relative humidity data
-        if ($meteoData->getRHmax()
-            && $meteoData->getRHmin()
-            && $meteoData->getTmax()
-            && $meteoData->getTmin()
+        if ($this->meteoData->getRHmax()
+            && $this->meteoData->getRHmin()
+            && $this->meteoData->getTmax()
+            && $this->meteoData->getTmin()
         ) {
             return $this->vapourPressionFromRHmax(
-                $meteoData->getRHmax(),
-                $meteoData->getRHmin(),
-                $meteoData->getTmax(),
-                $meteoData->getTmin()
+                $this->meteoData->getRHmax(),
+                $this->meteoData->getRHmin(),
+                $this->meteoData->getTmax(),
+                $this->meteoData->getTmin()
             ); // todo move to Meteodata ?
         }
 
-        if ($meteoData->getRHmax() and $meteoData->getTmin()) {
-            return $this->saturationVapourPression($meteoData->getTmin())
-                * $meteoData->getRHmax() / 100;
+        if ($this->meteoData->getRHmax() and $this->meteoData->getTmin()) {
+            return $this->saturationVapourPression($this->meteoData->getTmin())
+                * $this->meteoData->getRHmax() / 100;
         }
 
         // For RHmean defined
-        if ($meteoData->getRHmean() && $meteoData->getTmean()) {
-            return $this->saturationVapourPression($meteoData->getTmean())
-                * $meteoData->getRHmean() / 100;
+        if ($this->meteoData->getRHmean() && $this->meteoData->getTmean()) {
+            return $this->saturationVapourPression($this->meteoData->getTmean())
+                * $this->meteoData->getRHmean() / 100;
         }
 
         throw new Exception('Impossible to determine actual vapor pression');
@@ -174,13 +186,11 @@ class PenmanCalc
      * to increase the temperature of a unit mass of air by one degree at
      * constant pressure.
      *
-     * @param MeteoData $meteoData
-     *
      * @return float
      */
-    private function psychrometricConstant(MeteoData $meteoData): float
+    private function psychrometricConstant(): float
     {
-        $P = $meteoData->getPression();
+        $P = $this->meteoData->getPression();
 
         return round(0.665 * 0.001 * $P, 3);
     }
@@ -193,14 +203,6 @@ class PenmanCalc
      * http://www.fao.org/docrep/X0490E/x0490e06.htm requires air temperature,
      * humidity, radiation and wind speed data for daily, weekly, ten-day or
      * monthly calculations. T°, wind taken at 2 meters.
-     *
-     * @param float $Tmean
-     * @param float $u2
-     * @param float $e_s
-     * @param float $e_a
-     * @param float $delta
-     * @param float $Rn
-     * @param float $g
      *
      * @return float ETo mm.day-1
      */

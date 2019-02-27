@@ -22,10 +22,12 @@ class Location
     private $altitude = 0;
 
     /**
-     * *  for 'interior' locations, where land mass dominates and air masses are
+     * *  for 'interior' locations, where land mass dominates and air masses
+     * are
      *  not strongly influenced by a large water body, kRs @ 0.16;
-     * · for 'coastal' locations, situated on or adjacent to the coast of a large land mass
-     *  and where air masses are influenced by a nearby water body, kRs @ 0.19.
+     * · for 'coastal' locations, situated on or adjacent to the coast of a
+     * large land mass and where air masses are influenced by a nearby water
+     * body, kRs @ 0.19.
      *
      * @var float
      */
@@ -36,8 +38,7 @@ class Location
      *
      * @param float $latitude
      * @param float $longitude
-     * @param int $altitude
-     * @param string|null $name
+     * @param int   $altitude
      */
     public function __construct(
         float $latitude,
@@ -52,19 +53,19 @@ class Location
     }
 
     /**
-     * @return mixed
-     */
-    public function getLatitude(): float
-    {
-        return $this->latitude;
-    }
-
-    /**
      * @return float|int
      */
     public function getLatitudeRadian(): float
     {
         return pi() / 180 * $this->getLatitude();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLatitude(): float
+    {
+        return $this->latitude;
     }
 
     /**
@@ -93,12 +94,14 @@ class Location
 
     /**
      * @param float $kRs
+     *
      * @throws Exception
      */
     public function setKRs(float $kRs): void
     {
         if ($kRs >= 0.16 && $kRs <= 0.19) {
             $this->kRs = $kRs;
+
             return;
         }
         throw new Exception('kRs value not in range');

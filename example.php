@@ -34,8 +34,8 @@ $data->setWind2(new Wind2m(20, 'km/h', 2));
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
-$ETcalc = new PenmanCalc();
-$ETo = $ETcalc->EToPenmanMonteith($data);
+$ETcalc = new PenmanCalc($data);
+$ETo = $ETcalc->EToPenmanMonteith();
 
 echo 'ETo = '.$ETo.' mm/day';
 

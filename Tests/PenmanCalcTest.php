@@ -3,6 +3,7 @@
 use Evapotrans\ExtraRadiation;
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
+use Evapotrans\PenmanCalc;
 use Evapotrans\ValueObjects\Wind2m;
 use PHPUnit\Framework\TestCase;
 
@@ -20,10 +21,9 @@ class PenmanCalcTest extends TestCase
 
     public function setUp(): void
     {
-        $this->ETcalc = new \Evapotrans\PenmanCalc();
-
         $loc = new Location(45.72, 0, 200);
         $meteoData = new MeteoData($loc, new \DateTime('2018-01-01'));
+        $this->ETcalc = new PenmanCalc($meteoData);
         $this->meteo = new ExtraRadiation($meteoData);
     }
 
@@ -134,6 +134,7 @@ class PenmanCalcTest extends TestCase
     /**
      * @param $altitude
      * @param $expected
+     *
      * @throws Exception
      * @dataProvider psychometricConstantProvider
      */
@@ -141,12 +142,12 @@ class PenmanCalcTest extends TestCase
     {
         $location = new Location(0.0, 0.0, $altitude);
         $data = new MeteoData($location, new DateTime('2018-01-01'));
+        $calc = new PenmanCalc($data);
         self::assertEquals(
             $expected,
             $this->invokeMethod(
-                $this->ETcalc,
-                'psychrometricConstant',
-                [$data]
+                $calc,
+                'psychrometricConstant'
             )
         );
     }
@@ -199,6 +200,7 @@ class PenmanCalcTest extends TestCase
     /**
      * @param $Tmean
      * @param $expected
+     *
      * @throws ReflectionException
      * @dataProvider slopeOfSaturationVapourPressureCurveProvider
      */

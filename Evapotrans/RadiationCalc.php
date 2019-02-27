@@ -31,8 +31,8 @@ class RadiationCalc
     /**
      * RadiationCalc constructor.
      *
-     * @param MeteoData      $meteoData
-     * @param ExtraRadiation $meteoCalc
+     * @param MeteoData $meteoData
+     * @param float     $albedo
      */
     public function __construct(MeteoData $meteoData, $albedo = 0.23)
     {
@@ -43,8 +43,6 @@ class RadiationCalc
 
     /**
      * Rn from data.
-     *
-     * @param MeteoData $meteoData
      *
      * @return float Rn
      * @throws Exception
@@ -57,8 +55,7 @@ class RadiationCalc
         //        }
         $Ra = $this->extraterresRadiationFromMeteodata();
         $Rs = $this->solarRadiationStrategyFromMeteodata();
-        $e_a = (new PenmanCalc())->actualVaporPressionStrategy(
-            $this->meteoData
+        $e_a = (new PenmanCalc($this->meteoData))->actualVaporPressionStrategy(
         );
         // todo refactor
 
@@ -83,8 +80,6 @@ class RadiationCalc
     }
 
     /**
-     * @param MeteoData $data
-     *
      * @return float|int
      */
     private function extraterresRadiationFromMeteodata()
@@ -97,8 +92,6 @@ class RadiationCalc
     /**
      * Solar radiation (Rs) strategy of calculation
      * todo Refactor RaStrategy.
-     *
-     * @param MeteoData $data
      *
      * @return float
      * @throws Exception
