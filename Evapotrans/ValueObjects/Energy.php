@@ -17,8 +17,8 @@ class Energy extends AbstractMeasure
     /**
      * Conversion from energy values to equivalent evaporation
      * equivalent evaporation from Eq. [20]
-     * by using a conversion factor equal to the inverse of the latent heat of water vaporization
-     * value : MJ.m-2.day-1.
+     * by using a conversion factor equal to the inverse of the latent heat of
+     * water vaporization value : MJ.m-2.day-1.
      *
      * @return float mm/day
      */
@@ -26,6 +26,16 @@ class Energy extends AbstractMeasure
     {
         return round(
             1 / self::LATENT_HEAT_VAPORIZATION * $this->getValue(),
-            1);
+            1
+        );
+    }
+
+    /**
+     * MJ.m-2.day-1 to W.m-2
+     * @return float
+     */
+    public function convertWm2(): float
+    {
+        return round(11.6 * $this->getValue(), 1);
     }
 }

@@ -14,7 +14,7 @@ trait CalcTrait
      * @param int $dayOfTheYear
      * @param     $latitude
      *
-     * @return float
+     * @return float radian
      */
     private function sunsetHourAngle(int $dayOfTheYear, $latitude)
     {

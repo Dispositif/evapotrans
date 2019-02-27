@@ -30,10 +30,7 @@ $data->setTmax(new Temperature(61, 'F'));
 $data->setActualSunnyHours(7.2); // mesured full sunny hours
 $data->setWind2(new Wind2m(20, 'km/h', 2));
 
-// optional if RHmax
-//$data->setTdew(9);
-
-// optional if Tdew
+// optional if Tdew defined
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
