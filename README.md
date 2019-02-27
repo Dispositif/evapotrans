@@ -41,18 +41,20 @@ See also http://www.cesbio.ups-tlse.fr/multitemp/?p=4802
 
 ## Example 
 ```php
-$location = new Location(43.29, 5.38, 35);
+$location = new Location(43.29504, 5.3865, 35);
 $data = new MeteoData($location, new \DateTime('2019-02-15'));
 $data->setTmin(new Temperature(2.7));
 $data->setTmax(new Temperature(61, 'F'));
-$data->setActualSunnyHours(7.2); 
-$data->setWind2(new Wind2m(20, 'km/h', 2)); // mesured at 2 meters
+$data->setActualSunnyHours(7.2); // mesured today
+$data->setWind2(new Wind2m(20, 'km/h', 2));
+
+// optional if Tdew defined
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
-$ETo = (new PenmanCalc())->EToPenmanMonteith($data);
-// ETo : 1.1 (mm/day)
-
+$ETcalc = new PenmanCalc();
+$ETo = $ETcalc->EToPenmanMonteith($data);
+dump("ETo $ETo mm/day"); // ETo 5.7 mm/day
 
 // Crop evapotranspiration (work in progress)
 $radish = new Plant(
@@ -63,9 +65,9 @@ $area = new Area($radish);
 $area->setGrowStade('initial');
 $area->setFractionWetted(1);
 $area->setStressFactor(1.1);
-$ETc = (new CropEvapotrans($area, $ETo))->calcETc();
 
-// ETc : 0.8 (mm/day)
+$ETc = (new CropEvapotrans($area, $ETo))->calcETc();
+// ETc : 4.0 mm/day
 
 ```
 
