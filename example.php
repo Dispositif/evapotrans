@@ -8,7 +8,6 @@ use Evapotrans\ValueObjects\Temperature;
 use Evapotrans\ValueObjects\Wind2m;
 
 date_default_timezone_set('Europe/Paris');
-error_reporting(E_ALL);
 
 spl_autoload_register(
     function ($class) {
@@ -31,10 +30,10 @@ $data->setTmax(new Temperature(61, 'F'));
 $data->setActualSunnyHours(7.2); // mesured full sunny hours
 $data->setWind2(new Wind2m(20, 'km/h', 2));
 
-// Température dewpoint (point rosée) : Facultatif si RHmax/min ou RHmoyen
+// optional if RHmax
 //$data->setTdew(9);
 
-// RHmax, RHmin facultatif si Tdew
+// optional if Tdew
 $data->setRHmax(0.90);
 $data->setRHmin(0.38);
 
