@@ -35,7 +35,7 @@ namespace Evapotrans;
 /**
  * Due to differences in albedo, crop height, aerodynamic properties, and leaf and stomata properties, the evapotranspiration from full grown, well-watered crops differs from ETo.
  * http://www.fao.org/docrep/X0490E/x0490e0a.htm.
- * Class CropEvapoTranspiration
+ * Class CropEvapoTranspiration.
  */
 class CropEvapotrans
 {
@@ -83,6 +83,7 @@ class CropEvapotrans
 
     /**
      * @return float
+     *
      * @throws Exception
      */
     public function calcETc()
@@ -97,6 +98,7 @@ class CropEvapotrans
 
     /**
      * @return float
+     *
      * @throws Exception
      */
     private function strategyKc(): float

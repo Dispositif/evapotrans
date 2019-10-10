@@ -5,9 +5,10 @@ namespace Evapotrans;
 class RadiationCalc
 {
     /**
-     * see Location
+     * see Location.
      */
     const DEFAULT_KRS = 0.16;
+
     /**
      * @var MeteoData
      */
@@ -45,6 +46,7 @@ class RadiationCalc
      * Rn from data.
      *
      * @return float Rn
+     *
      * @throws Exception
      */
     public function netRadiationFromMeteodata(): float
@@ -94,6 +96,7 @@ class RadiationCalc
      * todo Refactor RaStrategy.
      *
      * @return float
+     *
      * @throws Exception
      */
     private function solarRadiationStrategyFromMeteodata()
@@ -190,7 +193,7 @@ class RadiationCalc
      * @param float $Ra
      * @param float $Tmin
      * @param float $Tmax
-     * @param float $kRs adjustment coefficient
+     * @param float $kRs  adjustment coefficient
      *
      * @return float
      */
@@ -226,7 +229,7 @@ class RadiationCalc
     ): float {
         if ($a_s && $b_s) {
             $Rso = ($a_s + $b_s) * $Ra;  // [36]
-        }else {
+        } else {
             $Rso = (0.75 + 2 * pow(10, -5) * $altitude) * $Ra; // [37]
         }
 

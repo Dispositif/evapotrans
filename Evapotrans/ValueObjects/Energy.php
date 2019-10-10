@@ -31,7 +31,8 @@ class Energy extends AbstractMeasure
     }
 
     /**
-     * MJ.m-2.day-1 to W.m-2
+     * MJ.m-2.day-1 to W.m-2.
+     *
      * @return float
      */
     public function convertWm2(): float

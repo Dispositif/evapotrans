@@ -4,7 +4,6 @@ namespace Evapotrans;
 
 class LocationTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testCorrectSet()
     {
         $location = new Location(43.29504, 5.3865, 35);
@@ -21,5 +20,4 @@ class LocationTest extends \PHPUnit\Framework\TestCase
         $this::expectException('ArgumentCountError');
         new Location();
     }
-
 }

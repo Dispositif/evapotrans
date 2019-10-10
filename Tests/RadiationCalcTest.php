@@ -64,7 +64,7 @@ class RadiationCalcTest extends TestCase
     }
 
     /**
-     * Allow TDD tests on private method
+     * Allow TDD tests on private method.
      *
      * @throws ReflectionException
      */
@@ -84,6 +84,7 @@ class RadiationCalcTest extends TestCase
      * EXAMPLE 15. Determination of solar radiation from temperature data.
      *
      * @group functional
+     *
      * @throws Exception
      */
     public function testSolarRadiationFromTempData()

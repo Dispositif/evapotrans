@@ -39,7 +39,7 @@ class PenmanCalcTest extends TestCase
     }
 
     /**
-     * TDD : Allow tests on private method
+     * TDD : Allow tests on private method.
      *
      * @throws ReflectionException
      */
@@ -57,6 +57,7 @@ class PenmanCalcTest extends TestCase
 
     /**
      * @group functional
+     *
      * @throws Exception
      */
     public function testWind2m()

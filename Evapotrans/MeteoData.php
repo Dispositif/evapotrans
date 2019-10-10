@@ -10,20 +10,23 @@ use Evapotrans\ValueObjects\Wind2m;
 class MeteoData
 {
     use CalcTrait;
+
     const DEFAULT_PRESSION = 100.4;
 
     /**
-     * Ra extraterrestrial radiation [MJ m-2 day-1]
+     * Ra extraterrestrial radiation [MJ m-2 day-1].
      */
     public $Ra;
+
     /**
      * a_s regression constant, expressing the fraction of extraterrestrial
      * radiation reaching the earth on overcast days (n =0),
-     * todo
+     * todo.
      *
      * @var float
      */
     public $a_s;
+
     /**
      * as+bs fraction of extraterrestrial radiation reaching the earth on clear
      * days (n = N).
@@ -36,20 +39,24 @@ class MeteoData
     private $location;
 
     // n (hours)
+
     /**
      * @var \DateTimeImmutable
      */
     private $date;
 
     // N (hours)
+
     /**
      * @var float Tmax
      */
     private $Tmax;
+
     /**
      * @var float
      */
     private $Tmean;
+
     /**
      * @var float
      */
@@ -57,7 +64,7 @@ class MeteoData
 
     /**
      * theorical maximal hours of light (N)
-     * aka "daylightHours"
+     * aka "daylightHours".
      *
      * @var float|null hours
      */
@@ -76,6 +83,7 @@ class MeteoData
      * @var float millimetres
      */
     private $precipitation;
+
     /**
      * Where no wind data are available within the region, a value of 2 m/s can
      * be used as a temporary estimate. This value is the average over 2000
@@ -87,7 +95,7 @@ class MeteoData
      * small and buoyancy of warm air induces air exchange at the surface.
      * Limiting u2 ³ 0.5 m/s in the ETo equation improves the estimation
      * accuracy under the conditions of very low wind speed. todo max 0.5 +
-     * value "estimated/minimized"
+     * value "estimated/minimized".
      *
      * @var float Wind speed at 2meter in m.s-1
      */
@@ -96,7 +104,7 @@ class MeteoData
     private $wind2origin = 'default';
 
     /**
-     * Dewpoint temperature
+     * Dewpoint temperature.
      */
     private $Tdew;
 
@@ -141,9 +149,9 @@ class MeteoData
 
         if ($date instanceof \DateTimeImmutable) {
             $this->date = $date;
-        }elseif ($date instanceof \DateTime) {
+        } elseif ($date instanceof \DateTime) {
             $this->date = \DateTimeImmutable::createFromMutable($date);
-        }else {
+        } else {
             throw new Exception('date instance error');
         }
     }
@@ -406,6 +414,7 @@ class MeteoData
      * @param mixed $RHmax
      *
      * @return MeteoData
+     *
      * @throws Exception
      * @throws Exception
      */
@@ -442,6 +451,7 @@ class MeteoData
      * @param mixed $RHmin
      *
      * @return MeteoData
+     *
      * @throws Exception
      * @throws Exception
      */
