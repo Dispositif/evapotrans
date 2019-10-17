@@ -16,7 +16,7 @@
         "phpunit/phpunit": "^8",
         "symfony/var-dumper": "^4.3"
     },
-    "license": "GPL",
+    "license": "GPL-3.0-only",
     "autoload": {
         "psr-4": {
             "Evapotrans\\": "src/"
