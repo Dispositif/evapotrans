@@ -3,3 +3,4 @@
 .idea
 /vendor/
 /src/Tests/build/
+composer.lock
