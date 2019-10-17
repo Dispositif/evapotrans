@@ -4,7 +4,7 @@ namespace Evapotrans;
 
 /**
  * Class Location
- * immutable
+ * immutable.
  */
 class Location
 {
@@ -12,10 +12,12 @@ class Location
      * @var float
      */
     private $latitude;
+
     /**
      * @var float
      */
     private $longitude;
+
     /**
      * @var int
      */
@@ -104,6 +106,7 @@ class Location
 
             return;
         }
+
         throw new Exception('kRs value not in range');
     }
 }

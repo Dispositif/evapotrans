@@ -8,7 +8,7 @@ class Plant
 
     /**
      * crop coefficient [dimensionless] by growStade.
-     * http://www.fao.org/docrep/X0490E/x0490e0b.htm#crop coefficients
+     * http://www.fao.org/docrep/X0490E/x0490e0b.htm#crop coefficients.
      *
      * @var array
      */

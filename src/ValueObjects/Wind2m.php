@@ -12,7 +12,7 @@ use Evapotrans\Exception;
  * the wind speed is small and buoyancy of warm air induces air exchange at the
  * surface. Limiting u2 ³ 0.5 m/s in the ETo equation improves the estimation
  * accuracy under the conditions of very low wind speed. todo max 0.5 + value
- * "estimated/minimized" -> MeteoData ? Class Wind default unit : m/s
+ * "estimated/minimized" -> MeteoData ? Class Wind default unit : m/s.
  */
 class Wind2m extends AbstractMeasure
 {
@@ -28,10 +28,11 @@ class Wind2m extends AbstractMeasure
     }
 
     /**
-     * @param float $speed
+     * @param float  $speed
      * @param string $unit
      *
      * @return float
+     *
      * @throws Exception
      */
     private function convertSpeedToMS(float $speed, string $unit): float
