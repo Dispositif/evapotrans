@@ -1,0 +1,26 @@
+{
+    "name": "dispositif/evapotrans",
+    "version": "1",
+    "description": "evapo-transpiration calculation from weather, climatological, physical and agronomic datas",
+    "authors": [
+        {
+            "name": "Phil M.",
+            "email": "dispositif@gmail.com"
+        }
+    ],
+    "type": "library",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8",
+        "symfony/var-dumper": "^4.3"
+    },
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "Evapotrans\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
