@@ -36,6 +36,7 @@ matrix:
 
 # Define an environment variable
 env:
+  - CODECOV_TOKEN="a7f6927a-c3ce-4eaf-966e-370a1cf70b25"
   - TRUC_VERSION="1" DB=msql
 
 # Update composer
@@ -56,10 +57,10 @@ before_script:
   - echo 'date.timezone = "Europe/Paris"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script:
-#  - vendor/bin/phpunit --coverage-clover=coverage.xml
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 after_success:
-#  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
 
 # After a build, send email notification with the build results
 notifications:
