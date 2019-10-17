@@ -13,7 +13,7 @@ class PenmanCalc
 
     /**
      * Soil heat flux density (G)
-     * [42] assumed to be zero (Allen et al.:1989) for day or < 10 day period
+     * [42] assumed to be zero (Allen et al.:1989) for day or < 10 day period.
      */
     const G_CONST = 0;
 
@@ -23,11 +23,17 @@ class PenmanCalc
     private $meteoData;
 
     private $Tmean;
+
     private $u2;
+
     private $e_s;
+
     private $e_a;
+
     private $delta;
+
     private $Rn;
+
     private $g;
 
     /**
@@ -40,9 +46,9 @@ class PenmanCalc
         $this->meteoData = $meteoData;
     }
 
-
     /**
      * @return float ETo [mm.day-1]
+     *
      * @throws Exception
      */
     public function EToPenmanMonteith()
@@ -103,13 +109,14 @@ class PenmanCalc
      * ACTUAL VAPOUR PRESSION (e_a).
      *
      * @return float|int
+     *
      * @throws Exception
      */
     public function actualVaporPressionStrategy()
     {
         // move on get/set MeteoData ?
         if (isset($this->meteoData->actualVaporPression)
-            && $this->meteoData->actualVaporPression !== null
+            && null !== $this->meteoData->actualVaporPression
         ) {
             return $this->meteoData->actualVaporPression;
         }
@@ -164,7 +171,7 @@ class PenmanCalc
     // Actual vapour pression (ea) derived from Tdew
 
     /**
-     * Slope of saturation vapour pressure curve (∆, delta)
+     * Slope of saturation vapour pressure curve (∆, delta).
      *
      * @param float $Tmean
      *
@@ -228,7 +235,7 @@ class PenmanCalc
      *
      * @param float $Tmin
      * @param float $Tmax
-     * @param float $Ra Ra MJ.m-2.day-1
+     * @param float $Ra   Ra MJ.m-2.day-1
      *
      * @return float mm/day
      */

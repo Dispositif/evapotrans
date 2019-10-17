@@ -43,17 +43,18 @@ class PenmanCalcTest extends TestCase
     }
 
     /**
-     * TDD : Allow tests on private method
+     * TDD : Allow tests on private method.
      *
-     * @param Object $object
+     * @param object $object
      * @param string $methodName
      * @param array  $parameters
      *
      * @return mixed
+     *
      * @throws ReflectionException
      */
     private function invokeMethod(
-        Object &$object,
+        object &$object,
         string $methodName,
         array $parameters = []
     ) {
@@ -66,6 +67,7 @@ class PenmanCalcTest extends TestCase
 
     /**
      * @group functional
+     *
      * @throws Exception
      */
     public function testWind2m()
@@ -190,10 +192,12 @@ class PenmanCalcTest extends TestCase
 
     /**
      * @dataProvider saturationVaporPressionProvider
+     *
      * @param $expected
      * @param $temp
+     *
      * @throws ReflectionException
-*/
+     */
     public function testSaturationVaporPression($expected, $temp)
     {
         $actual = $this->invokeMethod(

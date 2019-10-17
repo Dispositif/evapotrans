@@ -10,10 +10,12 @@ namespace Evapotrans;
 class ExtraRadiation
 {
     use CalcTrait;
+
     /**
      * @var int
      */
     private $dayOfTheYear;
+
     /**
      * @var float|mixed
      */
@@ -32,7 +34,7 @@ class ExtraRadiation
     }
 
     /**
-     * Extraterrestrial radiation for daily periods (Ra) [21]
+     * Extraterrestrial radiation for daily periods (Ra) [21].
      *
      * @return float|int MJ.m-2.d-1
      */
@@ -48,10 +50,9 @@ class ExtraRadiation
         return round($Ra, 1); // MJ.m-2.d-1
     }
 
-
-
     /**
      * @param int $dayOfTheYear
+     *
      * @return float|int
      */
     private function inverseRelativeDistanceEarthSun(int $dayOfTheYear)
@@ -61,5 +62,4 @@ class ExtraRadiation
 
         return $dr;
     }
-
 }
