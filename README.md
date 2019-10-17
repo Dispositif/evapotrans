@@ -1,14 +1,14 @@
 ## Evapotrans
 
-
-
-[![PHP](https://img.shields.io/badge/PHP-7.2-blue.svg)]()
+[![Build Status](https://travis-ci.org/Dispositif/evapotrans.svg?branch=master)](https://travis-ci.org/Dispositif
+/evapotrans) [![PHP](https://img.shields.io/badge/PHP-7.2-blue.svg)]()
 [![GPL](https://img.shields.io/badge/license-GPL-black.svg)]()
-[![BCH compliance](https://bettercodehub.com/edge/badge/Dispositif/evapotrans?branch=master)](https://bettercodehub.com/) <a href="https://codeclimate.com/github/Dispositif/evapotrans/maintainability"><img src="https://api.codeclimate.com/v1/badges/6f0ad445bbafa41daaee/maintainability" /></a>
+[![BCH compliance](https://bettercodehub.com/edge/badge/Dispositif/evapotrans?branch=master)](https://bettercodehub
+.com/) <a href="https://codeclimate.com/github/Dispositif/evapotrans/maintainability"><img src="https://api.codeclimate.com/v1/badges/6f0ad445bbafa41daaee/maintainability" /></a> [![StyleCI](https://github.styleci.io/repos/171043131/shield?branch=master)](https://github.styleci.io/repos/171043131)
 
 PHP 7.2 implementation of evapotranspiration prediction. Various calculation procedures for estimating missing data are also provided : weather, climatological, physical and agronomic datas. 
 
-GNU GPLv3 (c) 2014/2019 dispositif / Philippe M.
+GNU GPLv3 2014/2019 by Philippe M.
 
 Computation of all data required for the calculation of the reference evapotranspiration (ETc) by means of the FAO Penman-Monteith method. 
 
