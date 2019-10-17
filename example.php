@@ -2,7 +2,6 @@
 
 ///** @noinspection PhpUndefinedClassInspection */
 
-
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
 use Evapotrans\ValueObjects\Temperature;
@@ -12,7 +11,6 @@ use Evapotrans\PenmanCalc;
 date_default_timezone_set('Europe/Paris');
 
 require_once __DIR__.'/vendor/autoload.php';
-
 
 $location = new Location(43.29504, 5.3865, 35);
 

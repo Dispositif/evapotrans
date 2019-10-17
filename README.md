@@ -43,8 +43,20 @@ Simplistic equation for ETo when weather data are missing
 
 See also http://www.cesbio.ups-tlse.fr/multitemp/?p=4802
 
+## Install with composer
+```
+composer require dispositif/evapotrans
+```
+
 ## Example 
 ```php
+use Evapotrans\Location;
+use Evapotrans\MeteoData;
+use Evapotrans\ValueObjects\Temperature;
+use Evapotrans\ValueObjects\Wind2m;
+use Evapotrans\PenmanCalc;
+//require_once __DIR__.'/vendor/autoload.php';
+
 $location = new Location(43.29504, 5.3865, 35);
 $data = new MeteoData($location, new \DateTime('2019-02-15'));
 $data->setTmin(new Temperature(2.7));
