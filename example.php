@@ -1,17 +1,22 @@
 <?php
 
-/** @noinspection PhpUndefinedClassInspection */
+///** @noinspection PhpUndefinedClassInspection */
 
+
+use Evapotrans\Location;
+use Evapotrans\MeteoData;
 use Evapotrans\ValueObjects\Temperature;
 use Evapotrans\ValueObjects\Wind2m;
+use Evapotrans\PenmanCalc;
 
 date_default_timezone_set('Europe/Paris');
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
+
 
 $location = new Location(43.29504, 5.3865, 35);
 
-$data = new MeteoData($location, new \DateTime('2019-02-15'));
+$data = new MeteoData($location, new DateTime('2019-02-15'));
 $data->setTmin(new Temperature(2.7));
 $data->setTmax(new Temperature(61, 'F'));
 $data->setActualSunnyHours(7.2); // mesured full sunny hours
@@ -23,7 +28,6 @@ $data->setRHmin(0.38);
 
 $ETcalc = new PenmanCalc($data);
 $ETo = $ETcalc->EToPenmanMonteith();
-
 echo 'ETo = '.$ETo.' mm/day';
 
 include 'example_crop.php';
