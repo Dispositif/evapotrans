@@ -49,10 +49,6 @@ class RadiationCalc
      */
     public function netRadiationFromMeteodata(): float
     {
-        // inutile : strategy for solarRadiation
-        //        if (!$this->meteoData->getActualSunnyHours()) {
-        //            throw new Exception('Actual sunny hours not defined');
-        //        }
         $Ra = $this->extraterresRadiationFromMeteodata();
         $Rs = $this->solarRadiationStrategyFromMeteodata();
         $e_a = (new PenmanCalc($this->meteoData))->actualVaporPressionStrategy(
