@@ -1,4 +1,5 @@
 /docs
 *.cache
 .idea
-/Tests/build
+/vendor/
+/src/Tests/build/

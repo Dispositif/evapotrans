@@ -1,0 +1,7 @@
+languages:
+  - php
+
+component_depth: 2
+
+#exclude:
+
