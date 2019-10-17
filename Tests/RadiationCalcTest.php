@@ -1,5 +1,6 @@
 <?php
 
+use Evapotrans\ExtraRadiation;
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
 use Evapotrans\RadiationCalc;
@@ -9,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class RadiationCalcTest extends TestCase
 {
     /**
-     * @var \Evapotrans\ExtraRadiation
+     * @var ExtraRadiation
      */
     private $extraRadiation;
 
@@ -21,9 +22,9 @@ class RadiationCalcTest extends TestCase
     public function setUp(): void
     {
         $meteoData = new MeteoData(
-            new Location(-22.90, 0), new \DateTime('2015-05-15')
+            new Location(-22.90, 0), new DateTime('2015-05-15')
         );
-        $this->extraRadiation = new \Evapotrans\ExtraRadiation($meteoData);
+        $this->extraRadiation = new ExtraRadiation($meteoData);
         $this->radiationCalc = new RadiationCalc($meteoData);
     }
 
@@ -42,7 +43,7 @@ class RadiationCalcTest extends TestCase
         $location = new Location(13.73, 0, 2);
         $location->setKRs(0.19); // coastal location
 
-        $data = new MeteoData($location, new \DateTime('2019-04-15'));
+        $data = new MeteoData($location, new DateTime('2019-04-15'));
         $data->setTmin(new Temperature(25.6));
         $data->setTmax(new Temperature(34.8));
         $data->actualVaporPression = 2.85;
@@ -66,6 +67,11 @@ class RadiationCalcTest extends TestCase
     /**
      * Allow TDD tests on private method
      *
+     * @param Object $object
+     * @param string $methodName
+     * @param array  $parameters
+     *
+     * @return mixed
      * @throws ReflectionException
      */
     private function invokeMethod(
@@ -73,7 +79,7 @@ class RadiationCalcTest extends TestCase
         string $methodName,
         array $parameters = []
     ) {
-        $reflection = new \ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
@@ -90,9 +96,9 @@ class RadiationCalcTest extends TestCase
     {
         //45°43'N and at 200 m above sea level. In July, the mean monthly
         // maximum and minimum air temperatures are 26.6 and 14.8°C respectively.
-        $loc = new \Evapotrans\Location(45.72, 0, 200);
+        $loc = new Location(45.72, 0, 200);
         $loc->setKRs(0.16);
-        $date = new \DateTime('2018-07-15');
+        $date = new DateTime('2018-07-15');
         $data = new MeteoData($loc, $date);
         $data->setTmax(new Temperature(26.6));
         $data->setTmin(new Temperature(14.8));
@@ -108,7 +114,7 @@ class RadiationCalcTest extends TestCase
     public function testExtraterrestrialRadiation()
     {
         $data = new MeteoData(
-            new Location(-20, 0), new \DateTime('2018-09-03')
+            new Location(-20, 0), new DateTime('2018-09-03')
         );
         $rad = new RadiationCalc($data);
         $Ra = $this->invokeMethod(

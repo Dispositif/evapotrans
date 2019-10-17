@@ -2,7 +2,9 @@
 
 namespace Evapotrans;
 
-class LocationTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class LocationTest extends TestCase
 {
 
     public function testCorrectSet()

@@ -128,6 +128,7 @@ class MeteoData
      * @var float RHmean
      */
     private $RHmean;
+    public $actualVaporPression;
 
     /**
      * MeteoData constructor.

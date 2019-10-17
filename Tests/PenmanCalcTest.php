@@ -10,19 +10,19 @@ use PHPUnit\Framework\TestCase;
 class PenmanCalcTest extends TestCase
 {
     /**
-     * @var \Evapotrans\PenmanCalc
+     * @var PenmanCalc
      */
     private $ETcalc;
 
     /**
-     * @var \Evapotrans\ExtraRadiation
+     * @var ExtraRadiation
      */
     private $meteo;
 
     public function setUp(): void
     {
         $loc = new Location(45.72, 0, 200);
-        $meteoData = new MeteoData($loc, new \DateTime('2018-01-01'));
+        $meteoData = new MeteoData($loc, new DateTime('2018-01-01'));
         $this->ETcalc = new PenmanCalc($meteoData);
         $this->meteo = new ExtraRadiation($meteoData);
     }
@@ -41,6 +41,11 @@ class PenmanCalcTest extends TestCase
     /**
      * TDD : Allow tests on private method
      *
+     * @param Object $object
+     * @param string $methodName
+     * @param array  $parameters
+     *
+     * @return mixed
      * @throws ReflectionException
      */
     private function invokeMethod(
@@ -48,7 +53,7 @@ class PenmanCalcTest extends TestCase
         string $methodName,
         array $parameters = []
     ) {
-        $reflection = new \ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
@@ -81,20 +86,20 @@ class PenmanCalcTest extends TestCase
         self::assertEquals(
             1,
             (new MeteoData(
-                $loc, new \DateTime('2018-01-01')
+                $loc, new DateTime('2018-01-01')
             ))->getDaysOfYear()
         );
         self::assertEquals(
             305,
             (new MeteoData(
-                $loc, new \DateTime('2018-11-01')
+                $loc, new DateTime('2018-11-01')
             ))->getDaysOfYear()
         );
         // 2016 leap year
         self::assertEquals(
             306,
             (new MeteoData(
-                $loc, new \DateTime('2016-11-01')
+                $loc, new DateTime('2016-11-01')
             ))->getDaysOfYear()
         );
     }
@@ -104,6 +109,12 @@ class PenmanCalcTest extends TestCase
      * deviations may be more than 1%.
      *
      * @dataProvider daylightHoursProvider
+     *
+     * @param string $date
+     * @param        $expected
+     * @param        $lat
+     *
+     * @throws \Evapotrans\Exception
      */
     public function testCalcDaylightHours(string $date, $expected, $lat)
     {
@@ -175,7 +186,10 @@ class PenmanCalcTest extends TestCase
 
     /**
      * @dataProvider saturationVaporPressionProvider
-     */
+     * @param $expected
+     * @param $temp
+     * @throws ReflectionException
+*/
     public function testSaturationVaporPression($expected, $temp)
     {
         $actual = $this->invokeMethod(

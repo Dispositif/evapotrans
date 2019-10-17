@@ -4,6 +4,7 @@
 
 namespace Evapotrans;
 
+use DateTime;
 use Evapotrans\ValueObjects\Temperature;
 use Evapotrans\ValueObjects\Wind2m;
 
@@ -24,7 +25,7 @@ spl_autoload_register(
 
 $location = new Location(43.29504, 5.3865, 35);
 
-$data = new MeteoData($location, new \DateTime('2019-02-15'));
+$data = new MeteoData($location, new DateTime('2019-02-15'));
 $data->setTmin(new Temperature(2.7));
 $data->setTmax(new Temperature(61, 'F'));
 $data->setActualSunnyHours(7.2); // mesured full sunny hours
