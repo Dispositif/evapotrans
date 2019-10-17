@@ -1,7 +1,8 @@
 <?php
 
-namespace Evapotrans;
+namespace Evapotrans\Tests;
 
+use Evapotrans\Location;
 use PHPUnit\Framework\TestCase;
 
 class LocationTest extends TestCase

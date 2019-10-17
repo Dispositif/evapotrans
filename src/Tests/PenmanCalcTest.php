@@ -1,11 +1,15 @@
 <?php
 
+namespace Evapotrans\Tests;
+
+use DateTime;
 use Evapotrans\ExtraRadiation;
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
 use Evapotrans\PenmanCalc;
 use Evapotrans\ValueObjects\Wind2m;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class PenmanCalcTest extends TestCase
 {

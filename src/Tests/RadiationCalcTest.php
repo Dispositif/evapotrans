@@ -1,11 +1,15 @@
 <?php
 
+namespace Evapotrans\Tests;
+
+use DateTime;
 use Evapotrans\ExtraRadiation;
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
 use Evapotrans\RadiationCalc;
 use Evapotrans\ValueObjects\Temperature;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class RadiationCalcTest extends TestCase
 {
@@ -22,7 +26,7 @@ class RadiationCalcTest extends TestCase
     public function setUp(): void
     {
         $meteoData = new MeteoData(
-            new Location(-22.90, 0), new DateTime('2015-05-15')
+            new Location(-22.90, 0), new \DateTime('2015-05-15')
         );
         $this->extraRadiation = new ExtraRadiation($meteoData);
         $this->radiationCalc = new RadiationCalc($meteoData);
@@ -43,7 +47,7 @@ class RadiationCalcTest extends TestCase
         $location = new Location(13.73, 0, 2);
         $location->setKRs(0.19); // coastal location
 
-        $data = new MeteoData($location, new DateTime('2019-04-15'));
+        $data = new MeteoData($location, new \DateTime('2019-04-15'));
         $data->setTmin(new Temperature(25.6));
         $data->setTmax(new Temperature(34.8));
         $data->actualVaporPression = 2.85;
@@ -98,7 +102,7 @@ class RadiationCalcTest extends TestCase
         // maximum and minimum air temperatures are 26.6 and 14.8°C respectively.
         $loc = new Location(45.72, 0, 200);
         $loc->setKRs(0.16);
-        $date = new DateTime('2018-07-15');
+        $date = new \DateTime('2018-07-15');
         $data = new MeteoData($loc, $date);
         $data->setTmax(new Temperature(26.6));
         $data->setTmin(new Temperature(14.8));
