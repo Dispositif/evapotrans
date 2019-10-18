@@ -8,6 +8,7 @@
 namespace Evapotrans\Tests;
 
 use DateTime;
+use Evapotrans\Exception;
 use Evapotrans\ExtraRadiation;
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
@@ -15,6 +16,7 @@ use Evapotrans\RadiationCalc;
 use Evapotrans\ValueObjects\Temperature;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use ReflectionException;
 
 class RadiationCalcTest extends TestCase
 {
@@ -31,7 +33,7 @@ class RadiationCalcTest extends TestCase
     public function setUp(): void
     {
         $meteoData = new MeteoData(
-            new Location(-22.90, 0), new \DateTime('2015-05-15')
+            new Location(-22.90, 0), new DateTime('2015-05-15')
         );
         $this->extraRadiation = new ExtraRadiation($meteoData);
         $this->radiationCalc = new RadiationCalc($meteoData);
@@ -45,14 +47,14 @@ class RadiationCalcTest extends TestCase
      * minimum temperature and daily vapour pressure are 34.8°C, 25.6°C and
      * 2.85 kPa respectively.
      *
-     * @throws \Evapotrans\Exception
+     * @throws Exception
      */
     public function testNetRadiationFromMeteodata()
     {
         $location = new Location(13.73, 0, 2);
         $location->setKRs(0.19); // coastal location
 
-        $data = new MeteoData($location, new \DateTime('2019-04-15'));
+        $data = new MeteoData($location, new DateTime('2019-04-15'));
         $data->setTmin(new Temperature(25.6));
         $data->setTmax(new Temperature(34.8));
         $data->actualVaporPression = 2.85;
@@ -81,8 +83,7 @@ class RadiationCalcTest extends TestCase
      * @param array  $parameters
      *
      * @return mixed
-     *
-     * @throws ReflectionException
+     * @throws ReflectionException*@throws \ReflectionException
      */
     private function invokeMethod(
         object &$object,
@@ -100,8 +101,7 @@ class RadiationCalcTest extends TestCase
      * EXAMPLE 15. Determination of solar radiation from temperature data.
      *
      * @group functional
-     *
-     * @throws Exception
+     * @throws \Exception
      */
     public function testSolarRadiationFromTempData()
     {
@@ -109,7 +109,7 @@ class RadiationCalcTest extends TestCase
         // maximum and minimum air temperatures are 26.6 and 14.8°C respectively.
         $loc = new Location(45.72, 0, 200);
         $loc->setKRs(0.16);
-        $date = new \DateTime('2018-07-15');
+        $date = new DateTime('2018-07-15');
         $data = new MeteoData($loc, $date);
         $data->setTmax(new Temperature(26.6));
         $data->setTmin(new Temperature(14.8));

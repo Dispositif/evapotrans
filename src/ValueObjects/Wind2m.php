@@ -28,6 +28,7 @@ class Wind2m extends AbstractMeasure
         ?string $unit = 'm/s',
         ?int $altitudeM = 2
     ) {
+        // add parent::__construct() ?
         $speedMS = $this->convertSpeedToMS($speed, $unit);
         $this->value = $this->calcWind2meters($speedMS, $altitudeM);
     }

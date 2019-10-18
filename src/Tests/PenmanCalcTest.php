@@ -8,6 +8,7 @@
 namespace Evapotrans\Tests;
 
 use DateTime;
+use Evapotrans\Exception;
 use Evapotrans\ExtraRadiation;
 use Evapotrans\Location;
 use Evapotrans\MeteoData;
@@ -15,6 +16,7 @@ use Evapotrans\PenmanCalc;
 use Evapotrans\ValueObjects\Wind2m;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use ReflectionException;
 
 class PenmanCalcTest extends TestCase
 {
@@ -55,8 +57,7 @@ class PenmanCalcTest extends TestCase
      * @param array  $parameters
      *
      * @return mixed
-     *
-     * @throws ReflectionException
+     * @throws ReflectionException*@throws \ReflectionException
      */
     private function invokeMethod(
         object &$object,
@@ -72,8 +73,7 @@ class PenmanCalcTest extends TestCase
 
     /**
      * @group functional
-     *
-     * @throws Exception
+     * @throws \Exception*@throws Exception
      */
     public function testWind2m()
     {
@@ -86,7 +86,7 @@ class PenmanCalcTest extends TestCase
         $wind = new Wind2m(36, 'km/h', 2);
         self::assertEquals(10, $wind->getValue());
 
-        $this->expectException(\Evapotrans\Exception::class);
+        $this->expectException(Exception::class);
         new Wind2m(5, 'm');
     }
 
@@ -125,7 +125,7 @@ class PenmanCalcTest extends TestCase
      * @param        $expected
      * @param        $lat
      *
-     * @throws \Evapotrans\Exception
+     * @throws Exception
      */
     public function testCalcDaylightHours(string $date, $expected, $lat)
     {
@@ -157,7 +157,7 @@ class PenmanCalcTest extends TestCase
      * @param $altitude
      * @param $expected
      *
-     * @throws Exception
+     * @throws \Exception
      * @dataProvider psychometricConstantProvider
      */
     public function testPsychometricConstant($altitude, $expected)
